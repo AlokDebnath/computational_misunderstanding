@@ -1,0 +1,37 @@
+# Feedback on the Guidlines and Associated Task
+
+## Task Description
+
+Task description is thorough, and therefore it was easy to do. The guidelines
+are simple and easy to follow.
+
+## Task setup
+
+The current task setup (the format of annotation) is rather cumbersome for
+manual annotation. Each excel column occupies the entire page width and
+since this is a comparison task, that makes it difficult to get used to after
+a while. I should think that this can also increase annotator fatigue. 
+
+Suggestion: I believe that instead of comma separated columns, they should be
+individual rows. Comparing the sentences when placed next to each other in
+different lines makes it easier to view the differences and easier to annotate.
+
+For example:
+File: A.txt
+Text_A: The world is a mighty beautiful place.
+Text_B: The world is a mighty beautiful place for creatures like us.
+Question_1: For whom is the world a mighty beautiful place?
+Question_2:
+reason_no_question:
+
+## Guidelines
+
+I have observed a common trend in the reason_no_question annotation that the
+current guidelines don't cover, which is "No additional information in text_b,
+the two texts are just semantically different". For example:
+
+Text_A: I enjoy eating cherries.
+Text_B: I enjoy eating bananas.
+
+These two sentences are just different, and this occurs a large number of times
+so maybe it could be added into the reason_no_question list?
