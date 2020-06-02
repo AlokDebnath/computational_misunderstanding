@@ -1,0 +1,10 @@
+# Introduction
+
+In this set of experimets, the idea is to use a seq2seq machine translation
+model for attmepting to generate less ambiguous sentences from more ambiguous 
+ones.
+
+We use the Encoder-Decoder Model proposed by Sutskever et. al. (2014) first.
+
+# Running Instructions
+
