@@ -18,7 +18,6 @@ def clean(text):
     text = re.sub(r'[_"\-;%()|+&=*%.,!?:#$@\[\]/]', ' ', text)
     text = re.sub(r'<br />', ' ', text)
     text = re.sub(r'\'', ' ', text)
-    text = '<SOS> ' + text + ' <EOS>'
     return text
     
 
@@ -28,7 +27,7 @@ def fwritedata(fname, data):
     print('Cleaning and Writing dataset...')
     with open(fname, 'w+') as f:
         for ix in tqdm(range(len(col1))):
-            f.write(clean(col1[ix]) + '\t' + clean(col2n[ix]) + '\n')
+            f.write(col1[ix] + '\t' + col2n[ix] + '\n')
     f.close()
 
 
