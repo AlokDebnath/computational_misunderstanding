@@ -48,13 +48,13 @@ def unicodeToAscii(s):
 
 def normalizeString(s):
     s = unicodeToAscii(s.lower().strip())
-    s = re.sub(r"([.!?])", r" \1", s)
+    s = re.sub(r"([.!?])", r" ", s)
     s = re.sub(r"[^a-zA-Z.!?]+", r" ", s)
     return s
 
 def readIxGens(datapath):
     print("Reading lines...")
-    lines = open(datapath, encoding='utf-8').read().strip().split('\n')
+    lines = open(datapath, encoding='utf-8').read().strip().split('\n')[:1000]
     pairs = [[normalizeString(s) for s in l.split('\t')][2:] for l in tqdm(lines)]
     ixgen = IxGen()
     return ixgen, pairs
@@ -191,7 +191,7 @@ def tensorsFromPair(pair):
     target_tensor = tensorFromSentence(pair[1])
     return (input_tensor, target_tensor)
 
-teacher_forcing_ratio = 0.5
+teacher_forcing_ratio = 0.2
 
 
 def train(input_tensor, target_tensor, encoder, decoder, encoder_optimizer, decoder_optimizer, criterion, max_length=MAX_LENGTH):
@@ -204,12 +204,10 @@ def train(input_tensor, target_tensor, encoder, decoder, encoder_optimizer, deco
 
     loss = 0
     for ei in range(input_length):
-        encoder_output, encoder_hidden = encoder(
-            input_tensor[ei], encoder_hidden)
+        encoder_output, encoder_hidden = encoder(input_tensor[ei], encoder_hidden)
         encoder_outputs[ei] = encoder_output[0, 0]
 
     decoder_input = torch.tensor([[SOS_token]], device=device)
-
     decoder_hidden = encoder_hidden
 
     use_teacher_forcing = True if random.random() < teacher_forcing_ratio else False
@@ -217,15 +215,17 @@ def train(input_tensor, target_tensor, encoder, decoder, encoder_optimizer, deco
     if use_teacher_forcing:
         # Teacher forcing: Feed the target as the next input
         for di in range(target_length):
-            decoder_output, decoder_hidden, decoder_attention = decoder(
-                decoder_input, decoder_hidden, encoder_outputs)
+            # decoder_output, decoder_hidden, decoder_attention = decoder(
+            #     decoder_input, decoder_hidden, encoder_outputs)
+            decoder_output, decoder_hidden = decoder(decoder_input, decoder_hidden)
             loss += criterion(decoder_output, target_tensor[di])
             decoder_input = target_tensor[di]  # Teacher forcing
 
     else:
         for di in range(target_length):
-            decoder_output, decoder_hidden, decoder_attention = decoder(
-                decoder_input, decoder_hidden, encoder_outputs)
+            # decoder_output, decoder_hidden, decoder_attention = decoder(
+            #     decoder_input, decoder_hidden, encoder_outputs)
+            decoder_output, decoder_hidden = decoder(decoder_input, decoder_hidden)
             topv, topi = decoder_output.topk(1)
             decoder_input = topi.squeeze().detach()  # detach from history as input
 
@@ -268,6 +268,9 @@ def trainIters(encoder, decoder, n_iters, print_every=100, plot_every=100, learn
     training_pairs = [tensorsFromPair(random.choice(pairs))
                       for i in range(n_iters)]
     criterion = nn.NLLLoss()
+    print('=' * 89)
+    print('Time Spent (Left) \t Iter. \t % Done \t Average Loss')
+    print('=' * 89)
 
     for iter in range(1, n_iters + 1):
         training_pair = training_pairs[iter - 1]
@@ -278,11 +281,11 @@ def trainIters(encoder, decoder, n_iters, print_every=100, plot_every=100, learn
                      decoder, encoder_optimizer, decoder_optimizer, criterion)
         print_loss_total += loss
         plot_loss_total += loss
-
+        
         if iter % print_every == 0:
             print_loss_avg = print_loss_total / print_every
             print_loss_total = 0
-            print('%s (%d %d%%) %.4f' % (timeSince(start, iter / n_iters),
+            print('%s \t %d \t %d%% \t\t %.4f' % (timeSince(start, iter / n_iters),
                                          iter, iter / n_iters * 100, print_loss_avg))
 
         if iter % plot_every == 0:
@@ -323,10 +326,19 @@ def evaluate(encoder, decoder, sentence, max_length=MAX_LENGTH):
         decoded_words = []
         decoder_attentions = torch.zeros(max_length, max_length)
 
-        for di in range(max_length):
-            decoder_output, decoder_hidden, decoder_attention = decoder(
-                decoder_input, decoder_hidden, encoder_outputs)
-            decoder_attentions[di] = decoder_attention.data
+        # for di in range(max_length):
+        #     decoder_output, decoder_hidden, decoder_attention = decoder(
+        #         decoder_input, decoder_hidden, encoder_outputs)
+        #     decoder_attentions[di] = decoder_attention.data
+        #     topv, topi = decoder_output.data.topk(1)
+        #     if topi.item() == EOS_token:
+        #         decoded_words.append('<EOS>')
+        #         break
+        #     else:
+        #         decoded_words.append(ixgen.index2word[topi.item()])
+        
+        for dl in range(max_length):
+            decoder_output, decoder_hidden = decoder(decoder_input, decoder_hidden)
             topv, topi = decoder_output.data.topk(1)
             if topi.item() == EOS_token:
                 decoded_words.append('<EOS>')
@@ -336,14 +348,15 @@ def evaluate(encoder, decoder, sentence, max_length=MAX_LENGTH):
 
             decoder_input = topi.squeeze().detach()
 
-        return decoded_words, decoder_attentions[:di + 1]
+        # return decoded_words, decoder_attentions[:di + 1]
+        return decoded_words
 
 def evaluateRandomly(encoder, decoder, n=10):
     for i in range(n):
         pair = random.choice(pairs)
         print('>', pair[0])
         print('=', pair[1])
-        output_words, attentions = evaluate(encoder, decoder, pair[0])
+        output_words = evaluate(encoder, decoder, pair[0])
         output_sentence = ' '.join(output_words)
         print('<', output_sentence)
         print('')
@@ -352,14 +365,15 @@ def evaluateRandomly(encoder, decoder, n=10):
 
 hidden_size = 256
 encoder1 = EncoderRNN(ixgen.n_words, hidden_size).to(device)
+decoder1 = DecoderRNN(hidden_size, ixgen.n_words).to(device)
 attn_decoder1 = AttnDecoderRNN(hidden_size, ixgen.n_words, dropout_p=0.1).to(device)
 
-trainIters(encoder1, attn_decoder1, 75000, print_every=500)
-evaluateRandomly(encoder1, attn_decoder1)
+trainIters(encoder1, decoder1, 7500, print_every=500)
+evaluateRandomly(encoder1, decoder1)
 
-output_words, attentions = evaluate(
-    encoder1, attn_decoder1, "je suis trop froid .")
-plt.matshow(attentions.numpy())
+output_words = evaluate(
+    encoder1, decoder1, "this are my problem . ")
+# plt.matshow(attentions.numpy())
 
 def showAttention(input_sentence, output_words, attentions):
     # Set up figure with colorbar
