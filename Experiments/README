@@ -4,7 +4,26 @@ In this set of experimets, the idea is to use a seq2seq machine translation
 model for attmepting to generate less ambiguous sentences from more ambiguous 
 ones.
 
-We use the Encoder-Decoder Model proposed by Sutskever et. al. (2014) first.
+# Observations Log
 
-# Running Instructions
+~ Running into Language Modeling like problems in using simple encoder-decoder
+architecture, leess prominent in using attention
 
+~ SIZE OF THE SERVER  :'(
+
+~ Code takes 5.5 hours to run on single layer encoder-decoder for full dataset,
+goes from 5.446 to 4.498 loss on NLLloss criterion on 75000 iterations (4.016
+on using attention in decoding, single layers GRUs, 0.2 dropout)
+
+~ On increasing layers, code run time increases (anywhere between 1.5 to 3 times),
+when training on a subset of the dataset
+
+# Goals and targets
+
+~ Refactoring the code to make it more readable
+
+~ Including the argparse in the main implementation file so as to include flags etc
+
+~ CHECKPOINTING
+
+~ Implement dataset spliting and find out how to use data from inside a zip file :P
