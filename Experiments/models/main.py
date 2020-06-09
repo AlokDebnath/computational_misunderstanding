@@ -54,7 +54,7 @@ def normalizeString(s):
 
 def readIxGens(datapath):
     print("Reading lines...")
-    lines = open(datapath, encoding='utf-8').read().strip().split('\n')[:1000]
+    lines = open(datapath, encoding='utf-8').read().strip().split('\n')[:100]
     pairs = [[normalizeString(s) for s in l.split('\t')][2:] for l in tqdm(lines)]
     ixgen = IxGen()
     return ixgen, pairs
@@ -99,13 +99,14 @@ class EncoderRNN(nn.Module):
     def __init__(self, input_size, hidden_size):
         super(EncoderRNN, self).__init__()
         self.hidden_size = hidden_size
-
+        self.input_size = input_size
         self.embedding = nn.Embedding(input_size, hidden_size)
         self.gru = nn.GRU(hidden_size, hidden_size)
 
     def forward(self, input, hidden):
-        embedded = self.embedding(input).view(1, 1, -1)
+        embedded = self.embedding(input).view(1,1,-1)
         output = embedded
+        output, hidden = self.gru(output, hidden)
         output, hidden = self.gru(output, hidden)
         return output, hidden
 
@@ -167,7 +168,7 @@ class AttnDecoderRNN(nn.Module):
         return output, hidden, attn_weights
 
     def initHidden(self):
-        return torch.zeros(1, 1, self.hidden_size, device=device)
+        return torch.zeros(2, 1, self.hidden_size, device=device)
 
 def indexesFromSentence(sentence):
     ixs = list()
@@ -215,25 +216,28 @@ def train(input_tensor, target_tensor, encoder, decoder, encoder_optimizer, deco
     if use_teacher_forcing:
         # Teacher forcing: Feed the target as the next input
         for di in range(target_length):
-            # decoder_output, decoder_hidden, decoder_attention = decoder(
-            #     decoder_input, decoder_hidden, encoder_outputs)
-            decoder_output, decoder_hidden = decoder(decoder_input, decoder_hidden)
+            decoder_output, decoder_hidden, decoder_attention = decoder(
+                 decoder_input, decoder_hidden, encoder_outputs)
+            # decoder_output, decoder_hidden = decoder(decoder_input, decoder_hidden)
             loss += criterion(decoder_output, target_tensor[di])
             decoder_input = target_tensor[di]  # Teacher forcing
 
     else:
         for di in range(target_length):
-            # decoder_output, decoder_hidden, decoder_attention = decoder(
-            #     decoder_input, decoder_hidden, encoder_outputs)
-            decoder_output, decoder_hidden = decoder(decoder_input, decoder_hidden)
+            decoder_output, decoder_hidden, decoder_attention = decoder(
+                 decoder_input, decoder_hidden, encoder_outputs)
+            # decoder_output, decoder_hidden = decoder(decoder_input, decoder_hidden)
             topv, topi = decoder_output.topk(1)
             decoder_input = topi.squeeze().detach()  # detach from history as input
 
             loss += criterion(decoder_output, target_tensor[di])
             if decoder_input.item() == EOS_token:
                 break
-
-    loss.backward()
+    try: 
+        loss.backward()
+    except Exception as e:
+        print(e)
+        return NaN
 
     encoder_optimizer.step()
     decoder_optimizer.step()
@@ -326,25 +330,25 @@ def evaluate(encoder, decoder, sentence, max_length=MAX_LENGTH):
         decoded_words = []
         decoder_attentions = torch.zeros(max_length, max_length)
 
-        # for di in range(max_length):
-        #     decoder_output, decoder_hidden, decoder_attention = decoder(
-        #         decoder_input, decoder_hidden, encoder_outputs)
-        #     decoder_attentions[di] = decoder_attention.data
-        #     topv, topi = decoder_output.data.topk(1)
-        #     if topi.item() == EOS_token:
-        #         decoded_words.append('<EOS>')
-        #         break
-        #     else:
-        #         decoded_words.append(ixgen.index2word[topi.item()])
-        
-        for dl in range(max_length):
-            decoder_output, decoder_hidden = decoder(decoder_input, decoder_hidden)
+        for di in range(max_length):
+            decoder_output, decoder_hidden, decoder_attention = decoder(
+                decoder_input, decoder_hidden, encoder_outputs)
+            decoder_attentions[di] = decoder_attention.data
             topv, topi = decoder_output.data.topk(1)
             if topi.item() == EOS_token:
                 decoded_words.append('<EOS>')
                 break
             else:
                 decoded_words.append(ixgen.index2word[topi.item()])
+        
+        # for dl in range(max_length):
+        #     decoder_output, decoder_hidden = decoder(decoder_input, decoder_hidden)
+        #     topv, topi = decoder_output.data.topk(1)
+        #     if topi.item() == EOS_token:
+        #         decoded_words.append('<EOS>')
+        #         break
+        #     else:
+        #         decoded_words.append(ixgen.index2word[topi.item()])
 
             decoder_input = topi.squeeze().detach()
 
@@ -368,11 +372,12 @@ encoder1 = EncoderRNN(ixgen.n_words, hidden_size).to(device)
 decoder1 = DecoderRNN(hidden_size, ixgen.n_words).to(device)
 attn_decoder1 = AttnDecoderRNN(hidden_size, ixgen.n_words, dropout_p=0.1).to(device)
 
-trainIters(encoder1, decoder1, 7500, print_every=500)
-evaluateRandomly(encoder1, decoder1)
+trainIters(encoder1, attn_decoder1, 7500, print_every=1000)
 
-output_words = evaluate(
-    encoder1, decoder1, "this are my problem . ")
+evaluateRandomly(encoder1, attn_decoder1)
+
+output_words = evaluate(encoder1, attn_decoder1, "this are my problem . ")
+print(' ' .join(output_words))
 # plt.matshow(attentions.numpy())
 
 def showAttention(input_sentence, output_words, attentions):
