@@ -3,40 +3,47 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
+MAX_LENGTH = 150
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 class EncoderRNN(nn.Module):
-    def __init__(self, ninp, nhid, nlayers, dropout=0.2):
+    def __init__(self, ninp, nhid, nlayers, wtmatrix, dropout=0.2):
         super(EncoderRNN, self).__init__()
         self.nhid = nhid
         self.nlayers = nlayers
         self.dropout = nn.Dropout(dropout)
-        self.embedding = nn.Embedding(ninp, nhid)
+        self.embedding = nn.Embedding(ninp, len(wtmatrix[0]))
+        self.linear = nn.Linear(len(wtmatrix[0]), nhid)
+        self.embedding.weight.data.copy_(torch.from_numpy(wtmatrix))
         self.gru = nn.GRU(nhid, nhid)
 
     def forward(self, input, hidden):
-        embedded = self.embedding(input)
-        output = embedded
-        for l in range(len(nlayers)):
+        embedded = self.embedding(input).view(1, 1, -1)
+        output = self.linear(embedded)
+        for l in range(self.nlayers):
             output, hidden = self.gru(output, hidden)
+            output = self.dropout(output)
         return output, hidden
 
     def initHidden(self):
         return torch.zeros(1, 1, self.nhid, device=device)
 
 class DecoderRNN(nn.Module):
-    def __init__(self, nhid, nout, nlayers):
+    def __init__(self, nhid, nout, nlayers, dropout=0.2):
         super(DecoderRNN, self).__init__()
         self.nhid = nhid
         self.nlayers = nlayers
         self.embedding = nn.Embedding(nout, nhid)
         self.gru = nn.GRU(nhid, nhid)
+        self.dropout = nn.Dropout(dropout)
         self.out = nn.Linear(nhid, nout)
         self.softmax = nn.LogSoftmax(dim=1)
 
     def forward(self, input, hidden):
         output = self.embedding(input).view(1, 1, -1)
         output = F.relu(output)
-        for l in range(len(nlayers)):
+        for l in range(self.nlayers):
             output, hidden = self.gru(output, hidden)
+            output = self.dropout(output)
         output = self.softmax(self.out(output[0]))
         return output, hidden
 
@@ -51,7 +58,7 @@ class AttnDecoderRNN(nn.Module):
         self.nout = nout
         self.dropout_p = dropout_p
         self.max_length = max_length
-
+        self.nlayers = nlayers
         self.embedding = nn.Embedding(self.nout, self.nhid)
         self.attn = nn.Linear(self.nhid * 2, self.max_length)
         self.attn_combine = nn.Linear(self.nhid * 2, self.nhid)
@@ -72,8 +79,9 @@ class AttnDecoderRNN(nn.Module):
         output = self.attn_combine(output).unsqueeze(0)
 
         output = F.relu(output)
-        for l in range(len(nlayers)):
+        for l in range(self.nlayers):
             output, hidden = self.gru(output, hidden)
+            output = self.dropout(output)
 
         output = F.log_softmax(self.out(output[0]), dim=1)
         return output, hidden, attn_weights

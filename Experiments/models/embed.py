@@ -1,34 +1,28 @@
 import numpy as np
 import os
 import operator
+from tqdm import tqdm
+import torch
+from gensim.models.keyedvectors import KeyedVectors
 
-def getEmbeddings():
+
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+def getEmbeddings(fpath):
+    wv_from_bin = KeyedVectors.load_word2vec_format(fpath, binary=True)
     word2ix = dict()
-    vecs = np.array()
-    words = list()
+    glove = dict()
     ix = 0
-    with open('./glove.6B.300d.txt',  encoding='utf-8') as f:
-        for line in f:
-            word = line.decode().split()[0]
-            vecs.append(np.array(line.decode().split()[1:], dtype='float32'))
-            word2ix[word] = ix
-            words.append(word)
-            ix += 1
-    vecs = vecs.reshape((len(words), 300))
-    glove = {w: vecs[word2ix[w]] for w in words}
-    sos_index = word2idx['sos']
-    eos_index = word2idx['eos']
-    sos_swap_word = words[0]
-    eos_swap_word = words[1]
-     
-    words[0], words[sos_index] = words[sos_index], words[0]
-    words[1], words[eos_index] = words[eos_index], words[1]
-    word2ix[sos_swap_word], word2ix['sos'] = word2ix['sos'], word2ix[sos_swap_word]
-    word2ix[eos_swap_word], word2ix['eos'] = word2ix['eos'], word2ix[eos_swap_word]
-    word2ix = { k : v for k , v in sorted(word2ix.items(), key=operator.itemgetter(1))}
+    print('Getting embeddings...')
+    for word, vector in tqdm(zip(wv_from_bin.vocab, wv_from_bin.vectors)):
+        coefs = np.asarray(vector, dtype='float32')
+        word2ix[word] = ix
+        ix += 1
+        glove[word] = coefs
+    return word2ix, glove
     
 
-def indexesFromSentence(sentence):
+def indexesFromSentence(ixgen, sentence):
     ixs = list()
     for word in sentence.split():
         if word in ixgen.word2index.keys():
@@ -39,14 +33,17 @@ def indexesFromSentence(sentence):
     return ixs
 
 
-def tensorFromSentence(sentence):
-    indexes = indexesFromSentence(sentence)
-    indexes.append(EOS_token)
+def tensorFromSentence(ixgen, sentence):
+    indexes = indexesFromSentence(ixgen, sentence)
+    indexes.append(1)
     return torch.tensor(indexes, dtype=torch.long, device=device).view(-1, 1)
 
 
-def tensorsFromPair(pair):
-    input_tensor = tensorFromSentence(pair[0])
-    target_tensor = tensorFromSentence(pair[1])
-    return (input_tensor, target_tensor)
+def tensorsFromPair(ixgen, pair):
+    input_tensor = tensorFromSentence(ixgen, pair[0])
+    target_tensor = tensorFromSentence(ixgen, pair[1])
+    return input_tensor, target_tensor
 
+if __name__ == '__main__':
+    word2ix, glove = getEmbeddings('./glove.bin')
+    print(word2ix['the'], glove['the'])
