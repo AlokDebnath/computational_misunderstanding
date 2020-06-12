@@ -42,7 +42,7 @@ test_batches = preprocess.get_batches(eval_batch_size, test_data)
 dev_batches = preprocess.get_batches(eval_batch_size, dev_data)
 wtmatrix = preprocess.wtMatrix(ixgen)
 
-MAX_LENGTH = 150
+MAX_LENGTH = 20
 
 def train(input_tensor, target_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, max_length=MAX_LENGTH):
     encoder_hidden = encoder.initHidden()
@@ -127,7 +127,7 @@ def trainIters(ixgen, encoder, decoder, train_batches, dev_batches, log_interval
         val_loss = 0
         with torch.no_grad():
             for pair in dev_batches[i]:
-                input_tensor, output_tensor = embed.tensorsFromPair(pair)
+                input_tensor, output_tensor = embed.tensorsFromPair(ixgen, pair)
                 loss = train(input_tensor, output_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion)
                 count += 1
                 print_loss += loss

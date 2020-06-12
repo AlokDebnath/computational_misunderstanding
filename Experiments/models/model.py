@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-MAX_LENGTH = 150
+MAX_LENGTH = 20
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 class EncoderRNN(nn.Module):
     def __init__(self, ninp, nhid, nlayers, wtmatrix, dropout=0.2):

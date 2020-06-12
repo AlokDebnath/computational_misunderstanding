@@ -142,7 +142,7 @@ def readIxGens(lines, embpath):
     ixgen = IxGen(embpath)
     return ixgen, pairs
 
-MAX_LENGTH = 150
+MAX_LENGTH = 20
 
 
 def filterPair(p):
@@ -201,12 +201,12 @@ def read_train_test_dev(pairs, dev_files, test_files):
 
 def get_batches(batch_size, data):
     num_batches = int(len(data)/batch_size)
-    batches = dict()
+    batches = list()
     i = 0
     fin_size = len(data) % batch_size
     for i in range(num_batches):
-        batches[i] = data[i*batch_size:(i+1)*batch_size]
-    batches[i+1] = data[(i+1)*batch_size:]
+        batches.append(data[i*batch_size:(i+1)*batch_size])
+    batches.append(data[(i+1)*batch_size:])
     return batches
 
 if __name__ == '__main__':
