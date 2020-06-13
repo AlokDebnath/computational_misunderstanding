@@ -2,10 +2,9 @@ import preprocess
 import model
 import embed
 
-import os
-from tqdm import tqdm
 import argparse
 import time
+import pickle
 import math
 import torch
 import torch.nn as nn
@@ -25,7 +24,7 @@ parser.add_argument('--nlayers', type=int, default=2, help='number of hidden lay
 parser.add_argument('--nhid', type=int, default=256, help='hidden dimension of encoder and decoder')
 parser.add_argument('--batch_size', type=int, default=10000, help='size of the training data batches. Test set bsz is 0.1*train_bsz')
 parser.add_argument('--dropout', type=float, default=0.2, help='dropout for the encode and decoder')
-parser.add_argument('--model_save_path', type=str, default='./model.ckpt', help='save location for the model for evaluation')
+parser.add_argument('--model_save_path', type=str, default='/tmp/model.ckpt', help='save location for the model for evaluation')
 parser.add_argument('--lr', type=float, default=0.2, help='model learning rate')
 parser.add_argument('--log_interval', type=int, default=1000, help='reporting interval')
 parser.add_argument('--seed', type=int, default=1111, help='manual seed for reproducability')
@@ -36,15 +35,21 @@ torch.manual_seed(args.seed)
 ixgen, lines = preprocess.prepareData(args.data_path, args.embeddings)
 train_data, test_data, dev_data = preprocess.read_train_test_dev(lines, args.test_path, args.dev_path)
 
-eval_batch_size = int(0.1* args.batch_size)
+eval_batch_size = int(0.1 * args.batch_size)
 train_batches = preprocess.get_batches(args.batch_size, train_data)
 test_batches = preprocess.get_batches(eval_batch_size, test_data)
 dev_batches = preprocess.get_batches(eval_batch_size, dev_data)
 wtmatrix = preprocess.wtMatrix(ixgen)
 
+
+train_batches = train_batches[:min(len(train_batches), len(dev_batches))]
+dev_batches = dev_batches[:min(len(train_batches), len(dev_batches))]
+
+print('Number of bathces in train, test and validation: %d' % (len(train_batches)))
+
 MAX_LENGTH = 20
 
-def train(input_tensor, target_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, max_length=MAX_LENGTH):
+def train(input_tensor, target_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, max_length=MAX_LENGTH, train=1):
     encoder_hidden = encoder.initHidden()
     encoder_optim.zero_grad()
     decoder_optim.zero_grad()
@@ -70,10 +75,10 @@ def train(input_tensor, target_tensor, encoder, decoder, encoder_optim, decoder_
         loss += criterion(decoder_output, target_tensor[di])
         if decoder_input.item() == preprocess.EOS_token:
             break
-        
-    loss.backward()
-    encoder_optim.step()
-    decoder_optim.step()
+    if train:
+        loss.backward()
+        encoder_optim.step()
+        decoder_optim.step()
 
     return loss.item() / target_length
 
@@ -99,28 +104,29 @@ def trainIters(ixgen, encoder, decoder, train_batches, dev_batches, log_interval
     for i in range(len(train_batches)):
         batch_loss = 0
         start = time.time()
-        print('=' * 60) 
+        print('=' * 65) 
         print('Training batch: %d' % i)
-        print('-' * 60)
+        print('-' * 65)
         print('Elapsed (Left) \t\t Iter. \t\t Avg. Training Loss')
-        print('-' * 60)
+        print('-' * 65)
         count = 0
         print_loss = 0
         for pair in train_batches[i]:
             input_tensor = embed.tensorFromSentence(ixgen, pair[0])
             output_tensor = embed.tensorFromSentence(ixgen, pair[1])
             # input_tensor, output_tensor = embed.tensorsFromPair(ixgen, pair)
-            loss = train(input_tensor, output_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion)
+            loss = train(input_tensor, output_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, train=1)
             count += 1
             batch_loss += loss
             print_loss += loss
             if count % log_interval == 0:
-                print('%s \t %d \t %d%% \t\t %.4f' % (timeSince(start, count / len(train_batches[i])), int(count), float(count/len(train_batches[i]) * 100), float(print_loss/log_interval)))
+                print('%s \t %d \t %d%% \t\t %.4f' % (timeSince(start, count/len(train_batches[i])), int(count), float(count/len(train_batches[i]) * 100), float(print_loss/log_interval)))
                 print_loss = 0
-        print('-' * 60)
-        print('Validation batch: %d' % i)
-        print('-' * 60)
-        print('Elapsed \t Left \t Iter. \t Avg. Validation Loss')
+        print('-' * 65)
+        print('Development batch: %d' % i)
+        print('-' * 65)
+        print('Elapsed (Left) \t\t Iter. \t\t Avg. Developemnt Loss')
+        print('-' * 65)
         batch_loss = batch_loss / len(train_batches[i])
         count = 0
         print_loss = 0
@@ -128,25 +134,22 @@ def trainIters(ixgen, encoder, decoder, train_batches, dev_batches, log_interval
         with torch.no_grad():
             for pair in dev_batches[i]:
                 input_tensor, output_tensor = embed.tensorsFromPair(ixgen, pair)
-                loss = train(input_tensor, output_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion)
+                loss = train(input_tensor, output_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, train=0)
                 count += 1
                 print_loss += loss
                 val_loss += loss
                 if count % log_interval == 0:
-                    print('%s \t %d \t %d%% \t\t %.4f' % (timeSince(start, count / len(train_batches)), int(count), float(count/len(train_batches) * 100), float(print_loss/log_interval)))
+                    print('%s \t %d \t %d%% \t\t %.4f' % (timeSince(start, count/len(dev_batches[i])), int(count), float(count/len(dev_batches[i]) * 100), float(print_loss/log_interval)))
                     print_loss = 0
             val_loss = val_loss/len(dev_batches[i])
             if not best_val_loss or val_loss < best_val_loss:
                 with open(model_save_path, 'wb') as f:
                     torch.save({
                         'encoder': encoder.state_dict(),
-                        'encoder_optim': encoder_optim.state_dict(),
                         'decoder': decoder.state_dict(),
-                        'decoder_optim': decoder_optim.state_dict(),
                         }, f)
-            print('-' * 60)
-            print('Avg. Loss over training batch %d = %.4f' % i, batch_loss/len(train_batches[i]))
-            print('=' * 60)
+            print('-' * 65)
+            print('Avg. Loss over training batch %d = %.4f' % (i, (batch_loss/len(train_batches[i]) * 100)))
 
 def evaluate(ixgen, encoder, decoder, eval_batches, learning_rate=0.2, model_save_path='./model.ckpt', log_interval=1000):
     ckpt = torch.load(model_save_path)
@@ -157,8 +160,6 @@ def evaluate(ixgen, encoder, decoder, eval_batches, learning_rate=0.2, model_sav
     encoder_optim = optim.SGD(encoder.parameters(), lr=learning_rate)
     decoder_optim = optim.SGD(encoder.parameters(), lr=learning_rate)
     
-    encoder.load_state_dict(ckpt['encoder'])
-    decoder.load_state_dict(ckpt['decoder'])
     encoder.eval()
     decoder.eval()
 
@@ -167,24 +168,23 @@ def evaluate(ixgen, encoder, decoder, eval_batches, learning_rate=0.2, model_sav
         for i in range(len(eval_batches)):
             batch_loss = 0
             start = time.time()
-            print('=' * 60) 
+            print('=' * 65) 
             print('Evaluating batch: %d' % i)
-            print('-' * 60)
-            print('Elapsed \t Left \t Iter. \t Avg. Evaluation Loss')
-            print('-' * 60)
+            print('-' * 65)
+            print('Elapsed (Left) \t\t Iter. \t\t Avg. Evaluation Loss')
+            print('-' * 65)
             count = 0
             print_loss = 0
             for pair in eval_batches[i]:
                 input_tensor, output_tensor = embed.tensorsFromPair(ixgen, pair)
-                loss = train(input_tensor, output_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion)
+                loss = train(input_tensor, output_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, train=0)
                 count += 1
                 batch_loss += loss
                 print_loss += loss
                 if count % log_interval == 0:
-                    print('%s \t %d \t %d%% \t\t %.4f' % (timeSince(start, count / len(train_batches)), int(count), float(count/len(train_batches) * 100), float(print_loss/log_interval)))
-            print('-' * 60)
-            print('Avg. Loss over training batch %d = %.4f' % i, batch_loss/len(eval_batch[i]))
-            print('=' * 60)
+                    print('%s \t %d \t %d%% \t\t %.4f' % (timeSince(start, count / len(eval_batches[i])), int(count), float(count/len(eval_batches[i]) * 100), float(print_loss/log_interval)))
+            print('-' * 65)
+            print('Avg. Loss over training batch %d = %.4f' % (i, batch_loss/len(eval_batches[i])))
 
 encoder = model.EncoderRNN(ixgen.n_words, args.nhid, args.nlayers, wtmatrix, dropout=args.dropout).to(device)
 if not args.attention:

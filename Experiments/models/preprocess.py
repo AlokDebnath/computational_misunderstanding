@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import random
 import io
 import numpy as np
 from tqdm import tqdm
@@ -133,7 +134,8 @@ def readIxGens(lines, embpath):
         newlines.append([topic, p0, p1])
     lines = newlines
     pairs = []
-    for l in tqdm(lines):
+    # for l in tqdm([random.choice(lines) for i in range(10000)]):
+    for l in tqdm(lines):    
         pair = []
         pair.append(l[0])
         pair.append(normalizeString(l[1]))
