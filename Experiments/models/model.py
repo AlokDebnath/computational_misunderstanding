@@ -11,9 +11,10 @@ class EncoderRNN(nn.Module):
         self.nhid = nhid
         self.nlayers = nlayers
         self.dropout = nn.Dropout(dropout)
+        self.wtmatrix = wtmatrix
         self.embedding = nn.Embedding(ninp, len(wtmatrix[0]))
         self.linear = nn.Linear(len(wtmatrix[0]), nhid)
-        self.embedding.weight.data.copy_(torch.from_numpy(wtmatrix))
+        self.embedding.weight.data.copy_(torch.from_numpy(self.wtmatrix))
         self.gru = nn.GRU(nhid, nhid)
 
     def forward(self, input, hidden):
@@ -26,6 +27,9 @@ class EncoderRNN(nn.Module):
 
     def initHidden(self):
         return torch.zeros(1, 1, self.nhid, device=device)
+
+    def getHyperparams(self):
+        return self.ninp, self.nhid, self.nlayers, self.wtmatrix
 
 class DecoderRNN(nn.Module):
     def __init__(self, nhid, nout, nlayers, dropout=0.2):
@@ -50,6 +54,8 @@ class DecoderRNN(nn.Module):
     def initHidden(self):
         return torch.zeros(1, 1, self.nhid, device=device)
 
+    def getHyperparams(self):
+        return self.ninp, self.nhid, self.nlayers
 
 class AttnDecoderRNN(nn.Module):
     def __init__(self, nhid, nout, nlayers, dropout_p=0.1,max_length=MAX_LENGTH):
@@ -89,3 +95,5 @@ class AttnDecoderRNN(nn.Module):
     def initHidden(self):
         return torch.zeros(1, 1, self.nhid, device=device)
 
+    def getHyperparams(self):
+        return self.ninp, self.nhid, self.nlayers

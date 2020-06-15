@@ -13,43 +13,9 @@ import numpy as np
 from torch import optim
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
-parser = argparse.ArgumentParser(description='Predicting edited version from original version')
-parser.add_argument('--data_path', type=str, default='../data/wikiHow_revisions_corpus.txt', help='location of dataset')
-parser.add_argument('--test_path', type=str, default='../data/test_files.txt', help='path to test split file')
-parser.add_argument('--dev_path', type=str, default='../data/dev_files.txt', help='path to dev split file')
-parser.add_argument('--embeddings', type=str, default='./glove.bin', help='path to embedding file')
-parser.add_argument('--attention', action='store_true', help='use attention decoder? Default: True')
-parser.add_argument('--nlayers', type=int, default=2, help='number of hidden layers in the encoder and decoder')
-parser.add_argument('--nhid', type=int, default=256, help='hidden dimension of encoder and decoder')
-parser.add_argument('--batch_size', type=int, default=10000, help='size of the training data batches. Test set bsz is 0.1*train_bsz')
-parser.add_argument('--dropout', type=float, default=0.2, help='dropout for the encode and decoder')
-parser.add_argument('--model_save_path', type=str, default='/tmp/model.ckpt', help='save location for the model for evaluation')
-parser.add_argument('--lr', type=float, default=0.2, help='model learning rate')
-parser.add_argument('--log_interval', type=int, default=1000, help='reporting interval')
-parser.add_argument('--seed', type=int, default=1111, help='manual seed for reproducability')
-
-args = parser.parse_args()
-torch.manual_seed(args.seed)
-
-ixgen, lines = preprocess.prepareData(args.data_path, args.embeddings)
-train_data, test_data, dev_data = preprocess.read_train_test_dev(lines, args.test_path, args.dev_path)
-
-eval_batch_size = int(0.1 * args.batch_size)
-train_batches = preprocess.get_batches(args.batch_size, train_data)
-test_batches = preprocess.get_batches(eval_batch_size, test_data)
-dev_batches = preprocess.get_batches(eval_batch_size, dev_data)
-wtmatrix = preprocess.wtMatrix(ixgen)
-
-
-train_batches = train_batches[:min(len(train_batches), len(dev_batches))]
-dev_batches = dev_batches[:min(len(train_batches), len(dev_batches))]
-
-print('Number of bathces in train, test and validation: %d' % (len(train_batches)))
-
 MAX_LENGTH = 20
 
-def train(input_tensor, target_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, max_length=MAX_LENGTH, train=1):
+def train(input_tensor, target_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, max_length=MAX_LENGTH, train=1, attention=1):
     encoder_hidden = encoder.initHidden()
     encoder_optim.zero_grad()
     decoder_optim.zero_grad()
@@ -66,7 +32,7 @@ def train(input_tensor, target_tensor, encoder, decoder, encoder_optim, decoder_
     decoder_hidden = encoder_hidden
 
     for di in range(target_length):
-        if args.attention:
+        if attention:
             decoder_output, decoder_hidden, decoder_attention = decoder(decoder_input, decoder_hidden, encoder_outputs)
         else:
             decoder_output, decoder_hidden = decoder(decoder_input, decoder_hidden)
@@ -95,12 +61,17 @@ def timeSince(since, percent):
     rs = es - s
     return '%s (- %s)' % (asMinutes(s), asMinutes(rs))
 
-def trainIters(ixgen, encoder, decoder, train_batches, dev_batches, log_interval=1, learning_rate=0.2, model_save_path='./model.ckpt'):
+def trainIters(ixgen, encoder, decoder, train_batches, dev_batches, attention=1, log_interval=1, learning_rate=0.2, model_save_path='./model.ckpt', resume=False):
     print('Starting training...')
     criterion = nn.NLLLoss()
     encoder_optim = optim.SGD(encoder.parameters(), lr=learning_rate)
     decoder_optim = optim.SGD(encoder.parameters(), lr=learning_rate)
     best_val_loss = None
+    if resume:
+        ckpt = torch.load(model_save_path)
+        i = ckpt['iter']
+        encoder.load_state_dict(ckpt['encoder'])
+        decoder.load_state_dict(ckpt['decoder'])
     for i in range(len(train_batches)):
         batch_loss = 0
         start = time.time()
@@ -115,7 +86,7 @@ def trainIters(ixgen, encoder, decoder, train_batches, dev_batches, log_interval
             input_tensor = embed.tensorFromSentence(ixgen, pair[0])
             output_tensor = embed.tensorFromSentence(ixgen, pair[1])
             # input_tensor, output_tensor = embed.tensorsFromPair(ixgen, pair)
-            loss = train(input_tensor, output_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, train=1)
+            loss = train(input_tensor, output_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, train=1, attention=attention)
             count += 1
             batch_loss += loss
             print_loss += loss
@@ -134,7 +105,7 @@ def trainIters(ixgen, encoder, decoder, train_batches, dev_batches, log_interval
         with torch.no_grad():
             for pair in dev_batches[i]:
                 input_tensor, output_tensor = embed.tensorsFromPair(ixgen, pair)
-                loss = train(input_tensor, output_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, train=0)
+                loss = train(input_tensor, output_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, train=0, attention=attention)
                 count += 1
                 print_loss += loss
                 val_loss += loss
@@ -145,13 +116,14 @@ def trainIters(ixgen, encoder, decoder, train_batches, dev_batches, log_interval
             if not best_val_loss or val_loss < best_val_loss:
                 with open(model_save_path, 'wb') as f:
                     torch.save({
+                        'iter': i,
                         'encoder': encoder.state_dict(),
                         'decoder': decoder.state_dict(),
                         }, f)
             print('-' * 65)
             print('Avg. Loss over training batch %d = %.4f' % (i, (batch_loss/len(train_batches[i]) * 100)))
 
-def evaluate(ixgen, encoder, decoder, eval_batches, learning_rate=0.2, model_save_path='./model.ckpt', log_interval=1000):
+def evaluate(ixgen, encoder, decoder, eval_batches, attention=1, learning_rate=0.2, model_save_path='./model.ckpt', log_interval=1000):
     ckpt = torch.load(model_save_path)
     encoder.load_state_dict(ckpt['encoder'])
     decoder.load_state_dict(ckpt['decoder'])
@@ -186,11 +158,46 @@ def evaluate(ixgen, encoder, decoder, eval_batches, learning_rate=0.2, model_sav
             print('-' * 65)
             print('Avg. Loss over training batch %d = %.4f' % (i, batch_loss/len(eval_batches[i])))
 
-encoder = model.EncoderRNN(ixgen.n_words, args.nhid, args.nlayers, wtmatrix, dropout=args.dropout).to(device)
-if not args.attention:
-    decoder = model.DecoderRNN(args.nhid, ixgen.n_words, args.nlayers, dropout=args.dropout).to(device)
-else:
-    decoder = model.AttnDecoderRNN(args.nhid, ixgen.n_words, args.nlayers, dropout_p=args.dropout).to(device)
 
-trainIters(ixgen, encoder, decoder, train_batches, dev_batches, args.log_interval, args.lr, args.model_save_path)
-evaluate(ixgen, encoder, decoder, test_batches, args.lr, args.model_save_path, args.log_interval)
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Predicting edited version from original version')
+    parser.add_argument('--data_path', type=str, default='../data/wikiHow_revisions_corpus.txt', help='location of dataset')
+    parser.add_argument('--test_path', type=str, default='../data/test_files.txt', help='path to test split file')
+    parser.add_argument('--dev_path', type=str, default='../data/dev_files.txt', help='path to dev split file')
+    parser.add_argument('--embeddings', type=str, default='./glove.bin', help='path to embedding file')
+    parser.add_argument('--attention', action='store_true', help='use attention decoder? Default: True')
+    parser.add_argument('--nlayers', type=int, default=2, help='number of hidden layers in the encoder and decoder')
+    parser.add_argument('--nhid', type=int, default=256, help='hidden dimension of encoder and decoder')
+    parser.add_argument('--batch_size', type=int, default=10000, help='size of the training data batches. Test set bsz is 0.1*train_bsz')
+    parser.add_argument('--dropout', type=float, default=0.2, help='dropout for the encode and decoder')
+    parser.add_argument('--model_save_path', type=str, default='/tmp/model.ckpt', help='save location for the model for evaluation')
+    parser.add_argument('--lr', type=float, default=0.2, help='model learning rate')
+    parser.add_argument('--log_interval', type=int, default=1000, help='reporting interval')
+    parser.add_argument('--seed', type=int, default=1111, help='manual seed for reproducability')
+    parser.add_argument('--resume', action='store_false', help='resume from a previous checkpoint?')
+    
+    args = parser.parse_args()
+    torch.manual_seed(args.seed)
+    
+    ixgen, lines = preprocess.prepareData(args.data_path, args.embeddings)
+    train_data, test_data, dev_data = preprocess.read_train_test_dev(lines, args.test_path, args.dev_path)
+    
+    eval_batch_size = int(0.1 * args.batch_size)
+    train_batches = preprocess.get_batches(args.batch_size, train_data)
+    test_batches = preprocess.get_batches(eval_batch_size, test_data)
+    dev_batches = preprocess.get_batches(eval_batch_size, dev_data)
+    wtmatrix = preprocess.wtMatrix(ixgen)
+    
+    
+    train_batches = train_batches[:min(len(train_batches), len(dev_batches))]
+    dev_batches = dev_batches[:min(len(train_batches), len(dev_batches))]
+    
+    print('Number of bathces in train, test and validation: %d' % (len(train_batches)))
+    
+    encoder = model.EncoderRNN(ixgen.n_words, args.nhid, args.nlayers, wtmatrix, dropout=args.dropout).to(device)
+    if not args.attention:
+        decoder = model.DecoderRNN(args.nhid, ixgen.n_words, args.nlayers, dropout=args.dropout).to(device)
+    else:
+        decoder = model.AttnDecoderRNN(args.nhid, ixgen.n_words, args.nlayers, dropout_p=args.dropout).to(device)
+    trainIters(ixgen, encoder, decoder, train_batches, dev_batches, int(args.attention), args.log_interval, args.lr, args.model_save_path)
+    evaluate(ixgen, encoder, decoder, test_batches, int(args.attention), args.lr, args.model_save_path, args.log_interval)
