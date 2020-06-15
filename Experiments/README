@@ -6,24 +6,71 @@ ones.
 
 # Observations Log
 
-~ Running into Language Modeling like problems in using simple encoder-decoder
-architecture, leess prominent in using attention
+- Model for the entire training data takes approximately 1 week to train. This
+is not ideal
 
-~ SIZE OF THE SERVER  :'(
+- Using GloVe seems to cause an increase in the training loss by a significant
+amount, as opposed to not using GloVe
 
-~ Code takes 5.5 hours to run on single layer encoder-decoder for full dataset,
-goes from 5.446 to 4.498 loss on NLLloss criterion on 75000 iterations (4.016
-on using attention in decoding, single layers GRUs, 0.2 dropout)
+- Intermediate models do seem to give better results though, which is interesting.
 
-~ On increasing layers, code run time increases (anywhere between 1.5 to 3 times),
-when training on a subset of the dataset
+- Read up about using BERT like models as the encoder for this task.
 
 # Goals and targets
 
-~ Refactoring the code to make it more readable
+- Introducing POS and dependency information into the foray. An idea for that here:
 
-~ Including the argparse in the main implementation file so as to include flags etc
+Current Model:
 
-~ CHECKPOINTING
+				[0	32	198	...	1] (0 = SOS)
+				^
+				|
+[0.65	0.25	0.77	...	1] (Glove)
 
-~ Implement dataset spliting and find out how to use data from inside a zip file :P
+	 	 ^
+		 |
+[211	17	225	...	1] (1 = EOS)
+
+Proposed Model:
+
+
+				[0	32	198	...	1] (0 = SOS)
+							^
+							|
+				--------------------------------------------------------
+				^					^		^
+				|					|		|
+[0.65	0.25	0.77	...	1]	[4	7	5	...	0]	[DEPENDENCY MATRIX]
+			(Glove)					(POS)
+	 	 ^					^				^
+		 |--------------------------------------|-------------------------------|
+[211	17	225	...	1]
+
+Where the dependency matrix is a [number of words x number of relations possible] matrix.
+Each word is represented by a vector of n values, where n is the number of depdendncy relations.
+The vector is populated by 0s if the word is a leaf node, and the relative position of the word
+with a given relation at the index of that relation. For example:
+
+Let us assume that there are 3 dependency relations:
+
+[subject object genitive]
+
+in that order
+
+Then the sentence ``My name is Alok`` would have the representation
+
+[[0 0 0] [0 0 -1] [-1 1 0] [0 0 0]]
+
+
+There could also be a model for incremental decoding:
+
+I have an idea -/-> I have an idea for you
+
+	|		^
+
+	v		|
+
+I have an idea <PAD> <PAD>
+
+Which can then produce an intermediate output of [0 0 0 0 1 1] where 0 represents no change and 
+1 represents change. 
