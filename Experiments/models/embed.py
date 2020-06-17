@@ -8,18 +8,18 @@ from gensim.models.keyedvectors import KeyedVectors
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-def getEmbeddings(fpath):
-    wv_from_bin = KeyedVectors.load_word2vec_format(fpath, binary=True)
-    word2ix = dict()
-    glove = dict()
-    ix = 0
-    print('Getting embeddings...')
-    for word, vector in tqdm(zip(wv_from_bin.vocab, wv_from_bin.vectors)):
-        coefs = np.asarray(vector, dtype='float32')
-        word2ix[word] = ix
-        ix += 1
-        glove[word] = coefs
-    return word2ix, glove
+# def getEmbeddings(fpath):
+#     wv_from_bin = KeyedVectors.load_word2vec_format(fpath, binary=True)
+#     word2ix = dict()
+#     glove = dict()
+#     ix = 0
+#     print('Getting embeddings...')
+#     for word, vector in tqdm(zip(wv_from_bin.vocab, wv_from_bin.vectors)):
+#         coefs = np.asarray(vector, dtype='float32')
+#         word2ix[word] = ix
+#         ix += 1
+#         glove[word] = coefs
+#     return word2ix, glove
     
 
 def indexesFromSentence(ixgen, sentence):

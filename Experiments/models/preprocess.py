@@ -13,15 +13,19 @@ import embed
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
+SOS_token = 0
+EOS_token = 1
+
+
 class IxGen:
-    def __init__(self, fpath):
-        self.word2index, self.glove = embed.getEmbeddings(fpath)
-        self.word2count = {word : 1 for word in self.word2index.keys()}
-        self.index2word = {ix: word for word, ix in self.word2index.items()}
-        self.n_words = len(self.word2index.keys())
+    def __init__(self):
+        self.word2index = {}
+        self.word2count = {}
+        self.index2word = {0: "SOS", 1: "EOS"}
+        self.n_words = 2
 
     def addSentence(self, sentence):
-        for word in sentence.split():
+        for word in sentence.split(' '):
             self.addWord(word)
 
     def addWord(self, word):
@@ -32,10 +36,6 @@ class IxGen:
             self.n_words += 1
         else:
             self.word2count[word] += 1
-
-SOS_token = 0
-EOS_token = 1
-
 
 def unicodeToAscii(s):
     return ''.join(
@@ -126,7 +126,7 @@ def normalizeString(s):
     s = re.sub(r"[^a-zA-Z.!?]+", r" ", s)
     return s
 
-def readIxGens(lines, embpath):
+def readIxGens(lines):
     print("Reading lines...")
     newlines = []
     for line in lines:
@@ -134,14 +134,14 @@ def readIxGens(lines, embpath):
         newlines.append([topic, p0, p1])
     lines = newlines
     pairs = []
-    # for l in tqdm([random.choice(lines) for i in range(10000)]):
-    for l in tqdm(lines):    
+    for l in tqdm([random.choice(lines) for i in range(10000)]):
+    # for l in tqdm(lines):    
         pair = []
         pair.append(l[0])
         pair.append(normalizeString(l[1]))
         pair.append(normalizeString(l[2]))
         pairs.append(pair)
-    ixgen = IxGen(embpath)
+    ixgen = IxGen()
     return ixgen, pairs
 
 MAX_LENGTH = 20
@@ -154,10 +154,10 @@ def filterPair(p):
 def filterPairs(pairs):
     return [pair for pair in pairs if filterPair(pair)]
 
-def prepareData(fpath, embpath):
+def prepareData(fpath):
     with open(fpath, 'r') as f:
         lines = f.readlines()
-    ixgen, pairs = readIxGens(lines, embpath)
+    ixgen, pairs = readIxGens(lines)
     print("Read %s sentence pairs" % len(pairs))
     pairs = filterPairs(pairs)
     print("Trimmed to %s sentence pairs" % len(pairs))
@@ -169,17 +169,6 @@ def prepareData(fpath, embpath):
     print(ixgen.n_words)
     return ixgen, pairs
 
-def wtMatrix(ixgen):
-    matrix_len = ixgen.n_words
-    wtmatrix = list()
-    for word in ixgen.word2index.values():
-        if word in ixgen.glove.keys():
-            wtmatrix.append(ixgen.glove[word])
-        else:
-            wtmatrix.append(np.random.normal(scale=0.5, size=(300,)))
-    wtmatrix = np.array(wtmatrix, dtype='float32').reshape((matrix_len, 300))
-    return wtmatrix
-            
 def read_train_test_dev(pairs, dev_files, test_files):
     dev_X = []
     test_X = []
@@ -212,10 +201,10 @@ def get_batches(batch_size, data):
     return batches
 
 if __name__ == '__main__':
-    ixgen, data = prepareData('../data/wikiHow_revisions_corpus.txt', './glove.bin')
+    ixgen, data = prepareData('../data/wikiHow_revisions_corpus.txt')
     print(data[0])
     train_X, test_X, dev_X = read_train_test_dev(data, '../data/test_files.txt', '../data/dev_files.txt')
     # print(train_X[0], test_X[0], dev_X[0])
     wtmatrix = wtMatrix(ixgen)
     print(wtmatrix[0])
-    print(get_batches(10, train_X))
+    # print(get_batches(10, train_X))

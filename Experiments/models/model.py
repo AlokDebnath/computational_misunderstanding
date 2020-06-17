@@ -6,20 +6,17 @@ import torch.nn.functional as F
 MAX_LENGTH = 20
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 class EncoderRNN(nn.Module):
-    def __init__(self, ninp, nhid, nlayers, wtmatrix, dropout=0.2):
+    def __init__(self, ninp, nhid, nlayers, dropout=0.2):
         super(EncoderRNN, self).__init__()
         self.nhid = nhid
         self.nlayers = nlayers
         self.dropout = nn.Dropout(dropout)
-        self.wtmatrix = wtmatrix
-        self.embedding = nn.Embedding(ninp, len(wtmatrix[0]))
-        self.linear = nn.Linear(len(wtmatrix[0]), nhid)
-        self.embedding.weight.data.copy_(torch.from_numpy(self.wtmatrix))
+        self.embedding = nn.Embedding(ninp, nhid)
         self.gru = nn.GRU(nhid, nhid)
 
     def forward(self, input, hidden):
         embedded = self.embedding(input).view(1, 1, -1)
-        output = self.linear(embedded)
+        output = embedded
         for l in range(self.nlayers):
             output, hidden = self.gru(output, hidden)
             output = self.dropout(output)
