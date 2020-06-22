@@ -1,4 +1,3 @@
-import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -6,17 +5,22 @@ import torch.nn.functional as F
 MAX_LENGTH = 20
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 class EncoderRNN(nn.Module):
-    def __init__(self, ninp, nhid, nlayers, dropout=0.2):
+    def __init__(self, ninp, npos, nhid, nlayers, dropout=0.2):
         super(EncoderRNN, self).__init__()
         self.nhid = nhid
         self.nlayers = nlayers
         self.dropout = nn.Dropout(dropout)
         self.embedding = nn.Embedding(ninp, nhid)
+        self.posembedding = nn.Embedding(npos, nhid)
+        self.linear = nn.Linear(nhid, nhid)
         self.gru = nn.GRU(nhid, nhid)
 
-    def forward(self, input, hidden):
+    def forward(self, input, posinput, hidden):
         embedded = self.embedding(input).view(1, 1, -1)
-        output = embedded
+        posembed = self.posembedding(posinput).view(1, 1, -1)
+        embedded = torch.cat((embedded, posembed), dim=0)
+        output = self.linear(embedded)
+        # output = embedded
         for l in range(self.nlayers):
             output, hidden = self.gru(output, hidden)
             output = self.dropout(output)

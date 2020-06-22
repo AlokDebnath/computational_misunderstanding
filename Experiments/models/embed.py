@@ -1,7 +1,5 @@
-import numpy as np
-import os
 import operator
-from tqdm import tqdm
+import feature
 import torch
 from gensim.models.keyedvectors import KeyedVectors
 
@@ -44,6 +42,13 @@ def tensorsFromPair(ixgen, pair):
     target_tensor = tensorFromSentence(ixgen, pair[1])
     return input_tensor, target_tensor
 
+def posTensorFromSentence(ixgen, sentence):
+    ixs = list()
+    posList = feature.posParse(sentence)
+    for pos in posList:
+        ixs.append(ixgen.pos2index[pos])
+    ixs.append(0)
+    return torch.tensor(ixs, dtype=torch.long, device=device).view(-1, 1)
+
 if __name__ == '__main__':
-    word2ix, glove = getEmbeddings('./glove.bin')
-    print(word2ix['the'], glove['the'])
+    pass

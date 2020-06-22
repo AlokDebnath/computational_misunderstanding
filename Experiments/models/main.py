@@ -9,16 +9,15 @@ import random
 import math
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import numpy as np
 from torch import optim
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-MAX_LENGTH = 20
+MAX_LENGTH = 50
 SOS_token = 0
 EOS_token = 1
 
-def train(input_tensor, target_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, max_length=MAX_LENGTH, train=1, attention=1):
+def train(input_tensor, inputpos_tensor, target_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, max_length=MAX_LENGTH, train=1, attention=1):
     encoder_hidden = encoder.initHidden()
     encoder_optim.zero_grad()
     decoder_optim.zero_grad()
@@ -28,7 +27,7 @@ def train(input_tensor, target_tensor, encoder, decoder, encoder_optim, decoder_
 
     loss = 0
     for ei in range(input_length):
-        encoder_output, encoder_hidden = encoder(input_tensor[ei], encoder_hidden)
+        encoder_output, encoder_hidden = encoder(input_tensor[ei], inputpos_tensor[ei], encoder_hidden)
         encoder_outputs[ei] = encoder_output[0, 0]
 
     decoder_input = torch.tensor([[preprocess.SOS_token]], device=device)
@@ -87,9 +86,10 @@ def trainIters(ixgen, encoder, decoder, train_batches, dev_batches, attention=1,
         print_loss = 0
         for pair in train_batches[i]:
             input_tensor = embed.tensorFromSentence(ixgen, pair[0])
+            input_postensor = embed.posTensorFromSentence(ixgen, pair[0])
             output_tensor = embed.tensorFromSentence(ixgen, pair[1])
             # input_tensor, output_tensor = embed.tensorsFromPair(ixgen, pair)
-            loss = train(input_tensor, output_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, train=1, attention=attention)
+            loss = train(input_tensor, input_postensor, output_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, train=1, attention=attention)
             count += 1
             batch_loss += loss
             print_loss += loss
@@ -108,7 +108,8 @@ def trainIters(ixgen, encoder, decoder, train_batches, dev_batches, attention=1,
         with torch.no_grad():
             for pair in dev_batches[i]:
                 input_tensor, output_tensor = embed.tensorsFromPair(ixgen, pair)
-                loss = train(input_tensor, output_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, train=0, attention=attention)
+                input_postensor = embed.posTensorFromSentence(ixgen, pair[0])
+                loss = train(input_tensor, input_postensor, output_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, train=0, attention=attention)
                 count += 1
                 print_loss += loss
                 val_loss += loss
@@ -152,7 +153,8 @@ def evaluate(ixgen, encoder, decoder, eval_batches, attention=1, learning_rate=0
             print_loss = 0
             for pair in eval_batches[i]:
                 input_tensor, output_tensor = embed.tensorsFromPair(ixgen, pair)
-                loss = train(input_tensor, output_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, train=0, attention=attention)
+                input_postensor = embed.posTensorFromSentence(ixgen, pair[0])
+                loss = train(input_tensor, input_postensor, output_tensor, encoder, decoder, encoder_optim, decoder_optim, criterion, train=0, attention=attention)
                 count += 1
                 batch_loss += loss
                 print_loss += loss
@@ -162,16 +164,19 @@ def evaluate(ixgen, encoder, decoder, eval_batches, attention=1, learning_rate=0
             print('Avg. Loss over training batch %d = %.4f' % (i, batch_loss/len(eval_batches[i])))
 
 
-def manual(ixgen, encoder, decoder, sentence, max_length=MAX_LENGTH):
-
+def manual(ixgen, encoder, decoder, sentence, model_save_path, max_length=MAX_LENGTH):
+    ckpt = torch.load(model_save_path)
+    encoder.load_state_dict(ckpt['encoder'])
+    decoder.load_state_dict(ckpt['decoder'])
     with torch.no_grad():
         input_tensor = embed.tensorFromSentence(ixgen, sentence)
+        input_postensor = embed.posTensorFromSentence(ixgen, sentence)
         input_length = input_tensor.size()[0]
         encoder_hidden = encoder.initHidden()
         decoded_words = list()
         encoder_outputs = torch.zeros(MAX_LENGTH, encoder.nhid, device=device)
         for ei in range(input_length):
-            encoder_output, encoder_hidden = encoder(input_tensor[ei], encoder_hidden)
+            encoder_output, encoder_hidden = encoder(input_tensor[ei], input_postensor[ei], encoder_hidden)
             encoder_outputs[ei] += encoder_output[0, 0]
         decoder_input = torch.tensor([[preprocess.SOS_token]], device=device)
         decoder_hidden = encoder_hidden
@@ -191,25 +196,20 @@ def manual(ixgen, encoder, decoder, sentence, max_length=MAX_LENGTH):
         return decoded_sentence
 
 def cli(ixgen, encoder, decoder, lines, model_save_path):
-    ckpt = torch.load(model_save_path)
-    encoder.load_state_dict(ckpt['encoder'])
-    decoder.load_state_dict(ckpt['decoder'])
-    print(encoder)
-    print(decoder)
     print('> Enter sentences at the prompt. To quit, type \'QUIT\' \n< The output will be provided as soon as the model computes')
     while True:
         sentence = input('> ')
         if sentence == 'QUIT':
             break
         elif sentence == 'RANDOM':
-            evaluateRandomly(ixgen, encoder, decoder, lines, n=10)
+            evaluateRandomly(ixgen, encoder, decoder, lines, model_save_path, n=10)
         elif len(sentence.split()) > MAX_LENGTH:
             print('<< Maximum sentence length is %d words' % MAX_LENGTH)
-        output = manual(ixgen, encoder, decoder, sentence)
+        output = manual(ixgen, encoder, decoder, sentence, model_save_path)
         print('< ' + str(output))
         print('')
 
-def evaluateRandomly(ixgen, encoder, decoder, pairs, n=10):
+def evaluateRandomly(ixgen, encoder, decoder, pairs, model_save_path, n=10):
     for i in range(n):
         pair = random.choice(pairs)
         if len(pair[1]) > MAX_LENGTH or len(pair[2]) > MAX_LENGTH:
@@ -217,7 +217,7 @@ def evaluateRandomly(ixgen, encoder, decoder, pairs, n=10):
             continue
         print('>', pair[1])
         print('=', pair[2])
-        output_sentence = manual(ixgen, encoder, decoder, pair[1])
+        output_sentence = manual(ixgen, encoder, decoder, pair[1], model_save_path)
         print('<', output_sentence)
         print('')
 
@@ -236,11 +236,12 @@ if __name__ == '__main__':
     parser.add_argument('--log_interval', type=int, default=100, help='reporting interval')
     parser.add_argument('--seed', type=int, default=1111, help='manual seed for reproducability')
     parser.add_argument('--resume', action='store_false', help='resume from a previous checkpoint?')
+    parser.add_argument('--limit', type=int, default=None, help='number of random cases to consider')
     
     args = parser.parse_args()
     torch.manual_seed(args.seed)
     
-    ixgen, lines = preprocess.prepareData(args.data_path)
+    ixgen, lines = preprocess.prepareData(args.data_path, args.limit)
     train_data, test_data, dev_data = preprocess.read_train_test_dev(lines, args.test_path, args.dev_path)
     
     eval_batch_size = int(0.1 * args.batch_size)
@@ -254,7 +255,7 @@ if __name__ == '__main__':
     
     print('Number of batches in train, test and validation: %d' % (len(train_batches)))
     
-    encoder = model.EncoderRNN(ixgen.n_words, args.nhid, args.nlayers, dropout=args.dropout).to(device)
+    encoder = model.EncoderRNN(ixgen.n_words, ixgen.n_postags, args.nhid, args.nlayers, dropout=args.dropout).to(device)
     if not args.attention:
         decoder = model.DecoderRNN(args.nhid, ixgen.n_words, args.nlayers, dropout=args.dropout).to(device)
     else:

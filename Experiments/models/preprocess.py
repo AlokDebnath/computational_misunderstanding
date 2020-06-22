@@ -1,32 +1,37 @@
 # -*- coding: utf-8 -*-
-import os
 import random
 import io
-import numpy as np
 from tqdm import tqdm
 import re
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
 import unicodedata
 import embed
+import feature
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
 SOS_token = 0
 EOS_token = 1
-
+PAD_token = 2
 
 class IxGen:
     def __init__(self):
         self.word2index = {}
         self.word2count = {}
-        self.index2word = {0: "SOS", 1: "EOS"}
-        self.n_words = 2
+        self.pos2index = {0: "TAG"}
+        self.index2word = {0: "SOS", 1: "EOS", 2: "PAD"}
+        self.n_words = 3
+        self.n_postags = 0
 
     def addSentence(self, sentence):
-        for word in sentence.split(' '):
-            self.addWord(word)
+        pos = feature.posParse(sentence)
+        try:
+            for ix in range(len(sentence.strip().split(' '))):
+                self.addWord(sentence.strip().split(' ')[ix])
+                self.addPos(pos[ix])
+        except:
+            print(sentence)
+            print(pos)
 
     def addWord(self, word):
         if word not in self.word2index:
@@ -36,6 +41,11 @@ class IxGen:
             self.n_words += 1
         else:
             self.word2count[word] += 1
+
+    def addPos(self, pos):
+        if pos not in self.pos2index:
+            self.pos2index[pos] = self.n_postags
+            self.n_postags += 1
 
 def unicodeToAscii(s):
     return ''.join(
@@ -126,7 +136,7 @@ def normalizeString(s):
     s = re.sub(r"[^a-zA-Z.!?]+", r" ", s)
     return s
 
-def readIxGens(lines):
+def readIxGens(lines, limit):
     print("Reading lines...")
     newlines = []
     for line in lines:
@@ -134,8 +144,9 @@ def readIxGens(lines):
         newlines.append([topic, p0, p1])
     lines = newlines
     pairs = []
-    for l in tqdm([random.choice(lines) for i in range(10000)]):
-    # for l in tqdm(lines):    
+    limit = len(lines) if (limit == None) else limit
+    lines = [random.choice(lines) for i in range(limit)]
+    for l in tqdm(lines):    
         pair = []
         pair.append(l[0])
         pair.append(normalizeString(l[1]))
@@ -154,15 +165,15 @@ def filterPair(p):
 def filterPairs(pairs):
     return [pair for pair in pairs if filterPair(pair)]
 
-def prepareData(fpath):
+def prepareData(fpath, limit):
     with open(fpath, 'r') as f:
         lines = f.readlines()
-    ixgen, pairs = readIxGens(lines)
+    ixgen, pairs = readIxGens(lines, limit)
     print("Read %s sentence pairs" % len(pairs))
     pairs = filterPairs(pairs)
     print("Trimmed to %s sentence pairs" % len(pairs))
     print("Counting words...")
-    for pair in pairs:
+    for pair in tqdm(pairs):
         ixgen.addSentence(pair[1])
         ixgen.addSentence(pair[2])
     print("Counted words:")
@@ -194,17 +205,13 @@ def get_batches(batch_size, data):
     num_batches = int(len(data)/batch_size)
     batches = list()
     i = 0
-    fin_size = len(data) % batch_size
     for i in range(num_batches):
         batches.append(data[i*batch_size:(i+1)*batch_size])
     batches.append(data[(i+1)*batch_size:])
     return batches
 
 if __name__ == '__main__':
-    ixgen, data = prepareData('../data/wikiHow_revisions_corpus.txt')
+    ixgen, data = prepareData('../data/wikiHow_revisions_corpus.txt', 10000)
     print(data[0])
-    train_X, test_X, dev_X = read_train_test_dev(data, '../data/test_files.txt', '../data/dev_files.txt')
-    # print(train_X[0], test_X[0], dev_X[0])
-    wtmatrix = wtMatrix(ixgen)
-    print(wtmatrix[0])
-    # print(get_batches(10, train_X))
+    print(ixgen.n_postags)
+    # train_X, test_X, dev_X = read_train_test_dev(data, '../data/test_files.txt', '../data/dev_files.txt')
