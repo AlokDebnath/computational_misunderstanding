@@ -6,71 +6,42 @@ ones.
 
 # Observations Log
 
-- Model for the entire training data takes approximately 1 week to train. This
-is not ideal
+## Including POS Tags (SpaCy)
 
-- Using GloVe seems to cause an increase in the training loss by a significant
-amount, as opposed to not using GloVe
+- NLL loss increases until about 50,000 cases. It decreases 100,000 onwards
 
-- Intermediate models do seem to give better results though, which is interesting.
+- 2 hour increase in training time for the entire dataset, have optimized the code slightly
 
-- Read up about using BERT like models as the encoder for this task.
+- Treat POS Tags as possible vocabulary items (so are indexed as well)
 
-# Goals and targets
+- Qualitative evaluation reveals minor improvements in the ability to predict function word insertions, so the hypothesis worked.
 
-- Introducing POS and dependency information into the foray. An idea for that here:
+## Including Dependency Information (SpaCy)
 
-Current Model:
+- Could not finish experiments on this for two reasons: a) I found a better representation b) Any inclusion of dependency information is a graph convolution problem for sparse graphs. 
 
-				[0	32	198	...	1] (0 = SOS)
-				^
-				|
-[0.65	0.25	0.77	...	1] (Glove)
+- Representation: 
 
-	 	 ^
-		 |
-[211	17	225	...	1] (1 = EOS)
+	nsubj	dobj	...	det
 
-Proposed Model:
+The	0	0	...	1
 
+cat	2	0	...	0
 
-				[0	32	198	...	1] (0 = SOS)
-							^
-							|
-				--------------------------------------------------------
-				^					^		^
-				|					|		|
-[0.65	0.25	0.77	...	1]	[4	7	5	...	0]	[DEPENDENCY MATRIX]
-			(Glove)					(POS)
-	 	 ^					^				^
-		 |--------------------------------------|-------------------------------|
-[211	17	225	...	1]
+ate	0	0	...	0	<- ROOT
 
-Where the dependency matrix is a [number of words x number of relations possible] matrix.
-Each word is represented by a vector of n values, where n is the number of depdendncy relations.
-The vector is populated by 0s if the word is a leaf node, and the relative position of the word
-with a given relation at the index of that relation. For example:
+the	0	0	...	4
 
-Let us assume that there are 3 dependency relations:
+mouse	0	2	...	0
 
-[subject object genitive]
+This is a _very_ sparse matrix with $n$ non-zero elements where $n$ is the number of words. 
 
-in that order
+- Convolution on sparse matrices: Apparently this is not as simple as it sounds. After padding this dependency matrix into a square matrix, we could either perform sparse convolution, or make the matrix denser before performing. I do not know the theoretical differences between the two, except that standard convolutional filters provide very limited information from sparse matrices. Working on making the matrices dense.
 
-Then the sentence ``My name is Alok`` would have the representation
+## Experiments with BERT
 
-[[0 0 0] [0 0 -1] [-1 1 0] [0 0 0]]
+- Code has been written, but it is throwing some very novel CuDA errors which I have never seen before, including a device shift for some reason, which I do not understand. Debugging that now.
 
+## Irshad's Classification Task
 
-There could also be a model for incremental decoding:
-
-I have an idea -/-> I have an idea for you
-
-	|		^
-
-	v		|
-
-I have an idea <PAD> <PAD>
-
-Which can then produce an intermediate output of [0 0 0 0 1 1] where 0 represents no change and 
-1 represents change. 
+Irshad used DyNET for his work, which has been giving me installation errors. I should have a better hang of the last two topics by next week.
