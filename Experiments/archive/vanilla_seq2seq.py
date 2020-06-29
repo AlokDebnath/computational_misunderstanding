@@ -55,6 +55,7 @@ def normalizeString(s):
 def readIxGens(datapath):
     print("Reading lines...")
     lines = open(datapath, encoding='utf-8').read().strip().split('\n')
+    lines = [random.choice(lines) for i in range(1000000)]
     pairs = [[normalizeString(s) for s in l.split('\t')][2:] for l in tqdm(lines)]
     ixgen = IxGen()
     return ixgen, pairs
@@ -104,7 +105,7 @@ class EncoderRNN(nn.Module):
         self.gru = nn.GRU(hidden_size, hidden_size)
 
     def forward(self, input, hidden):
-        embedded = self.embedding(input).view(1,1,-1)
+        embedded = self.embedding(input).view(1, 1, -1)
         output = embedded
         for i in range(5):
             output, hidden = self.gru(output, hidden)
@@ -239,7 +240,7 @@ def train(input_tensor, target_tensor, encoder, decoder, encoder_optimizer, deco
         loss.backward()
     except Exception as e:
         print(e)
-        return NaN
+        return None
 
     encoder_optimizer.step()
     decoder_optimizer.step()
@@ -274,9 +275,9 @@ def trainIters(encoder, decoder, n_iters, print_every=100, plot_every=100, learn
     training_pairs = [tensorsFromPair(random.choice(pairs))
                       for i in range(n_iters)]
     criterion = nn.NLLLoss()
-    print('=' * 89)
+    print('=' * 65)
     print('Time Spent (Left) \t Iter. \t % Done \t Average Loss')
-    print('=' * 89)
+    print('=' * 65)
 
     for iter in range(1, n_iters + 1):
         training_pair = training_pairs[iter - 1]
@@ -374,7 +375,7 @@ encoder1 = EncoderRNN(ixgen.n_words, hidden_size).to(device)
 decoder1 = DecoderRNN(hidden_size, ixgen.n_words).to(device)
 attn_decoder1 = AttnDecoderRNN(hidden_size, ixgen.n_words, dropout_p=0.1).to(device)
 
-trainIters(encoder1, attn_decoder1, 75000, print_every=1000)
+trainIters(encoder1, attn_decoder1, 1000000, print_every=1000)
 
 evaluateRandomly(encoder1, attn_decoder1)
 

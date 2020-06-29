@@ -19,24 +19,30 @@ EOS_token = 1
 
 tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
 bert = BertModel.from_pretrained('bert-base-uncased')
+bert.to(device)
+bert.eval()
+
 MAX_LENGTH = 150
+
 def encode_sentence(s):
-    input_ids = torch.tensor(tokenizer.encode(s)).unsqueeze(0)  # Batch size 1
-    outputs = bert(input_ids)
-    last_hidden_states = outputs[0]
-    return last_hidden_states
+    #input_ids = torch.tensor(tokenizer.encode(s)).unsqueeze(0).to(device)  # Batch size 1
+    #outputs = bert(input_ids)
+    #last_hidden_states = outputs[0]
+    #return last_hidden_states
+    return torch.tensor(tokenizer.convert_tokens_to_ids(tokenizer.tokenize(s)), dtype=torch.long, device=device).view(-1, 1)
 
 def encode_pair(pair):
-    enc_sou = encode_sentence(pair[0])
-    enc_tgt = tokenizer.convert_tokens_to_ids(tokenizer.tokenize(pair[1]))
+    # return torch.tensor(indexes, dtype=torch.long, device=device).view(-1, 1)
+    enc_sou = torch.tensor(tokenizer.convert_tokens_to_ids(tokenizer.tokenize(pair[0])), dtype=torch.long, device=device).view(-1, 1)
+    enc_tgt = torch.tensor(tokenizer.convert_tokens_to_ids(tokenizer.tokenize(pair[1])), dtype=torch.long, device=device).view(-1, 1)
     return [enc_sou, enc_tgt]
 
 def encode_dataset(datapath):
     print("Reading lines...")
     lines = open(datapath, encoding='utf-8').read().strip().split('\n')
-    lines = [random.choice(lines) for i in range(10000)]
-    pairs = [l.split('\t') for l in lines]
-    enc_pairs = [encode_pair(p) for p in tqdm(pairs)]
+    lines = [random.choice(lines) for i in range(100000)]
+    pairs = [l.split('\t')[2:] for l in lines]
+    enc_pairs = [encode_pair(p) if len(p[0]) < MAX_LENGTH and len(p[1]) < MAX_LENGTH else None  for p in tqdm(pairs)]
     return pairs, enc_pairs
 
 class EncoderRNN(nn.Module):
@@ -44,7 +50,7 @@ class EncoderRNN(nn.Module):
         super(EncoderRNN, self).__init__()
         self.hidden_size = hidden_size
         self.input_size = input_size
-        self.embedding = nn.Linear(input_size, hidden_size)
+        self.embedding = nn.Embedding(input_size, hidden_size)
         self.gru = nn.GRU(hidden_size, hidden_size)
 
     def forward(self, input, hidden):
@@ -201,9 +207,10 @@ def trainIters(encoded_pairs, encoder, decoder, n_iters, print_every=100, plot_e
 
     for iter in range(1, n_iters + 1):
         training_pair = training_pairs[iter - 1]
+        if training_pair == None:
+            continue
         input_tensor = torch.tensor(training_pair[0])
         target_tensor = torch.tensor(training_pair[1])
-
         loss = train(input_tensor, target_tensor, encoder,
                      decoder, encoder_optimizer, decoder_optimizer, criterion)
         print_loss_total += loss
@@ -284,8 +291,8 @@ def evaluateRandomly(encoder, decoder, pairs, n=10):
         print('>', pair[0])
         print('=', pair[1])
         output_words = evaluate(encoder, decoder, pair[0])
-        output_sentence = ' '.join(output_words)
-        print('<', output_sentence)
+        #output_sentence = ' '.join(output_words)
+        print('<', output_words)
         print('')
 
 
@@ -296,7 +303,7 @@ encoder1 = EncoderRNN(tokenizer.vocab_size, hidden_size).to(device)
 decoder1 = DecoderRNN(hidden_size, tokenizer.vocab_size).to(device)
 attn_decoder1 = AttnDecoderRNN(hidden_size, tokenizer.vocab_size, dropout_p=0.1).to(device)
 
-trainIters(enc_pairs, encoder1, attn_decoder1, 10000, print_every=1000)
+trainIters(enc_pairs, encoder1, attn_decoder1, 100000, print_every=100)
 
 evaluateRandomly(encoder1, attn_decoder1, pairs)
 
