@@ -25,13 +25,9 @@ class IxGen:
 
     def addSentence(self, sentence):
         pos = feature.posParse(sentence)
-        try:
-            for ix in range(len(sentence.strip().split(' '))):
-                self.addWord(sentence.strip().split(' ')[ix])
-                self.addPos(pos[ix])
-        except:
-            print(sentence)
-            print(pos)
+        for ix in range(len(sentence.strip().split(' '))):
+            self.addWord(sentence.strip().split(' ')[ix])
+            self.addPos(pos[ix])
 
     def addWord(self, word):
         if word not in self.word2index:
@@ -131,7 +127,7 @@ def normalizeString(s):
 	"you're": "you are"
     }
     s = unicodeToAscii(s.lower().strip())
-    s = ' '.join([contractions[w] if w in contractions else w for w in s.split()])
+    # s = ' '.join([contractions[w] if w in contractions else w for w in s.split()])
     s = re.sub(r"([.!?])", r" ", s)
     s = re.sub(r"[^a-zA-Z.!?]+", r" ", s)
     return s
@@ -155,19 +151,18 @@ def readIxGens(lines, limit):
     ixgen = IxGen()
     return ixgen, pairs
 
-MAX_LENGTH = 20
+MAX_LENGTH = 50
 
 
 def filterPair(p):
-    return len(p[0].split()) < MAX_LENGTH and len(p[1].split()) < MAX_LENGTH
+    return len(p[1].split()) < MAX_LENGTH and len(p[2].split()) < MAX_LENGTH
 
 
 def filterPairs(pairs):
     return [pair for pair in pairs if filterPair(pair)]
 
 def prepareData(fpath, limit):
-    with open(fpath, 'r') as f:
-        lines = f.readlines()
+    lines = open(fpath, encoding='utf-8').read().strip().split('\n')
     ixgen, pairs = readIxGens(lines, limit)
     print("Read %s sentence pairs" % len(pairs))
     pairs = filterPairs(pairs)
@@ -175,7 +170,6 @@ def prepareData(fpath, limit):
     print("Counting words...")
     for pair in tqdm(pairs):
         ixgen.addSentence(pair[1])
-        ixgen.addSentence(pair[2])
     print("Counted words:")
     print(ixgen.n_words)
     return ixgen, pairs
@@ -191,8 +185,6 @@ def read_train_test_dev(pairs, dev_files, test_files):
         title = pair[0]
         src = pair[1]
         tgt = pair[2]
-        if len(src) > 150 or len(tgt) > 150:
-            continue
         if title in dev_files:
             dev_X.append([src, tgt])
         elif title in test_files:
@@ -214,4 +206,6 @@ if __name__ == '__main__':
     ixgen, data = prepareData('../data/wikiHow_revisions_corpus.txt', 10000)
     print(data[0])
     print(ixgen.n_postags)
-    # train_X, test_X, dev_X = read_train_test_dev(data, '../data/test_files.txt', '../data/dev_files.txt')
+    train_X, test_X, dev_X = read_train_test_dev(data, '../data/test_files.txt', '../data/dev_files.txt')
+    train_b = get_batches(1000, train_X)
+    print(train_b[0][0])
