@@ -6,42 +6,44 @@ ones.
 
 # Observations Log
 
-## Including POS Tags (SpaCy)
+## BERT Model
 
-- NLL loss increases until about 50,000 cases. It decreases 100,000 onwards
+After further tweaking with the model and running it for 1M samples, BERT tends
+to outperform word embeddings used before. One idea would be augment the BERT
+model with POS tag, dependency parse and other information.
 
-- 2 hour increase in training time for the entire dataset, have optimized the code slightly
+## Intermediate Prediction Layer
 
-- Treat POS Tags as possible vocabulary items (so are indexed as well)
+The prediction of change based on 0 and 1 for unchanged and changed positions
+was not a success and has been entirely scrapped until further notice. I believe
+that the dataset should be much more tuned for this to work.
 
-- Qualitative evaluation reveals minor improvements in the ability to predict function word insertions, so the hypothesis worked.
+## Classification Results and Analysis
 
-## Including Dependency Information (SpaCy)
+Both 0s: 609563 cases
+Characteristic cases include:
+  - Anaphora resolution
+  - Synonyms
+  - Misspellings
 
-- Could not finish experiments on this for two reasons: a) I found a better representation b) Any inclusion of dependency information is a graph convolution problem for sparse graphs. 
+Both 1s: 1510130 cases
+Characteristic cases include:
+  - Insertions
+  - Contractions and Expansions
+  - Paraphrases
 
-- Representation: 
+Clearly: this classification helps in denoising, but it is not enough. We also
+need to look into how to use context information in order to determine which
+edits actually disambiguate the sentence at hand.
 
-	nsubj	dobj	...	det
+## Tasks for next week
 
-The	0	0	...	1
+Extract more information from the scraped data such as section name, context
+sentences, and identify differences in the following criteria:
+  - changes in semantic roles of nouns in sentences with similar constructions
+  - changes in closed category POS tags and associated dependencies (including
+    CC, DT, EX, PDT, POS, PRP, RP, WDT, WP($), UH, TO, WRB).
 
-cat	2	0	...	0
-
-ate	0	0	...	0	<- ROOT
-
-the	0	0	...	4
-
-mouse	0	2	...	0
-
-This is a _very_ sparse matrix with $n$ non-zero elements where $n$ is the number of words. 
-
-- Convolution on sparse matrices: Apparently this is not as simple as it sounds. After padding this dependency matrix into a square matrix, we could either perform sparse convolution, or make the matrix denser before performing. I do not know the theoretical differences between the two, except that standard convolutional filters provide very limited information from sparse matrices. Working on making the matrices dense.
-
-## Experiments with BERT
-
-- Code has been written, but it is throwing some very novel CuDA errors which I have never seen before, including a device shift for some reason, which I do not understand. Debugging that now.
-
-## Irshad's Classification Task
-
-Irshad used DyNET for his work, which has been giving me installation errors. I should have a better hang of the last two topics by next week.
+Also aim to filter instructions based on section, so sections such as
+``Introduction``, ``Related wikis`` etc are going to be removed after
+preprocessing.
