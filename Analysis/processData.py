@@ -53,6 +53,9 @@ def filterPos(df):
     f = open('./SrcVTgtV.txt', 'w+')
     g = open('./SrcV.txt', 'w+')
     h = open('./TgtV.txt', 'w+')
+    svtv = 0
+    sv = 0
+    tv = 0
     for ix in tqdm(range(len(df['SourcePOS']))):
         if 'V' in df['SourcePOS'][ix][0]:
             if 'V' in df['TargetPOS'][ix][0]:
@@ -62,6 +65,7 @@ def filterPos(df):
                         + str(df['Target'][ix]) + '\t'
                         + str(df['TargetPOS'][ix]) + '\t'
                         + str(df['TargetDep'][ix]) + '\n\n')
+                svtv += 1
             else:
                 g.write(str(df['Source'][ix]) + '\t'
                         + str(df['SourcePOS'][ix]) + '\t'   
@@ -69,6 +73,7 @@ def filterPos(df):
                         + str(df['Target'][ix]) + '\t'
                         + str(df['TargetPOS'][ix]) + '\t'
                         + str(df['TargetDep'][ix]) + '\n\n')
+                sv += 1
         elif 'V' in df['TargetPOS'][ix][0]:
                 h.write(str(df['Source'][ix]) + '\t'
                         + str(df['SourcePOS'][ix]) + '\t'   
@@ -76,10 +81,14 @@ def filterPos(df):
                         + str(df['Target'][ix]) + '\t'
                         + str(df['TargetPOS'][ix]) + '\t'
                         + str(df['TargetDep'][ix]) + '\n\n')
+                tv += 1
             
     f.close()
     g.close()
     h.close()
+    print("Source V Target V: \t" + str(svtv))
+    print("Source V: \t" + str(sv))
+    print("Target V: \t" + str(tv))
     return
 
 if __name__ == '__main__':
