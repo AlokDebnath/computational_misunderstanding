@@ -56,9 +56,13 @@ def filterPos(df):
     svtv = 0
     sv = 0
     tv = 0
+    svtv_l = []
+    sv_l = []
+    tv_l = []
     for ix in tqdm(range(len(df['SourcePOS']))):
         if 'V' in df['SourcePOS'][ix][0]:
             if 'V' in df['TargetPOS'][ix][0]:
+                svtv_l = [df['Source'][ix], ['SourcePOS'][ix], ['SourceDep'][ix], ['Target'][ix], ['TargetPOS'][ix], ['TargetDep'][ix]]
                 f.write(str(df['Source'][ix]) + '\t'
                         + str(df['SourcePOS'][ix]) + '\t'   
                         + str(df['SourceDep'][ix]) + '\n'
@@ -67,6 +71,7 @@ def filterPos(df):
                         + str(df['TargetDep'][ix]) + '\n\n')
                 svtv += 1
             else:
+                sv_l = [df['Source'][ix], ['SourcePOS'][ix], ['SourceDep'][ix], ['Target'][ix], ['TargetPOS'][ix], ['TargetDep'][ix]]
                 g.write(str(df['Source'][ix]) + '\t'
                         + str(df['SourcePOS'][ix]) + '\t'   
                         + str(df['SourceDep'][ix]) + '\n'
@@ -75,6 +80,7 @@ def filterPos(df):
                         + str(df['TargetDep'][ix]) + '\n\n')
                 sv += 1
         elif 'V' in df['TargetPOS'][ix][0]:
+                tv_l = [df['Source'][ix], ['SourcePOS'][ix], ['SourceDep'][ix], ['Target'][ix], ['TargetPOS'][ix], ['TargetDep'][ix]]
                 h.write(str(df['Source'][ix]) + '\t'
                         + str(df['SourcePOS'][ix]) + '\t'   
                         + str(df['SourceDep'][ix]) + '\n'
@@ -89,7 +95,10 @@ def filterPos(df):
     print("Source V Target V: \t" + str(svtv))
     print("Source V: \t" + str(sv))
     print("Target V: \t" + str(tv))
-    return
+    svtv_df = pd.DataFrame(svtv_l, columns=['Source', 'SourcePOS', 'SourceDep', 'Target', 'TargetPOS', 'TargetDep'])
+    sv_df = pd.DataFrame(sv_l, columns=['Source', 'SourcePOS', 'SourceDep', 'Target', 'TargetPOS', 'TargetDep'])
+    tv_df = pd.DataFrame(tv_l, columns=['Source', 'SourcePOS', 'SourceDep', 'Target', 'TargetPOS', 'TargetDep'])
+    return svtv_df, sv_df, tv_df
 
 if __name__ == '__main__':
     fname = '/tmp/misunderstanding/typo_filtered_revisions.txt'
