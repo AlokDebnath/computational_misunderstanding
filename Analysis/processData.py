@@ -50,9 +50,9 @@ def addposAndDep(df, lim):
     return df
 
 def filterPos(df):
-    f = open('./SrcVTgtVi.txt', 'w+')
-    g = open('./SrcVi.txt', 'w+')
-    h = open('./TgtVi.txt', 'w+')
+    f = open('./SrcVTgtV.txt', 'w+')
+    g = open('./SrcV.txt', 'w+')
+    h = open('./TgtV.txt', 'w+')
     svtv = 0
     sv = 0
     tv = 0
@@ -121,7 +121,7 @@ def rephrase(df):
 if __name__ == '__main__':
     fname = '/tmp/misunderstanding/typo_filtered_revisions.txt'
     df = constructDf(fname)
-    lim = 1000
+    lim = 50000
     df = addposAndDep(df, lim)
     svtv_df, sv_df, tv_df = filterPos(df)
     cRoot_df = chRoot(sv_df)
