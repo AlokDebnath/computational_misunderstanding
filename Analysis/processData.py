@@ -50,9 +50,9 @@ def addposAndDep(df, lim):
     return df
 
 def filterPos(df):
-    f = open('./SrcVTgtV.txt', 'w+')
-    g = open('./SrcV.txt', 'w+')
-    h = open('./TgtV.txt', 'w+')
+    f = open('./SrcVTgtVi.txt', 'w+')
+    g = open('./SrcVi.txt', 'w+')
+    h = open('./TgtVi.txt', 'w+')
     svtv = 0
     sv = 0
     tv = 0
@@ -62,7 +62,7 @@ def filterPos(df):
     for ix in tqdm(range(len(df['SourcePOS']))):
         if 'V' in df['SourcePOS'][ix][0]:
             if 'V' in df['TargetPOS'][ix][0]:
-                svtv_l = [df['Source'][ix], ['SourcePOS'][ix], ['SourceDep'][ix], ['Target'][ix], ['TargetPOS'][ix], ['TargetDep'][ix]]
+                svtv_l.append([df['Source'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['Target'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
                 f.write(str(df['Source'][ix]) + '\t'
                         + str(df['SourcePOS'][ix]) + '\t'   
                         + str(df['SourceDep'][ix]) + '\n'
@@ -71,7 +71,7 @@ def filterPos(df):
                         + str(df['TargetDep'][ix]) + '\n\n')
                 svtv += 1
             else:
-                sv_l = [df['Source'][ix], ['SourcePOS'][ix], ['SourceDep'][ix], ['Target'][ix], ['TargetPOS'][ix], ['TargetDep'][ix]]
+                sv_l.append([df['Source'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['Target'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
                 g.write(str(df['Source'][ix]) + '\t'
                         + str(df['SourcePOS'][ix]) + '\t'   
                         + str(df['SourceDep'][ix]) + '\n'
@@ -80,7 +80,7 @@ def filterPos(df):
                         + str(df['TargetDep'][ix]) + '\n\n')
                 sv += 1
         elif 'V' in df['TargetPOS'][ix][0]:
-                tv_l = [df['Source'][ix], ['SourcePOS'][ix], ['SourceDep'][ix], ['Target'][ix], ['TargetPOS'][ix], ['TargetDep'][ix]]
+                tv_l.append([df['Source'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['Target'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
                 h.write(str(df['Source'][ix]) + '\t'
                         + str(df['SourcePOS'][ix]) + '\t'   
                         + str(df['SourceDep'][ix]) + '\n'
@@ -100,11 +100,31 @@ def filterPos(df):
     tv_df = pd.DataFrame(tv_l, columns=['Source', 'SourcePOS', 'SourceDep', 'Target', 'TargetPOS', 'TargetDep'])
     return svtv_df, sv_df, tv_df
 
+def chRoot(df):
+    cRoot = list()
+    for ix in tqdm(range(len(df['SourceDep']))):
+        if 'root' in df['SourceDep'][ix][0] and 'root' not in df['TargetDep'][ix][0]:
+            cRoot.append([df['Source'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['Target'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
+    cRoot_df = pd.DataFrame(cRoot,  columns=['Source', 'SourcePOS', 'SourceDep', 'Target', 'TargetPOS', 'TargetDep'])
+    cRoot_df.to_csv(path_or_buf='./chroot.csv', index=True)
+    return cRoot_df
+
+def rephrase(df):
+    rephrase = list()
+    for ix in tqdm(range(len(df['Source']))):
+        if len(set(df['Source'][ix].split()) - set(df['Target'][ix].split())) < 2:
+            rephrase.append([df['Source'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['Target'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
+    rephrase_df = pd.DataFrame(rephrase,  columns=['Source', 'SourcePOS', 'SourceDep', 'Target', 'TargetPOS', 'TargetDep'])
+    rephrase_df.to_csv(path_or_buf='./rephrase.csv', index=True)
+    return rephrase_df
+
 if __name__ == '__main__':
     fname = '/tmp/misunderstanding/typo_filtered_revisions.txt'
     df = constructDf(fname)
-    lim = 50000
+    lim = 1000
     df = addposAndDep(df, lim)
-    for i in range(len(df['TargetPOS'])):
-        print(df['TargetPOS'][i][0])
-    filterPos(df)
+    svtv_df, sv_df, tv_df = filterPos(df)
+    cRoot_df = chRoot(sv_df)
+    print(cRoot_df)
+    rephrase_df = rephrase(svtv_df)
+    print(rephrase_df)
