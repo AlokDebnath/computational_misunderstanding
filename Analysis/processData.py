@@ -112,7 +112,7 @@ def chRoot(df):
 def rephrase(df):
     rephrase = list()
     for ix in tqdm(range(len(df['Source']))):
-        if len(set(df['Source'][ix].split()) - set(df['Target'][ix].split())) < 2:
+        if len(set(df['Source'][ix].split()) - set(df['Target'][ix].split())) < 2 and len(set(df['SourceDep'][ix]) - set(df['TargetDep'][ix])) > 2:
             rephrase.append([df['Source'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['Target'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
     rephrase_df = pd.DataFrame(rephrase,  columns=['Source', 'SourcePOS', 'SourceDep', 'Target', 'TargetPOS', 'TargetDep'])
     rephrase_df.to_csv(path_or_buf='./rephrase.csv', index=True)
