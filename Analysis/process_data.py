@@ -120,7 +120,7 @@ def chRoot(df):
         if 'root' in df['SourceDep'][ix][0] and 'root' not in df['TargetDep'][ix][0]:
             cRoot.append([df['Source'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['Target'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
     cRoot_df = pd.DataFrame(cRoot,  columns=['Source', 'SourcePOS', 'SourceDep', 'Target', 'TargetPOS', 'TargetDep'])
-    cRoot_df.to_csv(path_or_buf='./chroot.csv', index=True)
+    cRoot_df.to_csv(path_or_buf='./chroot_svtv.csv', index=True)
     return cRoot_df
 
 def rephrase(df):
@@ -138,7 +138,7 @@ if __name__ == '__main__':
     lim = 1000
     df = addposAndDep(df, lim)
     svtv_df, sv_df, tv_df = filterPos(df)
-    cRoot_df = chRoot(sv_df)
+    cRoot_df = chRoot(svtv_df)
     print(cRoot_df)
     rephrase_df = rephrase(svtv_df)
     print(rephrase_df)
