@@ -1,6 +1,7 @@
 import pandas as pd
 import stanza
 from tqdm import tqdm 
+import editdistance
 
 def constructDf(fname):
     data = {
@@ -13,7 +14,7 @@ def constructDf(fname):
     with open(fname, 'r') as f:
         for line in f.readlines():
             [name, rev, src, tgt, _] = line.split('\t')
-            if abs(len(src.split()) - len(tgt.split())) < 3:
+            if abs(len(src.split()) - len(tgt.split())) < 3 and len(src.split()) < 40 and len(tgt.split()) < 40:
                 data['File Name'].append(name)
                 data['Revision'].append(rev)
                 data['Source'].append(src)
@@ -50,9 +51,9 @@ def addposAndDep(df, lim):
     return df
 
 def filterPos(df):
-    f = open('./SrcVTgtV.txt', 'w+')
-    g = open('./SrcV.txt', 'w+')
-    h = open('./TgtV.txt', 'w+')
+    f = open('SrcVTgtVi.txt', 'w+')
+    g = open('SrcVi.txt', 'w+')
+    h = open('TgtVi.txt', 'w+')
     svtv = 0
     sv = 0
     tv = 0
@@ -100,6 +101,19 @@ def filterPos(df):
     tv_df = pd.DataFrame(tv_l, columns=['Source', 'SourcePOS', 'SourceDep', 'Target', 'TargetPOS', 'TargetDep'])
     return svtv_df, sv_df, tv_df
 
+def edit_distance(str1, str2, l1, l2):
+    if l1 == 0:
+        return l2
+    if l2 == 0:
+        return l1
+    if str1[l1 - 1] == str2[l2 - 1]:
+        return edit_distance(str1, str2, l1-1, l2-1)
+
+    return 1 + min(edit_distance(str1, str2, l1, l2 - 1),
+                   edit_distance(str1, str2, l1 - 1, l2),
+                   edit_distance(str1, str2, l1 - 1, l2 - 1)
+                   )
+
 def chRoot(df):
     cRoot = list()
     for ix in tqdm(range(len(df['SourceDep']))):
@@ -112,7 +126,7 @@ def chRoot(df):
 def rephrase(df):
     rephrase = list()
     for ix in tqdm(range(len(df['Source']))):
-        if len(set(df['Source'][ix].split()) - set(df['Target'][ix].split())) < 2 and len(set(df['SourceDep'][ix]) - set(df['TargetDep'][ix])) > 2:
+        if editdistance.eval(df['Source'][ix], df['Target'][ix]) < 5 and editdistance.eval(df['Source'][ix], df['Target'][ix]) > 2:
             rephrase.append([df['Source'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['Target'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
     rephrase_df = pd.DataFrame(rephrase,  columns=['Source', 'SourcePOS', 'SourceDep', 'Target', 'TargetPOS', 'TargetDep'])
     rephrase_df.to_csv(path_or_buf='./rephrase.csv', index=True)
@@ -121,7 +135,7 @@ def rephrase(df):
 if __name__ == '__main__':
     fname = '/tmp/misunderstanding/typo_filtered_revisions.txt'
     df = constructDf(fname)
-    lim = 50000
+    lim = 1000
     df = addposAndDep(df, lim)
     svtv_df, sv_df, tv_df = filterPos(df)
     cRoot_df = chRoot(sv_df)
