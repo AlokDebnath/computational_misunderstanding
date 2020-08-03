@@ -64,30 +64,12 @@ def filterPos(df):
         if 'V' in df['SourcePOS'][ix][0]:
             if 'V' in df['TargetPOS'][ix][0]:
                 svtv_l.append([df['Source'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['Target'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
-                f.write(str(df['Source'][ix]) + '\t'
-                        + str(df['SourcePOS'][ix]) + '\t'   
-                        + str(df['SourceDep'][ix]) + '\n'
-                        + str(df['Target'][ix]) + '\t'
-                        + str(df['TargetPOS'][ix]) + '\t'
-                        + str(df['TargetDep'][ix]) + '\n\n')
                 svtv += 1
             else:
                 sv_l.append([df['Source'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['Target'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
-                g.write(str(df['Source'][ix]) + '\t'
-                        + str(df['SourcePOS'][ix]) + '\t'   
-                        + str(df['SourceDep'][ix]) + '\n'
-                        + str(df['Target'][ix]) + '\t'
-                        + str(df['TargetPOS'][ix]) + '\t'
-                        + str(df['TargetDep'][ix]) + '\n\n')
                 sv += 1
         elif 'V' in df['TargetPOS'][ix][0]:
                 tv_l.append([df['Source'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['Target'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
-                h.write(str(df['Source'][ix]) + '\t'
-                        + str(df['SourcePOS'][ix]) + '\t'   
-                        + str(df['SourceDep'][ix]) + '\n'
-                        + str(df['Target'][ix]) + '\t'
-                        + str(df['TargetPOS'][ix]) + '\t'
-                        + str(df['TargetDep'][ix]) + '\n\n')
                 tv += 1
             
     f.close()
@@ -114,22 +96,43 @@ def edit_distance(str1, str2, l1, l2):
                    edit_distance(str1, str2, l1 - 1, l2 - 1)
                    )
 
-def chRoot(df):
-    cRoot = list()
+def chRoot(fname, df):
+    """
+        Identify change in the position of the root, the root word itself, or both. Useful when looking at sentences where both the source and target sentence
+    """
+    cRootPosn = list()
+    cRootWord = list()
+    cRootWP = list()
     for ix in tqdm(range(len(df['SourceDep']))):
-        if 'root' in df['SourceDep'][ix][0] and 'root' not in df['TargetDep'][ix][0]:
-            cRoot.append([df['Source'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['Target'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
-    cRoot_df = pd.DataFrame(cRoot,  columns=['Source', 'SourcePOS', 'SourceDep', 'Target', 'TargetPOS', 'TargetDep'])
-    cRoot_df.to_csv(path_or_buf='./chroot_svtv.csv', index=True)
-    return cRoot_df
+        src_root_posn = df['SourceDep'][ix].index(('root', 0))
+        tgt_root_posn = df['TargetDep'][ix].index(('root', 0))
+        src_root_word = df['Source'][ix].split()[src_root_posn]
+        tgt_root_word = df['Target'][ix].split()[tgt_root_posn]
+        if src_root_posn != tgt_root_posn:
+            cRootPosn.append([df['Source'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['Target'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
+        if src_root_word != tgt_root_word:
+            cRootWord.append([df['Source'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['Target'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
+        if src_root_posn == tgt_root_posn and src_root_word != tgt_root_word:
+            cRootWP.append(df['Source'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['Target'][ix], df['TargetPOS'][ix], df['TargetDep'][ix])
+    
+    cRootPosn_df = pd.DataFrame(cRootPosn, columns=['Source', 'SourcePOS', 'SourceDep', 'Target', 'TargetPOS', 'TargetDep'])
+    cRootWord_df = pd.DataFrame(cRootWord, columns=['Source', 'SourcePOS', 'SourceDep', 'Target', 'TargetPOS', 'TargetDep'])
+    cRootWP_df = pd.DataFrame(cRootWP, columns=['Source', 'SourcePOS', 'SourceDep', 'Target', 'TargetPOS', 'TargetDep'])
+    cRootPosn_df.to_csv(path_or_buf=fname + 'posn.csv', index=True)
+    cRootWord_df.to_csv(path_or_buf=fname + 'word.csv', index=True)
+    cRootWP_df.to_csv(path_or_buf=fname + 'wp.csv', index=True)
+    return cRootPosn_df, cRootWord_df, cRootWP_df
 
-def rephrase(df):
+def rephrase(fname, df):
+    """
+        Rephrases based on just source and target based on the difference in the text and POS
+    """
     rephrase = list()
     for ix in tqdm(range(len(df['Source']))):
-        if editdistance.eval(df['Source'][ix], df['Target'][ix]) < 5 and editdistance.eval(df['Source'][ix], df['Target'][ix]) > 2:
+        if editdistance.eval(df['Source'][ix], df['Target'][ix]) < 10 and editdistance.eval(df['Source'][ix], df['Target'][ix]) > 2 and editdistance.eval(' '.join(df['SourcePOS'][ix]), ' '.join(df['TargetPOS'][ix])) > 10:
             rephrase.append([df['Source'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['Target'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
     rephrase_df = pd.DataFrame(rephrase,  columns=['Source', 'SourcePOS', 'SourceDep', 'Target', 'TargetPOS', 'TargetDep'])
-    rephrase_df.to_csv(path_or_buf='./rephrase.csv', index=True)
+    rephrase_df.to_csv(path_or_buf=fname, index=True)
     return rephrase_df
 
 if __name__ == '__main__':
@@ -138,7 +141,7 @@ if __name__ == '__main__':
     lim = 1000
     df = addposAndDep(df, lim)
     svtv_df, sv_df, tv_df = filterPos(df)
-    cRoot_df = chRoot(svtv_df)
-    print(cRoot_df)
-    rephrase_df = rephrase(svtv_df)
+    cRootPosn_df, cRootWord_df, cRootWP_df = chRoot('chRoot_sv', sv_df)
+    print(cRootPosn_df, cRootWord_df, cRootWP_df)
+    rephrase_df = rephrase('rephrase_svtv.csv', svtv_df)
     print(rephrase_df)
