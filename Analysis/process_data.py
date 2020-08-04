@@ -135,10 +135,9 @@ def rephrase(fname, df):
 if __name__ == '__main__':
     fname = '/tmp/misunderstanding/typo_filtered_revisions.txt'
     df = constructDf(fname)
-    lim = 1000
+    lim = 100000
     df = addposAndDep(df, lim)
     svtv_df, sv_df, tv_df = filterPos(df)
-    cRootPosn_df, cRootWord_df, cRootWP_df = chRoot('chRoot_sv', sv_df)
     cRootPosn_df, cRootWord_df, cRootWP_df = chRoot('chRoot_svtv', svtv_df)
     rephrase_df = rephrase('rephrase_svtv', svtv_df)
     rephrase_df = rephrase('rephrase_sv', sv_df)
