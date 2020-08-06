@@ -1,55 +1,782 @@
 ,Source,Target
-0,Trimming the hooves once a month is a great procedure and does not take a lot of effort .,Doing it once a month is a great procedure and does not take a lot of effort .
-1,"See the value of your goal and hold it above the preconceptions that society holds about socialization , by doing so you will be able to achieve more and break away from the constraints of socialization .","Start by cutting down the number of people you interact with on a regular basis , try to find which people you truly cherish as friends and which ones are merely along for the ride ."
-2,Make as many rooms as you want .,Add as many rooms as you want .
-3,wear natural looking makeup .,Apply natural looking makeup .
-4,Do you wanna save some money building your own skateboard instead of taking it to a skate shop ?,Do you want to save some money building your own skateboard instead of taking it to a skate shop ?
-5,Do n't be a b * tch .,Do n't be a bully .
-6,Fold the edges sticking out and tape them at the back of the board .,Tuck its edges around the back of the board and tape them .
-7,Become a member of American Medical Writers Association .,Obtain certification from the American Medical Writers Association .
-8,Choose the prepaid credit card you want to buy .,Decide which prepaid credit card you want to buy .
-9,got to the school in buildabear you could get about max 400 $ a day there,Go to the school in buildabear you could get about max 400 $ a day there .
-10,have a minamum fishing toll mine is 150 $ a day,Have a minimum fishing toll mine is 150 $ a day .
-11,dont lay your binder on the floor cause it will scratch,Do n't lay your binder on the floor because it might scratch
-12,Buy a piano that is often used by music institutions such as conservatories and universities .,Find out which pianos are often used by music institutions such as conservatories and universities .
-13,Buy the most expensive piano you can afford .,Expect to buy the most expensive piano you can afford .
-14,Starting a child on piano lessons would need a less expensive ' upright ' until they show a talent and desire to continue learning .,Starting a child on piano lessons would require a less expensive ' upright ' until they show a talent and desire to continue learning .
-15,Do n't be scared .,Do n't be afraid .
-16,hold it in your hand and speak softly to it .,Hold he / she in your hand and speak softly to it .
-17,bring purses or small ones,Bring purses or small purses .
-18,Bring purses or small purses .,have an awesome nick name .
-19,Do n't be a bully .,Do n't be a pussy .
-20,Do n't be mean .,Do n't be a pussy .
-21,Do n't be a bully .,Do n't be a show off
-22,Do n't be mean .,Do n't be a show off
-23,Do n't be a show off,Do n't be a bully to anyone .
-24,Do n't be mean .,Do n't be Elliot Robles
-25,Re position your baby if your nipple starts to hurt .,Reposition your baby if your nipple starts to hurt .
-26,Know if you have recurrent infections .,Determine if you have recurrent infections .
-27,"Sign in with the email address and password associated with your Roku account , if you have not already done so .","Log in with the email address and password associated with your Apple ID , if you have n't done so already ."
-28,"Sign in the the email address and password associated with your Playstation account , if you have not already done so .","Log in with the email address and password associated with your Apple ID , if you have n't done so already ."
-29,Do n't submit to a casting call unless you know you can be there and stay for the duration of the shoot .,Do n't apply to a casting call unless you know you can be there and stay for the duration of the shoot .
-30,Having a flexible schedule is key in being a successful extra .,Having a flexible schedule is helpful if you want to be an extra .
-31,dont tryto go after the girl he is currently dating .,Do n't try to go after the girl he is currently dating .
-32,ask for name favorite things .,Ask about his favorite things .
-33,"Do n't be afraid of asking your crush , though !",Thought do n't be afraid of asking your crush !
-34,"Using your Web browser , visit a site that registers domain names .",Open a web browser and navigate to a site that registers domain names .
-35,"Dont wear trousers , there silly , for scene kids .","Do n't wear trousers , they 're silly , for scene kids ."
-36,"dont make your self , look daft . / Take steps behond belief .","Do n't make your self , look daft . / Take steps beyond belief ."
-37,dont gossip nor bitch .,Do n't gossip nor bitch .
-38,"Dont bend the rules too much , you could get you into trouble .","Do n't bend the rules too much , you could get you into trouble ."
-39,"Be mindful of wearing clothes that are too revealing or too small for your body type , as they can be unflattering .","Be careful of wearing clothes that are too revealing or too small for your body type , as they can be unflattering ."
-40,Note that fruits and vegetables contain water .,Remember that fruits and vegetables contain water .
-41,Be the best you you can be .,Be the best person that you can be .
-42,"Be what you want to be , no matter what .","Be who you want to be , no matter what ."
-43,Determine the type and size that you want .,Choose the type and size of dirt bike you want .
-44,Remember that spending less can often cost more in the future .,Spending less can often cost more in the future .
-45,Buy a used dirt bike if you want to save money .,Shop online if you want a used dirt bike .
-46,Passing a background check .,Pass a background check .
-47,Place an anemone in the tank to make the clownfish feel more comfortable .,Placing anemone in the tank to make the clownfish feel more comfortable .
-48,Get a mated pair .,Develop a mated pair .
-49,Go to middle school baseball if your school has it .,Play middle school baseball if your school has it .
-50,Do you think you are a strong girl and love to know about mountains and climb them ?,Are a strong girl who would love to know more about mountains and climb them ?
-51,Go for a test ride .,Check your measurement on a test ride .
-52,"Introduced the gerbils using a split cage , and should be located in a quiet and calm area of the house where there is not a lot of traffic nor sudden loud noises .","Introduce the gerbils using a split cage , and should be located in a quiet and calm area of the house where there is not a lot of traffic nor sudden loud noises ."
-53,"Including some tasty , healthy snacks , such as kale chips or nuts , in your list will ensure that you have some snack options when you 're peckish without deviating from the basic , healthy plan .","Putting these diet-friendly foods , such as kale chips or shelled nuts , on your list will ensure that you have some snack options when you 're peckish without deviating from your basic , healthy plan ."
+0,Make as many rooms as you want .,Add as many rooms as you want .
+1,wear natural looking makeup .,Apply natural looking makeup .
+2,Do you wanna save some money building your own skateboard instead of taking it to a skate shop ?,Do you want to save some money building your own skateboard instead of taking it to a skate shop ?
+3,Do n't be a b * tch .,Do n't be a bully .
+4,got to the school in buildabear you could get about max 400 $ a day there,Go to the school in buildabear you could get about max 400 $ a day there .
+5,Starting a child on piano lessons would need a less expensive ' upright ' until they show a talent and desire to continue learning .,Starting a child on piano lessons would require a less expensive ' upright ' until they show a talent and desire to continue learning .
+6,Do n't be scared .,Do n't be afraid .
+7,Do n't submit to a casting call unless you know you can be there and stay for the duration of the shoot .,Do n't apply to a casting call unless you know you can be there and stay for the duration of the shoot .
+8,dont tryto go after the girl he is currently dating .,Do n't try to go after the girl he is currently dating .
+9,"Be mindful of wearing clothes that are too revealing or too small for your body type , as they can be unflattering .","Be careful of wearing clothes that are too revealing or too small for your body type , as they can be unflattering ."
+10,Place an anemone in the tank to make the clownfish feel more comfortable .,Placing anemone in the tank to make the clownfish feel more comfortable .
+11,Get a mated pair .,Develop a mated pair .
+12,Go to middle school baseball if your school has it .,Play middle school baseball if your school has it .
+13,Make a detailed list .,Write a detailed list .
+14,Resist using the air conditioner .,Avoid using the air conditioner .
+15,Get an Alien Baby in the Sims 2,Have an Alien Baby in The Sims 2
+16,Look for undergarments made for curvy shapes at local clothing stores or online .,Search for undergarments made for curvy shapes at local clothing stores or online .
+17,Pop an over-the-counter pain medication .,Take an over-the-counter pain medication .
+18,Act Like a Princess,Behave Like a Princess
+19,Earn a graduate degree .,Pursue a graduate degree .
+20,Do n't be cowardice .,Do n't be a coward .
+21,Do n't copy other people .,Do n't label other people .
+22,Do n't copy other people .,Do n't label other people .
+23,"Having confidence helps , believe in yourself NOW !","Having confidence helps , believe in yourself"
+24,Write the couple 's first names for an informal style .,List the couple 's first names for an informal style .
+25,"Write the couple 's names and then "" and Family "" for a casual envelope .","Put the couple 's names and then "" and Family "" for a casual envelope ."
+26,Write the address under the names .,Include the address under the names .
+27,Write your return address in the upper left corner of the envelope .,Put your return address in the upper left corner of the envelope .
+28,"Being politically incorrect does not mean being unkind , rude , or crass .","Be kind ; politically incorrect does not mean being unkind , rude , or crass :"
+29,Invest only what you can afford to lose .,Spend only what you can afford to lose .
+30,"Take care when brushing your hair , as the bristles may snag in the braid if it gets in the way .","Be careful when brushing your hair , as the bristles may snag in the braid if it gets in the way ."
+31,Dial your country 's exit code .,Obtain your country 's exit code .
+32,Get a signed letter of intent .,Execute a signed letter of intent .
+33,Spacing the chicken breasts a few inches apart will also make turning them over during the cooking process easier .,Spacing the chicken breasts a few inches apart also makes turning them over during the cooking process easier .
+34,Adding additional oil and seasoning will also help replace any seasoning that may have come off when you transferred the chicken onto the cooking sheet and into the oven .,Adding additional oil and seasoning also helps replace any seasoning that may have come off when you transferred the chicken onto the cooking sheet and into the oven .
+35,Eat a balanced and healthy diet .,Maintain a balanced and healthy diet .
+36,Choose a Bachelor of Arts / Science to teach high school children ( 12 - 18 ) .,Select a Bachelor of Arts / Science to teach high school children ( 12 - 18 ) .
+37,"Click the "" Archive "" button .","Tap the "" Archive "" button ."
+38,"Click the "" Archive "" button .","Tap the "" Archive "" button ."
+39,Measure the circuit 's voltage .,Record the circuit 's voltage .
+40,Measure the circuit 's current .,Record the circuit 's current .
+41,"Try tapping into a "" fierce "" side of yourself can give you the confidence to do things you might not normally do , and maintain the confidence of the person you want to be .","Tapping into a "" fierce "" side of yourself can give you the confidence to do things you might not normally do , and maintain the confidence of the person you want to be ."
+42,Figure out how much it costs .,Find out how much it costs .
+43,Draft a cover letter .,Write a cover letter .
+44,"Do not ever "" ' team on FFA , Experimental or Team mode ; you and your teammate will shrink when the Anti-Teaming penalty is activated .","Do not ever team on FFA , Experimental or Team mode ; you and your teammate will shrink when the Anti-Teaming penalty is activated ."
+45,Determine what size of table needed for your child .,Determining the size of table needed for your child .
+46,Keep away from the clock .,Stay away from the clock .
+47,Go to the Tumblr Savior website .,Open the Tumblr Savior website .
+48,Ensure that all these accounts were reconciled monthly .,Check that all these accounts were reconciled monthly .
+49,Undergo an SCR clearance .,Get an SCR clearance .
+50,Locate the room or closet in your church that holds the altar serving robes .,Go to the room or closet in your church that holds the altar serving robes .
+51,Locate the lector for the mass .,Find the lector for the mass .
+52,Label your answer in cubic inches .,Write your answer in cubic inches .
+53,Label your answer in cubic inches .,Display your answer in cubic inches .
+54,Create Your Own Style,Have Your Own Style
+55,Get the company 's information .,Obtain the company 's information .
+56,Save the discussion page .,Select the discussion page .
+57,Find Bouncy Supreme .,Go to Bouncy Supreme .
+58,Getting lots of sleep .,Get lots of sleep .
+59,Place the gammon in a saucepan with cold water and add ingredients .,Put the gammon in a saucepan with cold water and add ingredients .
+60,Attach the fence from the bottom of the first post to the top .,Connect the fence from the bottom of the first post to the top .
+61,Cutting the wood for the short ends of your crate .,Cut the wood for the short ends of your crate .
+62,Cutting the wood for the long sides .,Cut the wood for the long sides .
+63,Cutting the long wood into slats .,Cut the long wood into slats .
+64,Be a USAG Level 9 Gymnast,Become a USAG Level 9 Gymnast
+65,Be a USAG Level 10 Gymnast,Become a USAG Level 9 Gymnast
+66,Obtain a graduate degree .,Earn a graduate degree .
+67,Have good hygiene .,Practice good hygiene .
+68,Put on the black high water pants .,Wear the black high water pants .
+69,Put on the white tube socks .,Slide on the white tube socks .
+70,Put on your choice of color shiny jacket .,Pick out your choice of color shiny jacket .
+71,"Do n't critisize yourself , and fell free to express yourself .",Do n't criticize yourself and feel free to express yourself .
+72,Have a close circle of friends .,Build a close circle of friends .
+73,Handling a relationship is a tough responsible .,Handling a relationship is a tough responsibility .
+74,Choose a skate package .,Consider a skate package .
+75,Choose higher quality boots according to your level .,Select higher quality boots according to your level .
+76,Choose the correct type of hockey skates .,Purchase the correct type of hockey skates .
+77,Click on Wireless and Networks .,Tap on Wireless and Networks .
+78,Choose Tethering and Portable Hotspot .,Tap on Tethering and Portable Hotspot .
+79,Elevate Your Self Esteem,Improve Your Self Esteem
+80,Bring the cash amount you want added to your PayPal account .,Present the cash amount you want added to your PayPal account .
+81,Select a method to receive your PayPal Cash barcode .,Choose a method to receive your PayPal Cash barcode .
+82,"DO : Befriend the Staff - if you want to become an expert at bars , do n't forget to build some allies .","Befriend the Staff - if you want to become an expert at bars , do n't forget to build some allies ."
+83,Curl a Soccer Ball,Bend a Soccer Ball
+84,"Touch the "" Add to Home Screen "" button .","Tap the "" Add to Home Screen "" button ."
+85,"Distribute your calories carefully among carbohydrates , protein , and fat .","Divide your calories carefully among carbohydrates , protein , and fat ."
+86,Reuse the chimney balloon once the chimney is cold .,Reinflate the chimney balloon once the chimney is cold .
+87,Getting Around : Make sure you have a metro card and know how to take the subway and buses .,Getting Around Make sure you have a MetroCard and know how to take the subway and buses .
+88,"Enter the address where you 'd like to send the envelope , in the same format .","Write the address where you 'd like to send the envelope , in the same format ."
+89,Have a strong portfolio .,Develop a strong portfolio .
+90,Look to see if a strap is n't loose if you still feel discomfort .,Check to see if a strap is n't loose if you still feel discomfort .
+91,Rinse your hair thoroughly with cold water and apply conditioner .,Wash your hair thoroughly with cold water and apply conditioner .
+92,Elevate Your Self Esteem,Improve Your Self Esteem
+93,Consider a sledgehammer for thin slabs .,Use a sledgehammer for thin slabs .
+94,Throw the snow as far away from the driveway as you can .,Get the snow as far away from the driveway as you can .
+95,smoothe it in a allmost round but looking like a rock,Smooth it in a almost round but looking like a rock .
+96,Be the animal that 's getting married .,Remain the animal that 's getting married .
+97,Do n't cuss at igloo competitions,Do n't curse at igloo competitions .
+98,Take some raw potatoes .,Select some raw potatoes .
+99,Be carefull dont trust any person with you because they could push you if you are in a wheelchair .,"Be careful , do n't trust any person with you because they could push you if you are in a wheelchair ."
+100,"Be dark blue , Sonic 's colour .","Be light blue , Sonic 's colour ."
+101,Be a USAG Level 9 Gymnast,Become a USAG Level 9 Gymnast
+102,Add First Stroke .,Apply First Stroke .
+103,Add Second Stroke .,Apply Second Stroke .
+104,Go the the Build tab .,Click the Build tab .
+105,Save the Environment While Shopping,Help Save the Environment While Shopping
+106,Go to the website you want to bookmark .,Visit the website you want to bookmark .
+107,Digging your underground base .,Dig your underground base .
+108,Clip your hair into sections .,Divide your hair into sections .
+109,Adding levels to the leaves : cutting the portion that should be farther back gives a portion of the leave to give the illusion of the leaf folding over itself .,Adding levels to the leaves : cutting the portion that should be farther back gets a portion of the leaf to give the illusion of the leaf folding over itself .
+110,Do not squish any bugs .,Do not try squish any bugs .
+111,"Wanna know hot to be a sweet , fun girl ?","Want to know how to be a sweet , fun girl ?"
+112,Being unaware of how much time is left on the game clock or shot clock .,Be aware of how much time is left on the game clock or shot clock .
+113,Identify the five fundamental themes of geography .,Study the five fundamental themes of geography .
+114,Note your computer 's name .,Click your computer 's name .
+115,Apply the Normalizer Cream .,Remove the Normalizer Cream .
+116,Use an international calling card .,Find an international calling card .
+117,Find an international calling card .,Buy an international calling card .
+118,do n't use water around the organ .,Do n't have water around the organ .
+119,Observing the interests of your child,Observe the interests of your child .
+120,Do n't stalk people .,Do n't annoy people .
+121,Drink a variety of wines .,Taste a variety of wines .
+122,Stretch the fabric gently while sewing it .,Straighten the fabric gently while sewing it .
+123,Act Like a Princess,Behave Like a Princess
+124,put your thumb on the bottom of the opener and slightly push down .,Place your thumb on the bottom of the opener and slightly push down .
+125,Being a class clown does not always gets you cool .,Being a class clown does not always make you cool .
+126,Be alert and aware .,Stay alert and aware .
+127,Protect : Small CondomsFits Length : 3 Inches - 6 InchesFits Girth : 4 Inches - 5 InchesExamples : Any condom represented as small or snug .,Fit : Small CondomsFits Length : 3 Inches - 6 InchesFits Girth : 4 Inches - 5 InchesExamples : Any condom represented as small or snug .
+128,Create common ground .,Find common ground .
+129,Perform the five daily prayers .,Offer the five daily prayers .
+130,Do NOT look forward to this step too much .,Do notlook forward to this step too much .
+131,Do n't be pushy .,Do n't be selfish .
+132,Kill those people around you that create stress,Ignore those people around you that create stress
+133,Add your shipping address .,Choose your shipping address .
+134,"Click the "" Manage Payment Options "" link in the payment section .","Open the "" Manage Payment Options "" link in the payment section ."
+135,Raise the dumbbells to their starting position on either side of your head .,Bring the dumbbells to their starting position on either side of your head .
+136,Prefer canned beans .,Opt for canned beans .
+137,Be very familiar with the various .,Become familiar with the various .
+138,Get a good username .,Choose a good username .
+139,Take out the window pane .,Remove the window pane .
+140,Do n't be fake .,Do n't be mean .
+141,Do n't be a baby .,Do n't be mean .
+142,"Being an Engineer Is a hard when you start at a low rank , Weapons high recoil and low damage .","Being an Engineer is hard when you start at a low rank , weapons high recoil and low damage ."
+143,"Find a large , flat workspace where you can assemble your skateboard .","Use a large , flat workspace where you can assemble your skateboard ."
+144,"Click the "" Then "" drop-down box .","Tap the "" Then "" drop-down box ."
+145,acting anxious or fearful about doing something wrong,feel anxious or fearful about doing something wrong
+146,Put on some good music .,Play some good music .
+147,Consider your eyelid in thirds .,Divide your eyelid in thirds .
+148,Paint a medium-sized rectangle in the middle of your lid .,Make a medium-sized rectangle in the middle of your lid .
+149,Strengthen on your weakest links ! Math is n't your thing ?,Strenghten your weakest links ! Math is n't your thing ?
+150,"Are you scared that your first kiss is going to be slimy , awkward , gross , or other things a first kiss is not supposed to be ?","Are you afraid that your first kiss is going to be slimy , awkward , gross , or other things a first kiss is not supposed to be ?"
+151,Remove the chainsaw 's centrifugal clutch from the crank shaft .,Unscrew the chainsaw 's centrifugal clutch from the crank shaft .
+152,Being friends with any popular girl usually makes you more popular .,Being friends with any popular girl will usually make you more popular .
+153,Do n't cling - she will just get irritated and wo n't want to hang around with you .,Do n't be clingy - she will just get irritated and wo n't want to hang around with you .
+154,Do n't ditch old friends .,Do n't neglect old friends .
+155,Save the Environment While Shopping,Help Save the Environment While Shopping
+156,Go to Camp McCarren .,Travel to Camp McCarren .
+157,Go to AirDroid on your PC .,Install AirDroid on your PC .
+158,Decide if cryptozoology is right for you .,Determine if cryptozoology is right for you .
+159,Having control of your child / children when they come into the restaurant .,Keep control of your child / children when they come into the restaurant .
+160,Attain a high school diploma or complete the General Education Development ( GED ) requirement .,Receive a high school diploma or complete the General Education Development ( GED ) requirement .
+161,Send your art portfolio to tattoo shops with job openings .,Take your art portfolio to tattoo shops with job openings .
+162,Be away from antagonistic environment .,Stay away from antagonistic environment .
+163,"Being active , going outside , and playing sports is the best way to build muscles every day .","Being active , going outside , and playing sports are the best ways to build muscles every day ."
+164,"Do not make eye contact with anyone walking towards you , and do n't gawk like a tourist .","Try not to make eye contact with anyone walking towards you , and do n't gawk like a tourist ."
+165,Begin with something small .,Start with something small .
+166,Have a Birthday Party,Plan a Birthday Party
+167,Know the formula for calculating wavelength .,Define the formula for calculating wavelength .
+168,Know the correct units .,Use the correct units .
+169,Do n't be evil .,Do n't be mean
+170,Do n't be evil .,Do n't be mean .
+171,Do n't be evil .,Do n't be mean .
+172,"Do n't say swear , it 's really stupid and rude .","Do n't swear , it 's really stupid and rude ."
+173,Make a meal plan .,Develop a meal plan .
+174,Buy a piece of property to situate your new home on .,Find a piece of property to situate your new home on .
+175,Use an EPDM pond liner that is at least larger than the pond .,Install an EPDM pond liner that is at least larger than the pond .
+176,Mull over the conveniences that are being offered .,Look over the conveniences that are being offered .
+177,Create it into something else .,Make it into something else .
+178,Get your rabbit into the carrier .,Place your rabbit into the carrier .
+179,Give it a good living space .,Create a good living space .
+180,Obtain a casket or alternative container for the body .,Select a casket or alternative container for the body .
+181,Select an urn for storing the ashes .,Choose an urn for storing the ashes .
+182,Do n't harm your sibling .,Do n't lie to your sibling .
+183,Thawed milk at room temperature DO NOT MICROWAVE,Thaw milk at room temperature - DO NOT MICROWAVE
+184,Maintain a healthy diet .,Eat a healthy diet .
+185,Realise relationships change .,Realize that relationships change .
+186,Remeber you will earn special rewards and your siblings ( if you have any ) will get jealous,Remember that you will earn special rewards and your siblings ( if you have any ) will get jealous
+187,Pray all of the prayers no matter what you need to do because that will show people that nothing will stop you from praying to Allah .,Offer all of the prayers no matter what you need to do because that will show people that nothing will stop you from praying to Allah .
+188,Be especially careful around shy girls .,Be especially gentle around shy girls .
+189,"Stay polite and timely , and be the first on the yard and the last off .","Be polite and timely , and be the first on the yard and the last off ."
+190,Put a napkin on your lap .,Keep a napkin on your lap .
+191,"Cut the individual teeth , using the same small paring knife , then dig out a large area of flesh for the mouth cavity with a spoon .","Make the individual teeth , using the same small paring knife , then dig out a large area of flesh for the mouth cavity with a spoon ."
+192,Look at freshwater versus saltwater pearls .,Compare freshwater versus saltwater pearls .
+193,Put the dog into the tub .,Help the dog into the tub .
+194,Take your own blanket and pillow .,Bring your own blanket and pillow .
+195,Prepare the chicken legs .,Wash the chicken legs .
+196,Preheat the oven to 350 degrees .,Heat the oven to 350 degrees .
+197,Use safety pins In everything .,Put safety pins in everything .
+198,Do n't be cheap .,Do n't be clingy .
+199,Making the cyclic control system .,Make cyclic control system .
+200,Apply the waist trimmer on your chest .,Put the waist trimmer on your chest .
+201,Repeat your brainstorming session .,Document your brainstorming session .
+202,Become the Prettiest Girl in School,Be the Prettiest Girl in School
+203,Go to office hours .,Attend office hours .
+204,Attend class regularly .,Go to class regularly .
+205,Do not hangout with your enemy if you feel they might try and physically harm you .,Do not hang out with your enemy if you feel they might try to physically harm you .
+206,Being nice is also being considerate of others ' time .,Being nice is also about being considerate of others ' time .
+207,Start to train your cockatiel .,Begin to train your cockatiel .
+208,Ensure to break down big projects and assignments into smaller tasks to complete them on time .,Make sure to break down big projects and assignments into smaller tasks to complete them on time .
+209,"Buy some modern , cool vases and some fake flowers to go along with them .","Purchase modern , cool vases and some fake flowers to go along with them ."
+210,Buy some nice picture frames .,Find some nice picture frames .
+211,Click on Back Up Automatically in the left pane of the dialog box if you want your Mac to back up at regular intervals .,Check Back Up Automatically in the left pane of the dialog box if you want your Mac to back up at regular intervals .
+212,Click on Show Time Machine in menu bar to create a shortcut in the menu bar to Time Machine preferences and backup status .,Check Show Time Machine in menu bar to create a shortcut in the menu bar to Time Machine preferences and backup status .
+213,"Building a relationship requires time , so use yours to get to know your parent one-on-one .","Building a relationship takes time , so use yours to get to know your parent one-on-one ."
+214,Have a proper temperature and lighting .,Keep proper temperature and lighting .
+215,Know where your type of tarantula typically lives .,Find out where your type of tarantula typically lives .
+216,Pick an art director .,Become an art director .
+217,Do n't be trying too hard .,Do n't try too hard .
+218,Use an online FTE calculator .,Locate an online FTE calculator .
+219,"Be yourself , be funny outgoing .","Be yourself , be funny and outgoing ."
+220,"Apply bold , neon eyeshadow .","Use bold , neon eyeshadow ."
+221,go get a life you loser !,get a life you losers !
+222,Do CPR on a Baby,Perform CPR on a Baby
+223,remeber that when you show any sign of weakness or anger ( emotion ) you get them motivated to do more .,"Remember that when you show any sign of weakness or anger ( emotion ) , you get them motivated to do more ."
+224,Get a blank DVD .,Insert a blank DVD .
+225,Brush your hair and teeth,Brushing your hair and teeth .
+226,Keep your fingernails trimmed,Keeping your fingernails trimmed .
+227,Try layering necklaces .,Wear layering necklaces .
+228,Wear ocean colors .,Choose ocean colors .
+229,Are you a quiet student who enjoys reading and writing ?,Are you a quiet person who enjoys reading and writing ?
+230,Being a quite person doesn ; t mean you ca n't wear bright colours .,Being a quiet person does n't mean you ca n't wear bright colours .
+231,Build a Bird Bath,Make a Bird Bath
+232,Become a realistic optimist .,Be a realistic optimist .
+233,Take the determinant of the matrix .,Find the determinant of the matrix .
+234,Manage a healthy weight .,Maintain a healthy weight .
+235,Decide the size of the pond .,Determine the size of the pond .
+236,Do n't get scared ! ! hissers wo n't bite !,"Do n't get scared , hissers wo n't bite ."
+237,Having canned apples around make for an easy desert when guests show up unexpectedly .,Having canned apples on hand makes for an easy desert when guests show up unexpectedly .
+238,Use the wedding guest list .,Make a wedding guest list .
+239,Search for unfiltered wine as an alternative .,Look for unfiltered wine as an alternative .
+240,Enable Location Services .,Tap Location Services .
+241,Do n't be gross,Do n't be spoiled
+242,Do n't be typical,Do n't be spoiled
+243,Add goth accessories .,Pick goth accessories .
+244,Observe the way you write and speak .,Analyze the way you write and speak .
+245,Finish the wood with a clear gloss or lighter stain .,Coat the wood with a clear gloss or lighter stain .
+246,Add the video you want to edit .,Import the video you want to edit .
+247,Acquire a Ring of Sinewave Spheres in Excel,Create a Ring of Sinewave Spheres in Excel
+248,Be prepared that different companies have different requirements .,Be aware that different companies have different requirements .
+249,Receive the date and time of the meeting .,Learn the date and time of the meeting .
+250,Go for a color that matches your skin tone .,Find a color that matches your skin tone .
+251,Receive an associate 's degree in nursing .,Obtain an associate 's degree in nursing .
+252,Do you wanna be just like Massie Block but you do n't look anything like her in real life ?,Do you want to be just like Massie Block but you do n't look anything like her in real life ?
+253,Make short movies .,Watch short movies .
+254,Adhere the boxes together .,Put the boxes together .
+255,Consider your credit report .,View your credit report .
+256,Try not to support other teams .,Do not support other teams .
+257,DO NOT Wear your skates around the house to wear them in a little before going on the ice .,Do n't wear your skates around the house to wear them in a little before going on the ice .
+258,"Helping people with disabilities can be a very kind to do , as long as you 're actually helping them ( instead of hindering them ) .","Helping people with disabilities can be a very kind thing to do , as long as you 're actually helping them ( instead of hindering them ) ."
+259,Bathe your leopard gecko .,Evaluate your leopard gecko .
+260,Make a connection from all of the top layers of your walls inward .,Build a connection from all of the top layers of your walls inward .
+261,"Swearing a lot or talking really loudly in an accent people can hardly make out is most definitely unattractive , and not lady like .","Swearing a lot or talking really loudly in an accent people can hardly make out is most definitely unattractive , and not very lady like ."
+262,Put one of the dough circles at the bottom of the cake pan .,Place one of the dough circles at the bottom of the cake pan .
+263,Forget raking the leaves in the fall to provide food and shelter .,Skip raking the leaves in the fall to provide food and shelter .
+264,Write a Life Plan,Make a Life Plan
+265,Soaking the sponge in water first will prevent the sponge from soaking up too much foundation and wasting it .,Soaking the sponge in water first will keep the sponge from soaking up too much foundation and wasting it .
+266,"Using very gentle pressure , scrub the wound with a clean cloth to make sure that it is completely clean after you 've flushed it out with saline solution or regular running water .","Using very gentle pressure , pat the wound with a clean cloth to make sure that it is completely clean after you 've flushed it out with saline solution or regular running water ."
+267,Does the rig appear professional and well designed ?,Ask : Does the rig appear professional and well designed ?
+268,Does the rig have an H.I.T. refrigerated air dryer to cool air and prevent moisture in your air lines ?,Ask : Does the rig have an H.I.T. refrigerated air dryer to cool air and prevent moisture in your air lines ?
+269,Is the foam rig insulated ?,Ask : Is the foam rig insulated ?
+270,"Is the spray foam rig at least 7 ' 8 "" in height to allow easy pump removal and material handling ?","Ask : Is the spray foam rig at least 7 ' 8 "" in height to allow easy pump removal and material handling ?"
+271,Does the spray foam rig have an all-inclusive source for warranty and support ?,Ask : Does the spray foam rig have an all-inclusive source for warranty and support ?
+272,"Is the foam rig constructed with 8-inch double I-beams and support studs on 16-inch centers for rigid , lasting durability ?","Ask : Is the foam rig constructed with 8-inch double I-beams and support studs on 16-inch centers for rigid , lasting durability ?"
+273,Is the equipment in the rig secured and fastened down to withstand all driving conditions ?,Ask : Is the equipment in the rig secured and fastened down to withstand all driving conditions ?
+274,Does the rig have a close-able hose door ?,Ask : Does the rig have a close-able hose door ?
+275,Has the rig been designed and tested to ensure a safe and smooth tow ?,Ask : Has the rig been designed and tested to ensure a safe and smooth tow ?
+276,Do you have a breakaway brake equipped on the rig ?,Ask : Do you have a breakaway brake equipped on the rig ?
+277,Are the key equipment components on the rig manufactured by industry leaders ?,Ask : Are the key equipment components on the rig manufactured by industry leaders ?
+278,Does the spray foam rig have a ramp door for easy material access ?,Ask : Does the spray foam rig have a ramp door for easy material access ?
+279,Is the spray foam rig configured and built by the industry-leading distributor and service provider of foam and polyurea equipment ?,Ask : Is the spray foam rig configured and built by the industry-leading distributor and service provider of foam and polyurea equipment ?
+280,Yell at boot camp .,Go to boot camp .
+281,Yell at boot camp .,Go to boot camp .
+282,Yell at boot camp .,Go to boot camp .
+283,Yell at boot camp .,Go to boot camp .
+284,Yell at boot camp .,Go to boot camp .
+285,Go to boot camp .,Yell at boot camp .
+286,Yell at boot camp .,Go to boot camp .
+287,Do n't be easy .,Do n't be a nag
+288,Be honest and sincere .,Be candid and sincere .
+289,Do paper games .,Play paper games .
+290,do n't too much about sex or anything sexually related .,do n't talk too much about sex or anything sexually related .
+291,"Put your ball into your glove , and bring the ball up about halfway","Place your ball into your glove , and bring the ball up about halfway"
+292,"Begin a debate by greeting your audience , stating your team 's argument , and by speaking slowly and clearly .","Open a debate by greeting your audience , stating your team 's argument , and by speaking slowly and clearly ."
+293,Enter your credit card information .,Add your credit card information .
+294,Make an attractive webpage and do add trailers of your movie .,Create an attractive webpage and do add trailers of your movie .
+295,Be a Girl Spy,Be a Girl Spy Kid
+296,Pick your equipment wisely .,Choose your equipment wisely .
+297,Do n't suppose everybody on your scoreboard is alive .,Do n't assume everybody on your scoreboard is alive .
+298,Act Like a Princess,Behave Like a Princess
+299,Become a lifelong learner .,Remain a lifelong learner .
+300,Stretch your wrists regularly .,Strengthen your wrists regularly .
+301,Walking quickly and deliberately can decrease your chances of being bitten .,Walking slowly and deliberately can decrease your chances of being bitten .
+302,Have a thermometer and a humidity gauge in the tank .,Keep a thermometer and a humidity gauge in the tank .
+303,Eat a protein-rich dinner .,Prepare a protein-rich dinner .
+304,Buy a Computer Monitor,Choose a Computer Monitor
+305,"Pratic a lot , know the music and scales on scales the faster you can play then cleanly the better","Practice a lot , know the music and scales on scales the faster you can play then cleanly the better ."
+306,Getting over the awkwardness though will enable you to get better deals and therefore better gifts .,"Getting over the awkwardness , though , will enable you to get better deals and therefore better gifts ."
+307,Press the Home button .,Tap the Home button .
+308,Press the Home button .,Tap the Home button .
+309,Watch the dragonball series and look how Goku acts at every instance .,Read the dragonball series and look how Goku acts at every instance .
+310,"Have a glass of orange juice when taking your vitamins , or take a vitamin C supplement with them .","Drink a glass of orange juice when taking your vitamins , or take a vitamin C supplement with them ."
+311,Do not buy a greyhound as a running companion .,Do not adopt a greyhound as a running companion .
+312,Do n't get friends that will treat you rudely or like bullies .,"Do n't pick friends that will treat you rudely , or like bullies ."
+313,Do n't be fake,Do n't be a faker !
+314,Do this several days before getting your snake so that the temperature can regulate .,Set this up several days before getting your snake so that the temperature can regulate .
+315,Putting the needle in the desired are .,Put the needle in the desired are .
+316,Have a good defensive posture and use your whole body to block the other player 's advance .,Keep a good defensive posture and use your whole body to block the other player 's advance .
+317,Retrieve Deleted Emails from Hotmail,Restore Deleted Emails from Hotmail
+318,Act Like a Princess,Behave Like a Princess
+319,Wipe Clean the inside of the box with a damp cloth .,Clean the inside of the box with a damp cloth .
+320,Disconnect negative battery cable .,Reconnect negative battery cable
+321,Brining meat before cooking will yield a juicy and flavorful result .,Brining meat before cooking yields a juicy and flavorful result .
+322,do n't over go it with makeup,Do n't over do it with makeup .
+323,Track your partner 's interests .,Notice your partner 's interests .
+324,Be nice to people and they will most likely be nice back to you .,Be kind to people and they will most likely be kind back to you .
+325,Have a protective barrier for your tortoise .,Create a protective barrier for your tortoise .
+326,"Check the box next to "" Allow others to share my files and printer ( s ) and then click OK .","Uncheck the box next to "" Allow others to share my files and printer ( s ) "" and then click OK ."
+327,Tap on the closest city to your location .,Select the closest city to your location .
+328,Tap on at the bottom of the next screen .,Select at the bottom of the next screen .
+329,Tap on to receive a verification code .,Select to receive a verification code .
+330,Tap at the bottom of the screen .,Click at the bottom of the screen .
+331,Tap on on the pop-up window to verify the phone number .,Click on on the pop-up window to verify the phone number .
+332,Tap on or on the pop-up window .,Click on or on the pop-up window .
+333,Have you ever tried to sneak out of your house and been caught before you made it out your front door ?,Have you ever attempted to sneak out of your house and been caught before you made it out your front door ?
+334,Put your SUV in reverse .,Shift your SUV into reverse .
+335,Put the rope between the grooves around the outside of the wheel .,Thread the rope between the grooves around the outside of the wheel .
+336,"Fixed rate generally appear a little higher , but you will know what to expect each month .","Fixed rate generally are a little higher , but you will know what to expect each month ."
+337,Establish that there is nothing necessarily sexual about nudity .,Realize that there is nothing necessarily sexual about nudity .
+338,Sleeping naked will make you feel better about nudity .,Sleeping naked will help you feel better about nudity .
+339,Realize that nudity is natural .,Recognize that nudity is natural .
+340,Buy echoes : The Best of Pink Floyd .,Echoes : The Best of Pink Floyd .
+341,"Do some extracurriculars : Get involved in one sport , the drama club , and one art / music .","Do some extra curriculum : Get involved in one sport , the drama club , and one art / music ."
+342,Open the Call Log .,Select the Call Log .
+343,Taking these larger items to your local dry cleaners ask for a full cleaning or treatment can prevent future infestations .,Taking these larger items to your local dry cleaners for a full cleaning or treatment can prevent future infestations .
+344,Purchase through a variety of payment options .,Pay through a variety of payment options .
+345,Confirm the presence of excessive perspiration .,Look for the presence of excessive perspiration .
+346,Get all of your records together .,Gather all of your records together .
+347,Write your symbol on your forehead .,Draw your symbol on your forehead .
+348,Learn the best places to hide .,Know the best places to hide .
+349,Do n't be dumb .,Do n't be a moron .
+350,Do n't be dumb .,Do n't be a moron .
+351,Practice it into your daily game-play .,ice it into your daily game-play .
+352,Apply a damp wash cloth .,Use a damp wash cloth .
+353,"Use hair clips to divide your hair into a top , middle , and bottom section .","Using hair clips , divide your hair into a top , middle , and bottom section ."
+354,"Staying in a relationship with a draining person deprives you from being happy , both physically and emotionally .","Staying in a relationship with a draining person prevents you from being happy , both physically and emotionally ."
+355,GET two measuring cylinders .,Obtain two measuring cylinders .
+356,Do n't go telling everyone that you 're dating someone if you are n't exactly sure about your relationship status yet .,Do n't start telling everyone that you 're dating someone if you are n't exactly sure about your relationship status yet .
+357,Give share your reviews about your experiences with these different activities .,Share your reviews about your experiences with these different activities .
+358,Share your reviews about your experiences with these different activities .,Submit your reviews about your experiences with these different activities .
+359,Find the Page Layout options .,Click the Page Layout options .
+360,"Choose the "" Custom Watermark "" option under the Watermark menu if you would like to use an image as a watermark for your background .","Select the "" Custom Watermark "" option under the Watermark menu if you would like to use an image as a watermark for your background ."
+361,Find out what makes you angry .,Figure out what makes you angry .
+362,Do different scales while using a tuner .,Play different scales while using a tuner .
+363,Know which types of welding you 'll need for specific jobs .,Learn which types of welding you 'll need for specific jobs .
+364,"make sure it 's partitioned as "" Mac OS Extended ( Journaled ) "" under the "" Partition "" section in Disk Utility .","Ensure it 's partitioned as "" Mac OS Extended ( Journaled ) "" under the "" Partition "" section in Disk Utility ."
+365,Purchase an oil-based polyurethane and a wide foam brush .,Use an oil-based polyurethane and a wide foam brush .
+366,"Damaged hair can break easily when combed dry , so add a small amount of conditioner or water .","Damaged hair breaks easily when combed dry , so add a small amount of conditioner or water ."
+367,Learn to slow down and enjoy life .,Try to slow down and enjoy life .
+368,Take the muscle car body and increase the size of the fender openings with a dremel tool with a sanding drum .,Remove the muscle car body and increase the size of the fender openings with a dremel tool with a sanding drum .
+369,Become the Prettiest Girl in School,Be the Prettiest Girl in School
+370,Do n't do it on the makeup .,Do n't overdo it on the makeup .
+371,Try a simple hairstyle .,Wear a simple hairstyle .
+372,tell about it to your friends or siblings .,Talk about it with your friends or siblings .
+373,Put dim lights like fairy lights into your hiding place .,Include dim lights like fairy lights into your hiding place .
+374,Plan a schedule for watching the movies .,Make a schedule for watching the movies .
+375,Find a list of reflexology schools near you .,Create a list of reflexology schools near you .
+376,Get an Alien Baby in the Sims 2,Have an Alien Baby in The Sims 2
+377,Skip everyday being happy and acting healthy .,Pass everyday being happy and acting healthy .
+378,Get to grips with the basics .,Come to grips with the basics .
+379,Do not absent mindedly ask the Lord to bless it but actually beg Him that it may become a channel of His grace .,Do not absentmindedly ask the Lord to bless it ; actually beg Him that it may become a channel of His grace .
+380,Get a radiator key .,Find a radiator key .
+381,Go through with the boycotting of the animal-testing products .,Follow through with the boycotting of the animal-testing products .
+382,Choose a color scheme .,Select a color scheme .
+383,"Giving him frequent hugs , for example may be friendly to you but he may interpret it as a romantic gesture .","Giving him frequent hugs , for example , may seem friendly to you but he may interpret it as a romantic gesture ."
+384,Go to your first tournament .,Enter your first tournament .
+385,Use concealer under your eyes and on blemishes .,Apply concealer under your eyes and on blemishes .
+386,Do n't Text and Drive !,Do n't drink and Drive !
+387,"Stop the board before it spins too much , make sure your fingers land in the right place .","Catch the board before it spins too much , make sure your fingers land in the right place ."
+388,Put the paper sheet on a wood board,Place the paper sheet on a wood board .
+389,Learn your skin type .,Determine your skin type .
+390,Put a little clear nail polish for a healthy look .,Wear a little clear nail polish for a healthy look .
+391,Tell everyone you know that you are looking for organizations who want a good motivational speaker .,Inform everyone you know that you are looking for organizations who want a good motivational speaker .
+392,"Boarding the plane typically occurs half an hour before takeoff , so you may have plenty of time to kill .","Boarding the plane typically begins half an hour before takeoff , so you may have plenty of time to kill ."
+393,Put one weight in each hand .,Place one weight in each hand .
+394,"Colored skinnies are the best thing to wear Wear bright colors : ] TOPS : Jackets jackets jackets ! Always have a jacket with you , and make sure you own a bunch .","Colored skinny jeans are the best thing to wear Wear bright colors : ] TOPS : Jackets jackets jackets ! Always have a jacket with you , and make sure you own a bunch ."
+395,"Use baggy , ripped , patched jeans .","Buy baggy , ripped , or patched jeans ."
+396,"Go listen to screamo , symphonic metal , gothic music , crunk , classical , or something else you had n't given a chance before .","Listen to screamo , symphonic metal , gothic music , crunk , classical , or something else you had n't given a chance before ."
+397,"Draw on the plywood a basic curve of your ramp and add an extra flat spot at the top , a little shorter and a little longer for distance and taller for height .","Sketch on the plywood a basic curve of your ramp and add an extra flat spot at the top , a little shorter and a little longer for distance and taller for height ."
+398,Do n't be a pimp .,Do n't be dirty .
+399,Do n't be dirty .,Do n't be a pimp .
+400,Be a Punk,Be a Punk Girl
+401,Covering the dark circles,Cover the dark circles .
+402,Stay a good influence .,Be a good influence .
+403,Be safe on the internet .,Stay safe on the internet .
+404,Pull out initial request files / first application information,Take out initial request files / first application information
+405,Create your beauty salon 's web site .,Design your beauty salon 's web site .
+406,"Pack a hair straighteners and some make-up , you have to look your best !","Take hair straighteners and some make-up , you have to look your best !"
+407,Are you looking to erect your own fence to save money ?,Are you planning to erect your own fence to save money ?
+408,Have your feet in an ollie position .,Put your feet in an ollie position .
+409,Find chlorella supplements .,Consider chlorella supplements .
+410,Throw some kelp or spirulina powder in a smoothie .,Add some kelp or spirulina powder in a smoothie .
+411,Know what skills to look for in a program .,List what skills to look for in a program .
+412,Decide between community college or vocational schools .,Choose between community college or vocational schools .
+413,Try not to go off exploring alone .,Do not go off exploring alone .
+414,Go to medical school .,Finish medical school .
+415,Arrange the bacon on the rack .,Lay the bacon on the rack .
+416,Be thoroughly across the requirements .,Be thorough about the requirements .
+417,Bake a Moist Chocolate Cake,Make a Moist Mayo Chocolate Cake
+418,Have short-term memory loss .,Develop short-term memory loss .
+419,Decide what software you will need .,Consider what software you will need .
+420,Go Underwater Without Holding Your Nose,Swim Underwater Without Holding Your Nose
+421,Stick the pan into the oven for 25 minutes at 350 degrees .,Place the pan into the oven for 25 minutes at 350 degrees .
+422,Stick the cake back into the oven for five minutes or until done .,Place the cake back into the oven for five minutes or until done .
+423,"Using the courts as a means for stopping actions against their clients or as a means to seek damages for victims , human rights attorneys are at once legal professionals and activists .","Using the courts as a means for stopping actions against their clients or as a means to seek damages for victims , human rights attorneys are both legal professionals and activists ."
+424,"Froun a lot , and smile when something funny comes up , dont burst out laghing just smile .","Frown a lot , and smile when something funny comes up , do n't burst out laughing just smile ."
+425,Know the power of gloominess .,Feel the power of gloominess .
+426,Brush their coats at least once a week to control shedding and ensure that the natural oils from their skin are distributed throughout their fur .,Comb their coats at least once a week to control shedding and ensure that the natural oils from their skin are distributed throughout their fur .
+427,Do n't be a mean popular like Regina in Mean Girls .,Do n't be mean and popular like Regina in Mean Girls .
+428,Get on his good side .,Stay on his good side .
+429,Be a Responsible Teenager,Be a Responsible Teen
+430,Elevate Your Self Esteem,Improve Your Self Esteem
+431,Keep your everyday cutlery and cups in nearby drawers or cabinets .,Store your everyday cutlery and cups in nearby drawers or cabinets .
+432,Chatting can really take the hours away .,Chatting can really whisk the hours away .
+433,Do n't tell make deals with people to vote on each there 's stories so that you can gain fame .,Do n't make deals with people to vote on each there 's stories so that you can gain fame .
+434,Move like a vampire .,Speak like a vampire .
+435,Move like a vampire .,Speak like a vampire .
+436,Control the water temperature .,Check the water temperature .
+437,Try on your homework .,Do your homework .
+438,"Dislike the Los Angeles Lakers , New York Knicks , Philadelphia 76ers , and the Detroit Pistons .","Hate the Los Angeles Lakers , New York Knicks , Philadelphia 76ers , and the Detroit Pistons ."
+439,Market Your Store .,Set Up Your Store .
+440,"Do not yourself , as this is not healthy behavior .","Do not cut yourself , as this is not healthy behavior ."
+441,Put the pans on the center rack of the preheated oven .,Place the pans on the center rack of the preheated oven .
+442,"Be aware of any negativity that may stem from pressure and expectations , and take action to turn these thoughts into positive encouragements .","Stay aware of any negativity that may stem from pressure and expectations , and take action to turn these thoughts into positive encouragements ."
+443,Enter the maiden name of female siblings when possible .,Use the maiden name of female siblings when possible .
+444,Use multidimensional arrays .,Declare multidimensional arrays .
+445,Take 2 cups of sugar free tea daily .,Drink 2 cups of sugar free tea daily .
+446,keeping it conditioned as well so you wont have any split ends .,"keeping it conditioned as well , so you wo n't have any split ends ."
+447,Know the difference between non-exclusive and exclusive .,Learn the difference between non-exclusive and exclusive .
+448,Tell her to dress properly and speak in proper English .,Ask her to dress properly and speak in proper English .
+449,Tell your girlfriend in advance to be polite and chatty with your parents .,Ask your girlfriend in advance to be polite and chatty with your parents .
+450,Make a price or bargain for it,Name a price or bargain for it .
+451,Bring a deck of cards as you can play card games .,Take a deck of cards as you can play card games .
+452,have you ever fell down the stairs ?,Have you ever fallen down the stairs ?
+453,Open an email from a person whom you 'd like to add .,Find an email from a person whom you 'd like to add .
+454,"Locate the bread plate slightly above and to the left of the dinner plate , with the butter knife resting across the plate .","Place the bread plate slightly above and to the left of the dinner plate , with the butter knife resting across the plate ."
+455,Make sure that the type and quality of art you want to show is actually being made and is available to you .,Ensure that the type and quality of art you want to show is actually being made and is available to you .
+456,Have you ever helping someone ?,Have you ever tried helping someone ?
+457,"Take off a large piece of plastic ( and the big screw it 's attached with ) in the rear of the "" pistol "" .","Remove a large piece of plastic ( and the big screw it 's attached with ) in the rear of the "" pistol "" ."
+458,Finding a puffy shirt and wear it all the time .,Find a puffy shirt and wearing it all the time .
+459,Have a pirate-like swagger in your step .,Add a pirate-like swagger in your step .
+460,Run Cheat Engine .,Return to Cheat Engine .
+461,Earn Respect at Work,Get Respect at Work
+462,"Doing it will get you to be more known and famous in places , people might get jealous and some rumors might be spread about you .","Having Sex will get you to be more known and famous in places , people might get jealous and some rumors might be spread about you ."
+463,Get a Pokemon game .,Find a Pokemon game .
+464,Tell them you are here today for a test drive .,Say that you are here today for a test drive .
+465,walk tall ! This withholds a rush of confidence and will improve your body language as well by sending positive signals .,Stand tall ! This withholds a rush of confidence and will improve your body language as well by sending positive signals .
+466,do not do sarcasm around your parents .,Do not use sarcasm around your parents .
+467,Elevate Your Self Esteem,Improve Your Self Esteem
+468,"Remeber that you ca n't expect to gain your parents trust back over a matter of weeks , it depends on what made you lose it in the first place .",Remember that you ca n't expect to gain your parents ' trust back over a matter of weeks ; it depends on what made you lose it in the first place .
+469,Build a Bird Bath,Make a Bird Bath
+470,Do copy content from the web and post it on the forum .,Do not copy content from the web and post it on the forum .
+471,Does your post or question or answer relate to the topic ?,"Does your post , question , or answer relate to the topic ?"
+472,Talk to your parents if they liked them because your mostly going to get a yes .,Ask your parents if they liked them because your mostly going to get a yes .
+473,be carefull while handling the needle,Be careful while handling the needle .
+474,Bring all the materials necessary to writing notes .,Bringing all the materials necessary to write notes .
+475,"Sleeping well every night and keeping healthy means that your concentration will last longer , allowing you to focus .","Sleeping well every night and keeping healthy , meaning that your concentration will last longer , allowing you to focus ."
+476,Launch the Lyft app .,Open the Lyft app .
+477,Have at least one of the games .,Own at least one of the games .
+478,"Be conscious , skeptical and patient .","Be conscientious , skeptical , and patient ."
+479,Be a drama kid in high school .,Be a drama student in high school .
+480,Select an Ergonomic Office Chair,Choose an Ergonomic Office Chair
+481,Determine what size container you want .,Decide what size container you want .
+482,Get with your caterer to prepare for the amount of food needed for the reception .,Speak with your caterer to prepare for the amount of food needed for the reception .
+483,Do not over feed kitten .,Do not over feed the kitten .
+484,Elevate Your Self Esteem,Improve Your Self Esteem
+485,Soak your dry splint material in a deep bucket of cool water .,Place your dry splint material in a deep bucket of cool water .
+486,"Dont always hand out with boys , you will start to cory thier ways .","Do n't always hang out with boys , you will start to cory their ways ."
+487,Wear feminine clothes .,Buy feminine clothes .
+488,Add some slim jeans .,Knit some slim jeans .
+489,Have a pleasant conversation .,Make pleasant conversation .
+490,"Burn it with a torch , lighter or match .","Light it with a torch , lighter or match ."
+491,Be a Healthy Teen Girl,Be a Healthy Teenager
+492,Leave a soft sponge and soft toothbrush handy for cleaning the cage and the snail .,Set aside a soft sponge and soft toothbrush handy for cleaning the cage and the snail .
+493,inviting your friends with some snacks .,Invite your friends with some snacks .
+494,"Accept that Bible manuscripts , translations to other languages and copies are generally like 99 % pure so that they are very highly dependable in detail .","Check that Bible manuscripts , translations to other languages and copies are generally like 99 % pure so that they are very highly dependable in detail ."
+495,Accept the witness of all the people who saw Jesus alive after His Crucifixion .,Read the witness of all the people who saw Jesus alive after His Crucifixion .
+496,Believe the biblical evidence .,Check the biblical evidence .
+497,Realize that the Bible is archaeologically accurate too as to the sites of Israel .,Verify that the Bible is archaeologically accurate too as to the sites of Israel .
+498,Believe that Jesus said he would rise from the dead ( John 2 : 19 - 21 ) .,Read that Jesus said he would rise from the dead ( John 2 : 19 - 21 ) .
+499,Have a Berean Attitude : eager to study the Scriptures every day to find out if what they have been taught is Truth according to the scriptures ... Acts 17 : 10 - 12,Try a Berean Attitude : eager to study the Scriptures every day to find out if what they have been taught is Truth according to the scriptures ... Acts 17 : 10 - 12
+500,Being careful with your relationships adds class to your reputation .,Being careful with your relationships adds some class to your reputation .
+501,Decide which ingredients you want to use .,Pick which ingredients you want to use .
+502,Include your home address above the MSP 's address .,Place your home address above the MSP 's address .
+503,Looking to try something new with your hair ?,Want to try something new with your hair ?
+504,Put the 2 1x1 cylinders to the top of the hinge piece .,Add the two 1x1 cylinders to the top of the hinge piece .
+505,Relaxing your face will .,Relaxing your face will help .
+506,Did you bored playing Arcade games on emulator ?,Did you get bored playing Arcade games on emulator ?
+507,Find another source of iron .,Use another source of iron .
+508,Do perfect people smoke ?,Do perfect people drink ?
+509,Do perfect people do drugs ?,Do perfect people drink ?
+510,Insert your diced potatoes and onions to your mixing boil and drizzle these with olive oil .,Add your diced potatoes and onions to your mixing boil and drizzle these with olive oil .
+511,Tap your bank 's logo in the list if it appears .,Click your bank 's logo in the list if it appears .
+512,Put grey eyeshadow all over your eyelid and put black on the outer eyelid .,Apply grey eyeshadow all over your eyelid and put black on the outer eyelid .
+513,"Try : Make an appointment at some music stores , if need be , so you can try some flutes in person .","Make an appointment at some music stores , if need be , so you can try some flutes in person ."
+514,Buy : Be sure to take your time and do n't rush into anything .,Be sure to take your time and do n't rush into anything .
+515,"Speak up for yourself , but remember that you ca n't change someone 's beliefs or opinions .","Stand up for yourself , but remember that you ca n't change someone 's beliefs or opinions ."
+516,"Do an upward block , inward block , extended outward block , downward block , back elbow , push down block , and back to a horse stance .","Perform an upward block , inward block , extended outward block , downward block , back elbow , push down block , and back to a horse stance ."
+517,Obtain a high school diploma .,Get a high school diploma .
+518,have a black t shirt designless is best but if not use a design like something intimidating in red,Get a black t shirt designless is best but if not use a design like something intimidating in red
+519,DO : Open doors for your date .,Open doors for your date .
+520,DO : Help your date to her chair before you sit down .,Help your date to her chair before you sit down .
+521,DO : Ask questions about your date .,Ask questions about your date .
+522,DO : Let your date know how much fun you had and offer a possible second date .,Let your date know how much fun you had and offer a possible second date .
+523,Do n't tease the police officer .,Do n't insult the police officer .
+524,Have respect yourself and other people 's relationships .,Have respect for yourself and other people 's relationships .
+525,Loosen the root ball .,Plant the root ball .
+526,Do n't be scared to reply to people that appeal to you in interest / about me threads .,Do n't be afraid to reply to people that appeal to you in interest / about me threads .
+527,Do the right hair .,Have the right hair .
+528,Ride on someone 's coattails .,Use someone 's coattails .
+529,Determine whether you will be living in one of the apartments or living offsite .,Decide whether you will be living in one of the apartments or living offsite .
+530,Do n't file your nails too often .,Do n't polish your nails too often .
+531,Cut your nails frequently with clippers .,Trim your nails frequently with clippers .
+532,Use memorable imagery in your conversation .,Invoke memorable imagery in your conversation .
+533,Make follow-up plans .,Ask for follow-up plans .
+534,Use imagery to liven up the call .,Invoke imagery to liven up the call .
+535,Ripping off dried skin on your lips will also inflame your lips and possibly result in bleeding .,Ripping off dried skin on your lips will also damage your lips and possibly result in bleeding .
+536,Do n't ever swear .,Do n't ever yell !
+537,Do n't ever swear .,Do n't ever beg .
+538,Do n't when you 're feeling bad .,Do n't drink when you 're feeling bad .
+539,Build the greenhouse ( step 1 ) .,Place the greenhouse ( step 1 ) .
+540,Build the greenhouse ( step 2 ) .,Place the greenhouse ( step 2 ) .
+541,Build the greenhouse ( step 3 ) .,Place the greenhouse ( step 3 ) .
+542,Using a soft tooth brush ' scrub ' your lips till they are plump and smooth,"Using a soft toothbrush , ' scrub ' your lips till they are plump and smooth ."
+543,"Do what you can to appear as small as possible and hopefully less intimidating , if you can walk up to it with your shoulder facing it , but remember to stay attentive .","Do whatever you can to appear as small as possible and hopefully less intimidating , if you can walk up to it with your shoulder facing it , but remember to stay attentive ."
+544,"Admire the overall effect in the mirror , and redo the eyeliner if you think it 's necessary .","Check the overall effect in the mirror , and redo the eyeliner if you think it 's necessary ."
+545,Get some craft glue ( the type that does n't dry clear ) and smooth it around the mouth in a bubbly effect .,Use craft glue ( the type that does n't dry clear ) and smooth it around the mouth in a bubbly effect .
+546,"Try to make the cut not completely vertical ; instead , angle the point of the knife in towards the center of the circle .","Do not make the cut not completely vertical ; instead , angle the point of the knife in towards the center of the circle ."
+547,Do n't overfeed junk food .,Do n't overdo junk food .
+548,Fix your makeup ( do n't overdo it-just out on a little lip stick or lip gloss and eye shadow ) .,Do your makeup ( do n't overdo it - just out on a little lipstick or lip gloss and eye shadow ) .
+549,Do n't like wet and cold things .,Dislike wet and cold things .
+550,Own Your Own Business,Start Your Own Business
+551,Have proper air circulation .,Ensure proper air circulation .
+552,Letting your computer update .,Let your computer update .
+553,Opening software centre .,Open the software centre .
+554,Have a balanced diet .,Consume a balanced diet .
+555,Have the right tires .,Purchase the right tires .
+556,"Be aware of dogs , cars ( monsters ) and rats .","Befriend of dogs , cars ( monsters ) and rats ."
+557,BE A GANGSTA FOOH,BE A GANGSTA
+558,"Shut off the water supply , then flush the toilet to empty the tank before you start working .","Turn off the water supply , then flush the toilet to empty the tank before you start working ."
+559,Placed the cartons on top of the CD stack .,Lay the cartons on top of the CD stack .
+560,Prepare the nail sticker .,Apply the nail sticker .
+561,Do n't do drugs .,Do n't take drugs .
+562,"Chanting the mantras and doing pujas : In jainism , the most important mantra is ' Navkar ' or ' Namokar ' mantra .","Chant the mantras and do pujas : In jainism , the most important mantra is ' Navkar ' or ' Namokar ' mantra ."
+563,Use for text output .,Consider for text output .
+564,Wrtie many high quality artiles on things you know alot about .,Write many high quality articles on things you know a lot about .
+565,"Add dressing or plaster , ensuring that it is the right size .","Apply dressing or plaster , ensuring that it is the right size ."
+566,Pull the teacher aside when they are n't doing anything and tell them what your problem is and they will do their best to help you .,Ask the teacher aside when they are n't doing anything and tell them what your problem is and they will do their best to help you .
+567,Launder your bra correctly .,Put on your bra correctly .
+568,Launder your bra correctly .,Put on your bra correctly .
+569,Complete your Associate 's degree .,Get your Associate 's degree .
+570,Transform all of the things you would normally be saying out loud into thoughts .,Form all of the things you would normally be saying out loud into thoughts .
+571,"Resist fat-soluble toxins that can build up in farmed , pond-raised fish .","Avoid fat-soluble toxins that can build up in farmed , pond-raised fish ."
+572,Thinking before you act is an introverted thing .,Thinking before you act is an introverted trait .
+573,Act Like a Princess,Behave Like a Princess
+574,Cope With Irritable Bowel Syndrome,Live with Irritable Bowel Syndrome
+575,"Set the settings of the filter to 3 to 5 percent , depending on how fine you want your glitter effect to be .","Put the settings of the filter at 3 to 5 percent , depending on how fine you want your glitter effect to be ."
+576,Sync Your Apple Watch with an iPhone,Pair Your Apple Watch with an iPhone
+577,Dropping a Nevy 's Disk is not a bad call once you 've a Force in hand and enough land to cast a CS naturally before it .,Dropping a Nevinyrral Disk is not a bad call once you 've a Force in hand and enough land to cast a CS naturally before it .
+578,Add the rest of the ingredients .,Fold in the rest of the ingredients .
+579,Realise and accept that life sometimes seems unfair .,Realize and accept that life sometimes seems not fair .
+580,Become emotionally independent .,Be emotionally independent .
+581,Give air plants a dose of fertilizer every four weeks .,Feed air plants a dose of fertilizer every four weeks .
+582,Find a good vet .,Choose a good vet .
+583,Establishing basic things and move to the finish .,"Establish basic things , and move to the finish ."
+584,Find a water source .,Create a water source .
+585,Create a water source .,Provide a water source .
+586,Consider how connected you want to be .,Choose how connected you want to be .
+587,"Take the cushions off of the couch place them on the floor , between or under the couch and table .","Grab the cushions off of the couch place them on the floor , between or under the couch and table ."
+588,Build a blanket fort over your bed .,Set up a blanket fort over your bed .
+589,Build a string and tarp fort .,Make a string and tarp fort .
+590,"Ask , wikiHow 's community support person , if she has any objections into making the user a featured author .","wikiHow 's community support person , if she has any objections into making the user a featured author ."
+591,"Being a good preteen is not just about being pretty and fashionable , but having respect for others and yourself .","Being a great preteen is not just about being pretty and fashionable , but having respect for others and yourself ."
+592,"Do n't shoot at people , animals , or anything that would constitute vandalism .","Do n't aim at people , animals , or anything that would constitute vandalism ."
+593,Are you gutting the entire transmission fluid ?,Are you replacing the entire transmission fluid ?
+594,Know the layout of your abdominal muscles .,Learn the layout of your abdominal muscles .
+595,"Use clothes and outfits to draw attention to the color of your eyes , not your eyeshadow .","Wear clothes and outfits to draw attention to the color of your eyes , not your eyeshadow ."
+596,Train your agility and your speed .,Improve your agility and your speed .
+597,get a mountain bike,Buy a mountain bike .
+598,Have a mountain bike,Buy a mountain bike .
+599,Avoiding injuring your eyes and the eyes of your combatant .,Avoid injuring your eyes or the eyes of your combatant .
+600,Make your eyes open to the wild .,Keep your eyes open to the wild .
+601,Eat tea with your doll .,have a tea with your doll .
+602,Put on midnight blue eyeshadow .,Use midnight blue eyeshadow .
+603,Apply a non-talc rice setting powder all over face or in needed areas ( see tips ) .,Add a non-talc rice setting powder all over face or in needed areas ( see tips ) .
+604,"Applying a finishing powder over your face will set your makeup , especially the areas where concealer was applied .","Applying a finishing powder over your face to set your makeup , especially the areas where concealer was applied ."
+605,"Have connections throughout the country , whether they be with other jockeys , trainers , owners , or racetrack officials .","Build connections throughout the country , whether they be with other jockeys , trainers , owners , or racetrack officials ."
+606,Connect your iPod to your computer .,Attach your iPod to your computer .
+607,Connect your iPod to your computer .,Attach your iPod to your computer .
+608,Connect your iPod to your computer .,Attach your iPod to your computer .
+609,Connect your iPod to your computer .,Attach your iPod to your computer .
+610,Enjoy meaningful exchanges .,Have meaningful exchanges .
+611,Elevate Your Self Esteem,Improve Your Self Esteem
+612,"Select the "" System Preferences "" option .","Click the "" System Preferences "" option ."
+613,Click the amount of Robux you want to buy .,Tap the amount of Robux you want to buy .
+614,Do * not * hurt anybody 's feelings !,Do not hurt anybody 's feelings !
+615,Get a real person to help you ; not just someone online .,Find a real person to help you ; not just someone online .
+616,lets start off talking about your cardio workout .,Start off talking about your cardio workout .
+617,Get him / her along when you need to purchase something .,Bring him / her along when you need to purchase something .
+618,Make random acts of kindness .,Do random acts of kindness .
+619,Pay with a debit card .,Buy with your debit card .
+620,"Assuming they 're still touring , and alive see if you can go see them .","Assuming they 're still touring and alive , see if you can go see them ."
+621,Have statement pieces that will set your wardrobe apart from your classmates .,Find statement pieces that will set your wardrobe apart from your classmates .
+622,Domesticated Foxes make great pets .,Domesticated foxes can make great pets .
+623,Jump like a wolf .,Walk like a wolf .
+624,Have a Secret Santa .,Do a Secret Santa
+625,Generalized electronics stores that sell everything from fridges to computers but have staff with specialized computer knowledge,Generalized electronics stores that sell everything from fridges to computers rarely have staff with specialized computer knowledge
+626,"Being low maintenance not only makes you a helpful and polite person , but it also helps other people who are close to you live their life easier .","Being low maintenance not only makes you a helpful and polite person , it also helps other people who are close to you live their lives easier ."
+627,"Being low maintenance not only makes you a helpful and polite person , it also helps other people who are close to you live their lives easier .","Being low maintenance not only makes you a helpful and polite person , but it also helps other people who are close to you live their lives easier ."
+628,meaning you do n't necessarily need to ask them for everything at every minute .,Means you do n't necessarily need to ask them for everything at every minute .
+629,"Adopting a senior pet , knowing that you will have a shorter time together , takes the right pet parent .","Adopting a senior pet , knowing that you will have a shorter time together , does take the right pet parent ."
+630,"Being respectful to the officer and doing what they say help everyone in the long run , and judges take your behavior in account when they decide what your sentence is going to be .","Being respectful to the officer and doing what they say will help everyone in the long run , and judges take your behavior in account when they decide what your sentence is going to be ."
+631,Do n't text and drive .,Do n't drink and drive .
+632,Do n't get distracted .,Do n't get too wasted .
+633,Work interference if necessary .,Provide interference if necessary .
+634,Put on the finishing touches .,Add the finishing touches .
+635,Go fix every single one of them .,Fix every single one of them .
+636,"Contact local schools , colleges or universities .","Check local schools , colleges or universities ."
+637,"Select the "" Forwarding and POP / IMAP "" tab .","Click the "" Forwarding and POP / IMAP "" tab ."
+638,Adding a moat around the castle .,Create a moat around the castle .
+639,Attach the other end of the strings to top of the bridge on each side .,Glue the other end of the strings to top of the bridge on each side .
+640,Keep your fingers away from the saw blade .,Direct your fingers away from the saw blade .
+641,Adding mascara and / or false lashes completes any eye look .,Adding mascara and false lashes complete any eye look .
+642,Do n't be scared to ask other people for help .,Do n't be afraid to ask other people for help .
+643,Inform your patient they can remove the bandage later that day .,Tell your patient they can remove the bandage later that day .
+644,Mounting the Remote Receiver,Mount the Remote Receiver .
+645,Solder the remote receiver .,Mount the remote receiver .
+646,Doing your homework and studying hard will lead to a cute girl who is knowledgeable and mature .,Doing your homework and studying hard will make you a cute girl who is knowledgeable and mature .
+647,Find the page you want to block .,Go to the page you want to block .
+648,Talk to the school board about implementing these programs .,Go to the school board about implementing these programs .
+649,Open up your Skype account .,Login to your Skype account .
+650,learning how to finger-knit old t-shirts make fun ropes and you can hide seeds / treats in them,"Learning how to finger-knit old t-shirts makes fun ropes , and you can hide seeds / treats in them ."
+651,Hold your stacks side by side .,Place your stacks side by side .
+652,Use catchy titles for your vlogs .,Plan catchy titles for your vlogs .
+653,Put your hands close to the can on your first tries so you wo n't spill it everywhere .,Keep your hands close to the can on your first tries so you wo n't spill it everywhere .
+654,Know the facts about retired police dogs .,Get the facts about retired police dogs .
+655,Spitting up can also be cause by reflux .,Spit up can also be cause by reflux .
+656,Get the form notarized .,Have form notarized .
+657,Be careful of false teachings .,Be wary of false teachings .
+658,Beat up Cyrus for the second time .,Defeat Cyrus for the second time .
+659,Thrash your friends with the best dragon move : Roar of Time !,Win your friends with the best dragon move : Roar of Time !
+660,Stop doing any illegal activity .,Avoid doing any illegal activity .
+661,Punch upward and into the face .,Strike upward and into the face .
+662,Talk like a cat would if it could talk .,Speak like a cat would if it could talk .
+663,Do n't be humble .,Do n't be vain .
+664,Be Funny : Cool people always use humor and ease in any situation .,Use Humor : Cool people always use humor and ease in any situation .
+665,Being cool is being you .,Being cool is being yourself .
+666,Being cool is being you .,Being cool is being yourself !
+667,Being cool is being you .,Being cool is being yourself !
+668,Being cool is being you .,Being cool is being yourself !
+669,Being cool is being you .,Being cool is being yourself !
+670,Being cool is being you .,Being cool is being yourself !
+671,Being cool is being you .,Being cool is being yourself !
+672,Being cool is being you .,Being cool is being yourself !
+673,Being cool is being you .,Being cool is being yourself !
+674,Being cool is being you .,Being cool is being yourself !
+675,Do n't be shy .,Do n't be needy .
+676,Do n't be needy .,Do n't be a pussy .
+677,Do n't be shy .,Do n't be a pussy .
+678,Do n't be a pussy .,Do n't be needy .
+679,Do n't be shy .,Do n't be needy .
+680,Do n't be needy .,Do n't be a duech .
+681,Do n't be shy .,Do n't be needy .
+682,Do n't be shy .,Do n't be needy .
+683,Do n't be shy .,Do n't be needy .
+684,Do n't be shy .,Do n't be needy .
+685,Do n't be shy .,Do n't be needy .
+686,Do n't be shy .,Do n't be needy .
+687,Do n't be shy .,Do n't be needy .
+688,Do n't be needy .,Do n't be white .
+689,Do n't be white .,Do n't be needy .
+690,Verify Your Number .,Type Your Number .
+691,Shelve Books in a Library,Find Books in a Library
+692,Have you ever likes the thought of helping out people ?,Have you ever liked the thought of helping people ?
+693,"Begin a "" set "" ( a list of songs to be played ) before setting foot inside a DJ booth .","Plan a "" set "" ( a list of songs to be played ) before setting foot inside a DJ booth ."
+694,Do n't be shallow .,Do n't be you .
+695,Be prepared for technical questions about your abilities as an IT worker .,Be ready for technical questions about your abilities as an IT worker .
+696,Budget your time wisely .,Manage your time wisely .
+697,Do n't have milk products .,Do n't consume milk products .
+698,"Look mature , regal and elegant , but have a playful side , too .","Be mature , regal and elegant , but have a playful side , too ."
+699,Maintain eye contact to let the other person know you 're engaged .,Make eye contact to let the other person know you 're engaged .
+700,Repeating the same question over and over make that person not want to talk to you anymore .,Repeating the same question over and over will make that person not want to talk to you anymore .
+701,Buy items that contain minimal packaging that can easily be recycled .,Choose items that contain minimal packaging that can easily be recycled .
+702,Go to the blocked video .,Select the blocked video .
+703,Go to the blocked video .,Select the blocked video .
+704,"Set max change to .000,000,000,000,01 without commas as goal-seeking is done a lot .","Set max change to .000,000,000,000,01 without commas as goal-seeking can be done a lot ."
+705,Sanding original paint off .,Sand the original paint off .
+706,Removing dings and dents by bogging and priming .,Remove dings and dents by boggling and priming .
+707,Go to the court hearing .,Attend the court hearing .
+708,"Think long necklaces , dangling earrings , and chunky rings .","Wear long necklaces , dangling earrings , and chunky rings ."
+709,Do not talk to anyone .,Do not speak to anyone .
+710,Do n't be scared to try something new .,Do n't be afraid to try something new .
+711,Are you crazy and loud at heart ?,Are you weird and loud at heart ?
+712,Following this step-by-step guide will save you from identity theft and keep your card secure .,Following this step-by-step guide will help save you from identity theft and keep your card secure .
+713,Wail till bedtime to sleep .,Wait until bedtime to sleep .
+714,Suck your knees up as you reach the end of the rail .,Bend your knees up as you reach the end of the rail .
+715,chose the right party or you will never be elected,Choose the right party or you will never be elected .
+716,"Dyed , teased layers of choppy hair .","Try dyed , teased layers of choppy hair ."
+717,be fit and healthy,Get fit and healthy .
+718,Stop the ball with the bottom or side of your foot .,Stopping the ball with the bottom or side of your foot .
+719,"Realize that "" mentally retarded "" is no longer an accepted diagnostic term .","Recognize that "" mentally retarded "" is no longer an accepted diagnostic term ."
+720,Getting plenty of rest every night,Get plenty of rest every night
+721,Do n't gossip or tread on other people 's territory .,Do n't bully or tread on other people 's territory .
+722,Keep to-do lists .,Create to-do lists .
+723,"Realize the input you would like to make , and find the right time to do so .","Plan the input you would like to make , and find the right time to do so ."
+724,Cancelling more than five minutes after ordering your Uber when your driver is on schedule will result in a cancellation fee .,Canceling more than 2 - 5 minutes after ordering your Uber when your driver is on schedule will result in a cancellation fee .
+725,Have good hygiene .,Practice good hygiene .
+726,"Keeping in mind the number of accidents in India , never ride your scooter without a helmet","Keeping in mind the number of accidents in India , and never ride your scooter without a helmet ."
+727,Slam the bathroom door open when his girlfriend 's walking by .,Hurl the bathroom door open when his girlfriend 's walking by .
+728,Review the available products .,Peruse the available products .
+729,"Look for firm , healthy udders and a full set of teeth .","Check for firm , healthy udders and a full set of teeth ."
+730,Keeping it is recommended .,Keeping it is not recommended .
+731,Do n't be an ambassador for the fame,Do n't become an ambassador for the fame .
+732,Bashing former employers - If you speak ill of a former manager the interviewer will assume you would do the same to her .,Bashing Former Employers - If you speak ill of a former manager the interviewer will assume you would do the same to them .
+733,"Make-up - keep it sexy , but natural ! Put some concealer over your spots , and under your eyes , and then some setting powder .","Wear Make-up - keep it sexy , but natural ! Put some concealer over your spots , and under your eyes , and then some setting powder ."
+734,Do not be scared of the ball or the other team .,Do not be afraid of the ball or the other team .
+735,"Do n't be something you 're not , because in the end it all comes down to real life .","Do n't be someone you 're not , because in the end it all comes down to real life ."
+736,"Speaking at events forces you stay at the forefront of your industry as this is your time to shine and if you don 't , people will notice .","Speaking at events forces you to stay at the forefront of your industry , as this is your time to shine and if you don 't , people will notice ."
+737,"do n't be depressed all the time , smile and be polite toward normal people .","Do n't feel depressed all the time , smile and be polite toward normal people ."
+738,Ensure you discuss your sex life with him .,Be sure to discuss your sex life with him .
+739,Consider an certificate or diploma program .,Choose a certificate or diploma program .
+740,Having a college degree will give candidates get hired and have a higher starting salary .,Having a college degree will help candidates get hired and have a higher starting salary .
+741,Know how to put on a life vest .,Learn how to put on a life vest .
+742,Make clear navigation .,Provide clear navigation .
+743,Set up stationary cameras on tripods or mount them to the wall .,Mount stationary cameras on tripods or mount them to the wall .
+744,Set up your equipment in areas that are known for high activity to increase the chance that you 'll see something paranormal .,Place your equipment in areas that are known for high activity to increase the chance that you 'll see something paranormal .
+745,were a top and then a shirt over it,Wear a top and then a shirt over it .
+746,"Work out what kind of writing you want to do : novel , article ?","Figure out what kind of writing you want to do : novel , article ?"
+747,"Make one side "" Homework "" and make the other "" Corrected "" .","Label one side "" Homework "" and label the other "" Corrected "" ."
+748,See that unusual needs are normally spoken by the customer .,Be aware that unusual needs are normally spoken by the customer .
+749,Pick a good role model to follow .,Choose a good role model to follow .
+750,Give your baby a pacifier .,Offer your baby a pacifier .
+751,rememeber that its not easy for them to move into a new environment and to automatically live to respect you,Remember that it 's not easy for them to move into a new environment and to automatically live to respect you
+752,Pick a superhero name .,Create a superhero name .
+753,Kissing them is not - ever .,Kissing them is awesome - ever .
+754,Earn an associate 's degree in cardiovascular technology .,Obtain an associate 's degree in cardiovascular technology .
+755,"measuring about an inch , and crease the fold well .","Measure about an inch , and crease the fold well ."
+756,Make sure your shopping cart does n't contain any of the proscribed articles .,Ensure your shopping cart does n't contain any of the proscribed articles .
+757,Get a Bachelor 's Degree in urban design .,Earn a Bachelor 's degree in urban design .
+758,Work out when his schedule can accommodate your calls or presence .,Find out when his schedule can accommodate your calls or presence .
+759,"viewing the product over and over , without buying .","View the product over and over , without buying ."
+760,Apply now a new effect by applying different kinds of brushes on the document .,Employ a new effect by applying different kinds of brushes on the document .
+761,"Go to your doctor or health care provider whenever you have a need , but also to find ways to be more self-sufficient in improving your health .","See your doctor or health care provider whenever you have a need , but also to find ways to be more self-sufficient in improving your health ."
+762,"Learning how dance hip-hop will really imrove your new "" thugette image . ""","Learning how to dance hip-hop will really improve your new "" thugette image . """
+763,Take order of your life .,Create order in your life .
+764,Apply for a V-1 visa if you 're married to a permanent American resident .,Opt for a V-1 visa if you 're married to a permanent American resident .
+765,Click a delivery method .,Select a delivery method .
+766,do not permission .,do not get permission .
+767,Do n't the context and subject matter personally .,Do n't take the context and subject matter personally .
+768,Establish banking and credit card accounts for your business .,Obtain banking and credit card accounts for your business .
+769,"Enter the relevant Australian area / city code , or use "" 04 "" if you are calling a mobile .","Add the relevant Australian area / city code , or use "" 04 "" if you are calling a mobile ."
+770,Submitting an online application to apply for exchange .,Submit an online application to apply for exchange .
+771,Be carful if you take him / her outside he might get lost .,Be careful if you take him / her outside he might get lost . :(
+772,Do not yell or shout at your dog before a third person .,Do not hit or shout at your dog before a third person .
+773,Know the speed of light .,Define the speed of light .
+774,Do n't turn up earlier .,Do n't show up earlier .
+775,Be home on time .,Arrive home on time .
+776,Be wary when shopping at big-box stores .,Be careful when shopping at big-box stores .
+777,Declare how your business is structured .,Explain how your business is structured .
+778,Give the DBA form to the county clerk 's office .,Submit the DBA form to the county clerk 's office .
+779,Build Your Own Business,Start Your Own Business
+780,Dont fake her out and start MAKING OUT when shes just trying to watch the goddamn movie .,Dont freak her out and start MAKING OUT when shes just trying to watch the goddamn movie
