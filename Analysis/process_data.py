@@ -36,8 +36,9 @@ def constructDf(fname):
     print('Size of the dataframe: \t' + str(len(df['File Name'])))
     return df
 
-def addposAndDep(df, lim):
+def addposAndDep(df, start, lim):
     nlp = stanza.Pipeline('en', processors='tokenize, lemma, pos, depparse')
+    indlist = list()
     srctok = list()
     srcpos = list()
     srcdep = list()
@@ -46,7 +47,9 @@ def addposAndDep(df, lim):
     tgtpos = list()
     tgtdep = list()
     tgthead = list()
-    for ix in tqdm(range(len(df['Revision'][:lim]))):
+    ix = start
+    for ix in tqdm(range(len(df['Revision'][start:lim]))):
+        indlist.append(start + ix)
         src = nlp(df['Source'][ix])
         tgt = nlp(df['Target'][ix])
         srctok.append([word.text for word in src.sentences[0].words])
@@ -57,11 +60,12 @@ def addposAndDep(df, lim):
         tgtdep.append([word.deprel for word in tgt.sentences[0].words])
         srchead.append([word.head for word in src.sentences[0].words])
         tgthead.append([word.head for word in tgt.sentences[0].words])
+
     data = {
-            'File Name': df['File Name'][:lim],
-            'Revision': df['Revision'][:lim],
-            'Source': df['Source'][:lim],
-            'Target': df['Target'][:lim]
+            'File Name': df['File Name'][start:lim],
+            'Revision': df['Revision'][start:lim],
+            'Source': df['Source'][start:lim],
+            'Target': df['Target'][start:lim]
             }
     data['SourceTok'] = srctok
     data['TargetTok'] = tgttok
@@ -71,25 +75,23 @@ def addposAndDep(df, lim):
     data['TargetDep'] = tgtdep
     data['SourceHead'] = srchead
     data['TargetHead'] = tgthead
-    df = pd.DataFrame.from_dict(data, orient="columns")
-    return df
+    data['index'] = indlist
+    o_df = pd.DataFrame.from_dict(data, orient="columns")
+    print(o_df)
+    return o_df
 
 def filterImperative(df):
     siti = 0
-    si = 0
-    ti = 0
     siti_l = []
-    si_l = []
-    ti_l = []
     subj_list = ['you', 'one', 'it']
-    for ix in tqdm(range(len(df['SourceDep']))):
+    for ix in df['index']:
         try:
             src_root_loc = df['SourceDep'][ix].index('root')
             tgt_root_loc = df['TargetDep'][ix].index('root')
             src_root = df['SourceTok'][ix][src_root_loc].lower()
             tgt_root = df['TargetTok'][ix][tgt_root_loc].lower()
 
-        except:
+        except Exception:
             continue
 
         # Condition 0: Sentence root is the word "let"
@@ -161,16 +163,12 @@ def filterPos(df):
     print(svtv_df)
     return svtv_df, sv_df, tv_df
 
-
 def chRoot(fname, df):
     """
         Identify change in the position of the root, the root word itself, or both. 
         Useful when looking at sentences where both the source and target sentence
     """
-    cRootPosn = list()
-    cRootWord = list()
     cRootWP = list()
-    rephrase = list()
     for ix in tqdm(range(len(df['SourceDep']))):
         src_root_posn = df['SourceDep'][ix].index('root')
         tgt_root_posn = df['TargetDep'][ix].index('root')
@@ -183,21 +181,12 @@ def chRoot(fname, df):
             tgt_root_word = ''
         
         # Rephrase only
-        if editdistance.eval(df['Source'][ix], df['Target'][ix]) > 5 and editdistance.eval(df['Source'][ix], df['Target'][ix]) < 25:
-            rephrase.append([df['Source'][ix], df['Target'][ix]])
-        if src_root_word != tgt_root_word and editdistance.eval(df['Source'][ix], df['Target'][ix]) > 5 and editdistance.eval(df['Source'][ix], df['Target'][ix]) < 25:
-            cRootWord.append([df['Source'][ix], df['Target'][ix]])
-        if src_root_posn == tgt_root_posn and src_root_word != tgt_root_word and editdistance.eval(df['Source'][ix], df['Target'][ix]) > 3 and editdistance.eval(df['Source'][ix], df['Target'][ix]) < 10:
+        if src_root_posn == tgt_root_posn and src_root_word != tgt_root_word and editdistance.eval(df['Source'][ix], df['Target'][ix]) > 4 and editdistance.eval(df['Source'][ix], df['Target'][ix]) < 10:
             cRootWP.append([df['Source'][ix], df['Target'][ix]])
     
-    rephrase_df = pd.DataFrame(rephrase, columns=['Source',  'Target'])
-    cRootWord_df = pd.DataFrame(cRootWord, columns=['Source',  'Target'])
     cRootWP_df = pd.DataFrame(cRootWP, columns=['Source', 'Target']) 
-    
-    rephrase_df.to_csv(path_or_buf=fname + 'rephrase.csv', index=True)
-    cRootWord_df.to_csv(path_or_buf=fname + 'word.csv', index=True)
     cRootWP_df.to_csv(path_or_buf=fname + 'wp.csv', index=True)
-    return rephrase_df, cRootWord_df, cRootWP_df
+    return cRootWP_df
 
 def rephrase(fname, df):
     """
@@ -209,14 +198,16 @@ if __name__ == '__main__':
     fname = '/tmp/misunderstanding/typo_filtered_revisions.txt'
     # fname = './both0s.txt'
     df = constructDf(fname)
-    lim = 100000
-    df = addposAndDep(df, lim)
-    siti_df = filterImperative(df)
-    # svtv_df, sv_df, tv_df = filterPos(df)
-    # chRoot('chRoot_svtv', svtv_df)
-    # chRoot('chRoot_sv', sv_df)
-    # chRoot('chRoot_tv', tv_df)
-    # rephrase('rephrase_svtv', svtv_df)
-    # rephrase('rephrase_sv', sv_df)
-    # rephrase('rephrase_tv', tv_df)
-    chRoot('chRoot_siti', siti_df)
+    for ix in range(int(df.size/10000) - 1):
+        start = ix * 10000
+        lim = (ix + 1) * 10000
+        o_df = addposAndDep(df, start, lim)
+        siti_df = filterImperative(o_df)
+        chRoot('/tmp/misunderstanding/chRoot_siti_' + str(ix), siti_df)
+
+    start = ix * (df.size/10000)
+    lim = df.size
+    o_df = addposAndDep(df, start, lim)
+    siti_df = filterImperative(o_df)
+    chRoot('chRoot_siti_' + str(ix), siti_df)
+    
