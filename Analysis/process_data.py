@@ -97,13 +97,15 @@ def filterImperative(df):
         # Condition 0: Sentence root is the word "let"
         if (src_root == 'let') and (tgt_root == 'let'):
             siti += 1
-            siti_l.append([df['Source'][ix], df['SourceTok'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['SourceHead'][ix],
+            siti_l.append([df['File Name'][ix],
+                           df['Source'][ix], df['SourceTok'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['SourceHead'][ix],
                            df['Target'][ix], df['TargetTok'][ix], df['TargetPOS'][ix], df['TargetDep'][ix], df['TargetHead'][ix]])
 
         # Condition 1: Sentence has a root but no `nsubj`
         elif 'nsubj' not in df['SourceDep'][ix] and 'nsubj' not in df['TargetDep'][ix]:
             siti += 1
-            siti_l.append([df['Source'][ix], df['SourceTok'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['SourceHead'][ix],
+            siti_l.append([df['File Name'][ix],
+                           df['Source'][ix], df['SourceTok'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['SourceHead'][ix],
                            df['Target'][ix], df['TargetTok'][ix], df['TargetPOS'][ix], df['TargetDep'][ix], df['TargetHead'][ix]])
         else:
             # Condition 2: the `nsubj` in the sentence is not linked to the root verb.
@@ -116,20 +118,22 @@ def filterImperative(df):
                 continue
             if src_nsubj_head not in df['SourceTok'][ix][src_root_loc].lower() and tgt_nsubj_head != df['TargetTok'][ix][tgt_root_loc].lower():
                 siti += 1
-                siti_l.append([df['Source'][ix], df['SourceTok'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['SourceHead'][ix],
+                siti_l.append([df['File Name'][ix],
+                               df['Source'][ix], df['SourceTok'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['SourceHead'][ix],
                                df['Target'][ix], df['TargetTok'][ix], df['TargetPOS'][ix], df['TargetDep'][ix], df['TargetHead'][ix]])
             # Condition 3: the `nsubj` in the sentence is "one", "you" or "it"
             elif src_nsubj_head in subj_list and tgt_nsubj_head in subj_list:
                 siti += 1
-                siti_l.append([df['Source'][ix], df['SourceTok'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['SourceHead'][ix],
+                siti_l.append([df['File Name'][ix],
+                               df['Source'][ix], df['SourceTok'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['SourceHead'][ix],
                                df['Target'][ix], df['TargetTok'][ix], df['TargetPOS'][ix], df['TargetDep'][ix], df['TargetHead'][ix]])
 
 
     print("Source I Target I: \t" + str(siti))
-    siti_df = pd.DataFrame(siti_l, columns=['Source', 'SourceTok', 'SourcePOS', 'SourceDep', 'SourceHead', 
+    siti_df = pd.DataFrame(siti_l, columns=['File Name',
+                                            'Source', 'SourceTok', 'SourcePOS', 'SourceDep', 'SourceHead', 
                                             'Target', 'TargetTok', 'TargetPOS', 'TargetDep', 'TargetHead'])
     print(siti_df)
-    siti_df.to_csv(path_or_buf='siti.csv', index=True)
     return siti_df
 
 def filterPos(df):
@@ -182,23 +186,18 @@ def chRoot(fname, df):
         
         # Rephrase only
         if src_root_posn == tgt_root_posn and src_root_word != tgt_root_word and editdistance.eval(df['Source'][ix], df['Target'][ix]) > 4 and editdistance.eval(df['Source'][ix], df['Target'][ix]) < 10:
-            cRootWP.append([df['Source'][ix], df['Target'][ix]])
+            cRootWP.append([df['File Name'][ix], df['Source'][ix], df['Target'][ix]])
     
-    cRootWP_df = pd.DataFrame(cRootWP, columns=['Source', 'Target']) 
+    cRootWP_df = pd.DataFrame(cRootWP, columns=['File Name', 'Source', 'Target']) 
     cRootWP_df.to_csv(path_or_buf=fname + 'wp.csv', index=True)
     return cRootWP_df
 
-def rephrase(fname, df):
-    """
-        Rephrases based on just source and target based on the difference in the text and POS
-    """
-    pass
 
 if __name__ == '__main__':
     fname = '/tmp/misunderstanding/typo_filtered_revisions.txt'
     # fname = './both0s.txt'
     df = constructDf(fname)
-    for ix in range(int(df.size/10000) - 1):
+    for ix in tqdm(range(int(df.size/10000) - 1)):
         start = ix * 10000
         lim = (ix + 1) * 10000
         o_df = addposAndDep(df, start, lim)
