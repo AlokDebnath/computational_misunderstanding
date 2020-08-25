@@ -26,7 +26,7 @@ def constructDf(fname):
                 [name, rev, src, tgt, _] = line.split('\t')
             except:
                 [name, rev, src, tgt] = line.split('\t')
-            if abs(len(src.split()) - len(tgt.split())) < 3 and len(src.split()) < 40 and len(tgt.split()) < 40:
+            if len(src.split()) < 100 and len(tgt.split()) < 100:
                 data['File Name'].append(name)
                 data['Revision'].append(rev)
                 data['Source'].append(src)
@@ -185,7 +185,7 @@ def chRoot(fname, df):
             tgt_root_word = ''
         
         # Rephrase only
-        if src_root_posn == tgt_root_posn and src_root_word != tgt_root_word and editdistance.eval(df['Source'][ix], df['Target'][ix]) > 4 and editdistance.eval(df['Source'][ix], df['Target'][ix]) < 10:
+        if src_root_word != tgt_root_word and editdistance.eval(df['Source'][ix], df['Target'][ix]) > 4 and editdistance.eval(df['Source'][ix], df['Target'][ix]) < 10:
             cRootWP.append([df['File Name'][ix], df['Source'][ix], df['Target'][ix]])
     
     cRootWP_df = pd.DataFrame(cRootWP, columns=['File Name', 'Source', 'Target']) 
@@ -194,7 +194,7 @@ def chRoot(fname, df):
 
 
 if __name__ == '__main__':
-    fname = '/tmp/misunderstanding/typo_filtered_revisions.txt'
+    fname = '/mount/projekte/emmy-noether-roth/mist/misunderstanding/typo_filtered_revisions.txt'
     # fname = './both0s.txt'
     df = constructDf(fname)
     for ix in tqdm(range(int(df.size/10000) - 1)):
@@ -204,7 +204,7 @@ if __name__ == '__main__':
         siti_df = filterImperative(o_df)
         chRoot('/tmp/misunderstanding/chRoot_siti_' + str(ix), siti_df)
 
-    start = ix * (df.size/10000)
+    start = ix * int(df.size/10000)
     lim = df.size
     o_df = addposAndDep(df, start, lim)
     siti_df = filterImperative(o_df)
