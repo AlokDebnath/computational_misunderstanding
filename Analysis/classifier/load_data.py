@@ -71,11 +71,10 @@ def create_dataset_from_csv(datadir, dev_file_path, test_file_path):
     return train_df, test_df, val_df
 
 
-def load_dataset(train_df, test_df, val_df, test_sen=None):
+def load_dataset(train_df, test_df, val_df):
     tokenize = lambda x: x.split()
     TEXT = data.Field(sequential=True, tokenize=tokenize, lower=True, include_lengths=True, batch_first=True, fix_length=200)
     LABEL = data.LabelField(tensor_type=torch.FloatTensor)
-    # train_data, test_data = datasets.IMDB.splits(TEXT, LABEL)
     train_data, valid_data, test_data = DataFrameDataset.splits(text_field=TEXT, label_field=LABEL, train_df=train_df, val_df=val_df, test_df=test_df)
     TEXT.build_vocab(train_data, vectors=FastText(language='en'))
     LABEL.build_vocab(train_data)
@@ -84,6 +83,6 @@ def load_dataset(train_df, test_df, val_df, test_sen=None):
     print("Length of Text Vocabulary: " + str(len(TEXT.vocab)))
     print("Vector size of Text Vocabulary: ", TEXT.vocab.vectors.size())
     print("Label Length: " + str(len(LABEL.vocab)))
-    train_iter, valid_iter, test_iter = data.BucketIterator.splits((train_data, valid_data, test_data), batch_size=32, sort_key=lambda x: len(x.text), repeat=False, shuffle=True)
+    train_iter, valid_iter, test_iter = data.BucketIterator.splits((train_data, valid_data, test_data), batch_size=32, sort_key=lambda x: len(x.text), repeat=False, shuffle=False)
     vocab_size = len(TEXT.vocab)
     return TEXT, vocab_size, word_embeddings, train_iter, valid_iter, test_iter 

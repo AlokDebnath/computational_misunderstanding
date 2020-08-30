@@ -1,0 +1,9 @@
+AttentionModel(
+  (word_embeddings): Embedding(45362, 300)
+  (lstmA): LSTM(300, 256)
+  (lstmB): LSTM(300, 256)
+  (jointlstm): LSTM(512, 256)
+  (combine): Linear(in_features=512, out_features=256, bias=True)
+  (labelA): Linear(in_features=256, out_features=2, bias=True)
+  (labelB): Linear(in_features=256, out_features=2, bias=True)
+)

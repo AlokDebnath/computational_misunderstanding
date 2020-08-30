@@ -26,7 +26,7 @@ def constructDf(fname):
                 [name, rev, src, tgt, _] = line.split('\t')
             except:
                 [name, rev, src, tgt] = line.split('\t')
-            if len(src.split()) < 100 and len(tgt.split()) < 100:
+            if len(src.split()) > 5 and len(tgt.split()) > 5 and len(src.split()) < 50 and len(tgt.split()) < 50:
                 data['File Name'].append(name)
                 data['Revision'].append(rev)
                 data['Source'].append(src)
@@ -50,8 +50,8 @@ def addposAndDep(df, start, lim):
     ix = start
     for ix in tqdm(range(len(df['Revision'][start:lim]))):
         indlist.append(start + ix)
-        src = nlp(df['Source'][ix])
-        tgt = nlp(df['Target'][ix])
+        src = nlp(df['Source'][start + ix])
+        tgt = nlp(df['Target'][start + ix])
         srctok.append([word.text for word in src.sentences[0].words])
         tgttok.append([word.text for word in tgt.sentences[0].words])
         srcpos.append([word.xpos for word in src.sentences[0].words])
@@ -95,7 +95,7 @@ def filterImperative(df):
             continue
 
         # Condition 0: Sentence root is the word "let"
-        if (src_root == 'let') and (tgt_root == 'let'):
+        if 'let' in df['Source'][ix]  and 'let' in df['Target'][ix]:
             siti += 1
             siti_l.append([df['File Name'][ix],
                            df['Source'][ix], df['SourceTok'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], df['SourceHead'][ix],
@@ -136,59 +136,26 @@ def filterImperative(df):
     print(siti_df)
     return siti_df
 
-def filterPos(df):
-    svtv = 0
-    sv = 0
-    tv = 0
-    svtv_l = []
-    sv_l = []
-    tv_l = []
-    for ix in tqdm(range(len(df['SourcePOS']))):
-        if 'V' in df['SourcePOS'][ix][0]:
-            if 'V' in df['TargetPOS'][ix][0]:
-                svtv_l.append([df['Source'][ix], df['SourceTok'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], 
-                               df['Target'][ix], df['TargetTok'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
-                svtv += 1
-            else:
-                sv_l.append([df['Source'][ix], df['SourceTok'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], 
-                             df['Target'][ix], df['TargetTok'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
-                sv += 1
-        elif 'V' in df['TargetPOS'][ix][0]:
-                tv_l.append([df['Source'][ix], df['SourceTok'][ix], df['SourcePOS'][ix], df['SourceDep'][ix], 
-                             df['Target'][ix], df['TargetTok'][ix], df['TargetPOS'][ix], df['TargetDep'][ix]])
-                tv += 1
-            
-    print("Source V Target V: \t" + str(svtv))
-    print("Source V: \t" + str(sv))
-    print("Target V: \t" + str(tv))
-    svtv_df = pd.DataFrame(svtv_l, columns=['Source', 'SourceTok', 'SourcePOS', 'SourceDep', 'Target', 'TargetTok', 'TargetPOS', 'TargetDep'])
-    sv_df = pd.DataFrame(sv_l, columns=['Source', 'SourceTok', 'SourcePOS', 'SourceDep', 'Target', 'TargetTok', 'TargetPOS', 'TargetDep'])
-    tv_df = pd.DataFrame(tv_l, columns=['Source', 'SourceTok', 'SourcePOS', 'SourceDep', 'Target', 'TargetTok', 'TargetPOS', 'TargetDep'])
-    print(svtv_df)
-    return svtv_df, sv_df, tv_df
-
 def chRoot(fname, df):
     """
         Identify change in the position of the root, the root word itself, or both. 
         Useful when looking at sentences where both the source and target sentence
     """
     cRootWP = list()
-    for ix in tqdm(range(len(df['SourceDep']))):
+    for ix in tqdm(range(len(df['Source']))):
         src_root_posn = df['SourceDep'][ix].index('root')
         tgt_root_posn = df['TargetDep'][ix].index('root')
-        try:
-            src_root_word = df['SourceTok'][ix][src_root_posn].lower()
-            tgt_root_word = df['TargetTok'][ix][tgt_root_posn].lower()
-        except:
-            print(src_root_posn, tgt_root_posn)
-            src_root_word = ''
-            tgt_root_word = ''
+        src_root_word = df['SourceTok'][ix][src_root_posn].lower()
+        tgt_root_word = df['TargetTok'][ix][tgt_root_posn].lower()
+        src_root_pos = df['SourcePOS'][ix][src_root_posn]
+        tgt_root_pos = df['TargetPOS'][ix][tgt_root_posn]
         
         # Rephrase only
-        if src_root_word != tgt_root_word and editdistance.eval(df['Source'][ix], df['Target'][ix]) > 4 and editdistance.eval(df['Source'][ix], df['Target'][ix]) < 10:
-            cRootWP.append([df['File Name'][ix], df['Source'][ix], df['Target'][ix]])
+        if src_root_word not in tgt_root_word and tgt_root_word not in src_root_word and editdistance.eval(df['Source'][ix], df['Target'][ix]) > 4 and editdistance.eval(df['Source'][ix], df['Target'][ix]) < 10 and 'V' in src_root_pos and 'V' in tgt_root_pos:
+            # print(src_root_word, tgt_root_word)
+            cRootWP.append([df['File Name'][ix], df['Source'][ix], df['Target'][ix], src_root_word, tgt_root_word])
     
-    cRootWP_df = pd.DataFrame(cRootWP, columns=['File Name', 'Source', 'Target']) 
+    cRootWP_df = pd.DataFrame(cRootWP, columns=['File Name', 'Source', 'Target', 'Src Root', 'Tgt Root']) 
     cRootWP_df.to_csv(path_or_buf=fname + 'wp.csv', index=True)
     return cRootWP_df
 
@@ -197,16 +164,18 @@ if __name__ == '__main__':
     fname = '/mount/projekte/emmy-noether-roth/mist/misunderstanding/typo_filtered_revisions.txt'
     # fname = './both0s.txt'
     df = constructDf(fname)
-    for ix in tqdm(range(int(df.size/10000) - 1)):
-        start = ix * 10000
-        lim = (ix + 1) * 10000
+    for ix in tqdm(range(int(len(df['Source'])/1000) - 1)):
+        start = ix * 1000
+        lim = (ix + 1) * 1000
         o_df = addposAndDep(df, start, lim)
         siti_df = filterImperative(o_df)
         chRoot('/tmp/misunderstanding/chRoot_siti_' + str(ix), siti_df)
 
-    start = ix * int(df.size/10000)
+    start = ix * int(df.size/1000)
     lim = df.size
+    # ix = 1
+    # start = ix * 1000
+    # lim = (ix + 1) * 1000
     o_df = addposAndDep(df, start, lim)
     siti_df = filterImperative(o_df)
-    chRoot('chRoot_siti_' + str(ix), siti_df)
-    
+    chRoot('/tmp/misunderstanding/chRoot_siti_' + str(ix), siti_df)
