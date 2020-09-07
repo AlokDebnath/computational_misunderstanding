@@ -1,5 +1,5 @@
-import load_data
-# import BERT_load_data
+# import load_data
+import BERT_load_data
 import torch
 import torch.nn.functional as F
 from torch.autograd import Variable
@@ -7,19 +7,19 @@ import torch.optim
 import numpy as np
 # from models.LSTM import LSTMClassifier
 from models.LSTM_Attn import AttentionModel
-# from models.BERT_LSTM_Attn import AttentionModel
-# from transformers import BertTokenizer, BertModel
+from models.BERT_LSTM_Attn import AttentionModel
+from transformers import BertTokenizer, BertModel
 
 datadir = '/mount/projekte/emmy-noether-roth/mist/misunderstanding/csv2' 
 # datadir = '/tmp/misunderstanding'
 test_path = '/tmp/misunderstanding/computational_misunderstanding/Experiments/data/test_files.txt'
 val_path = '/tmp/misunderstanding/computational_misunderstanding/Experiments/data/dev_files.txt'
 
-# train_df, test_df, val_df = BERT_load_data.create_dataset_from_csv(datadir, test_path, val_path)
-train_df, test_df, val_df = load_data.create_dataset_from_csv(datadir, test_path, val_path)
-# TEXT_A, TEXT_B, vocab_size, train_iter, valid_iter, test_iter = BERT_load_data.load_dataset(train_df, test_df, val_df)
-TEXT_A, TEXT_B, vocab_size, word_embeddings, train_iter, valid_iter, test_iter = load_data.load_dataset(train_df, test_df, val_df)
-# bert = BertModel.from_pretrained('bert-base-uncased')
+train_df, test_df, val_df = BERT_load_data.create_dataset_from_csv(datadir, test_path, val_path)
+# train_df, test_df, val_df = load_data.create_dataset_from_csv(datadir, test_path, val_path)
+TEXT_A, TEXT_B, vocab_size, train_iter, valid_iter, test_iter = BERT_load_data.load_dataset(train_df, test_df, val_df)
+# TEXT_A, TEXT_B, vocab_size, word_embeddings, train_iter, valid_iter, test_iter = load_data.load_dataset(train_df, test_df, val_df)
+bert = BertModel.from_pretrained('bert-base-uncased')
 
 def clip_gradient(model, clip_value):
     params = list(filter(lambda p: p.grad is not None, model.parameters()))
@@ -56,7 +56,7 @@ def train_model(model, train_iter, epoch):
         num_corrects += (torch.max(predictionB, 1)[1].view(targetB.size()).data == targetB.data).sum()
         acc = 100.0 * (0.5 * num_corrects)/len(batch)        
         loss.backward()
-        clip_gradient(model, 0.2)
+        clip_gradient(model, 0.3)
         optim.step()
         steps += 1
 
@@ -104,8 +104,8 @@ output_size = 2
 hidden_size = 256
 embedding_length = 300
 
-# model = AttentionModel(bert, batch_size, output_size, hidden_size)
-model = AttentionModel(batch_size, output_size, hidden_size, vocab_size, embedding_length, word_embeddings)
+model = AttentionModel(bert, batch_size, output_size, hidden_size)
+# model = AttentionModel(batch_size, output_size, hidden_size, vocab_size, embedding_length, word_embeddings)
 loss_fn = F.cross_entropy
 print(model)
 for epoch in range(10):
